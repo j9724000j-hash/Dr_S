@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n/ui';
+import { useTranslations, useTranslatedPath } from '../../i18n/utils';
+import { services, values, stats, gallery, tourStripKeys } from '../../data/content';
+import { clinic } from '../../data/clinic';
+import { img } from '../../data/images';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+const isAr = lang === 'ar';
+
+const tourItems = gallery[lang].filter((g) => (tourStripKeys as readonly string[]).includes(g.key));
+---
+
+<BaseLayout lang={lang} title={t('meta.home.title')} description={t('meta.home.desc')}>
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="badge"><Icon name="sparkle" size={16} /> {t('hero.badge')}</span>
+        <p class="hero-greeting">{t('hero.greeting')}</p>
+        <h1 class="hero-title">
+          {t('hero.title1')} <span class="title-accent">{t('hero.title2')}</span>
+        </h1>
+        <p class="hero-sub">{t('hero.sub')}</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href={tp('/contact')}>
+            <Icon name="calendar" size={18} /> {t('hero.cta1')}
+          </a>
+          <a class="btn btn-ghost" href={tp('/services')}>{t('hero.cta2')}</a>
+        </div>
+        <ul class="stats">
+          {stats[lang].map((s) => (
+            <li><b>{s.value}</b><span>{s.label}</span></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-blob" aria-hidden="true"></div>
+        <div class="hero-frame">
+          <img src={img.heroClinic} alt={isAr ? clinic.nameAr : clinic.nameEn} loading="eager" />
+        </div>
+        <img src={img.lavender} alt="" class="hero-lavender" aria-hidden="true" loading="lazy" />
+        <div class="float-card float-card-1"><Icon name="smile" size={20} /><span>{t('hero.float1')}</span></div>
+        <div class="float-card float-card-2"><Icon name="star" size={20} /><span>{t('hero.float2')}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Services ===== -->
+  <section class="section alt" id="services">
+    <div class="container">
+      <SectionHeading eyebrow={t('services.eyebrow')} title={t('services.title')} sub={t('services.sub')} />
+      <div class="cards-grid">
+        {services[lang].map((s) => (
+          <article class="card service-card">
+            <div class="service-img">
+              <img src={s.image} alt={s.name} loading="lazy" />
+            </div>
+            <span class="icon-circle"><Icon name={s.icon} size={26} /></span>
+            <h3>{s.name}</h3>
+            <p>{s.desc}</p>
+          </article>
+        ))}
+      </div>
+      <div class="center-cta">
+        <a class="btn btn-primary" href={tp('/services')}>{t('services.cta')}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Values ===== -->
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow={t('values.eyebrow')} title={t('values.title')} sub={t('values.sub')} />
+      <div class="values-grid">
+        {values[lang].map((v) => (
+          <div class="value-card">
+            <span class="icon-circle"><Icon name={v.icon} size={24} /></span>
+            <h3>{v.name}</h3>
+            <p>{v.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Clinic tour ===== -->
+  <section class="section alt">
+    <div class="container">
+      <SectionHeading eyebrow={t('tour.eyebrow')} title={t('tour.title')} sub={t('tour.sub')} />
+      <div class="tour-grid">
+        {tourItems.map((item) => (
+          <a href={tp('/gallery')} class="tour-card">
+            <img src={item.src} alt={item.title} loading="lazy" />
+            <span class="tour-caption"><b>{item.title}</b><i>{item.desc}</i></span>
+          </a>
+        ))}
+      </div>
+      <div class="center-cta">
+        <a class="btn btn-ghost" href={tp('/gallery')}>{t('tour.cta')}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA banner ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner">
+        <span class="cta-script">{t('cta.title1')}</span>
+        <span class="cta-ar">{t('cta.title2')}</span>
+        <a class="btn btn-invert" href={tp('/contact')}>
+          <Icon name="calendar" size={18} /> {t('cta.btn')}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contact strip ===== -->
+  <section class="section alt" id="contact">
+    <div class="container">
+      <SectionHeading eyebrow={t('contact.eyebrow')} title={t('contact.title')} sub={t('contact.sub')} />
+      <div class="contact-grid">
+        <a class="card contact-card" href={clinic.phoneHref}>
+          <span class="icon-circle"><Icon name="phone" size={22} /></span>
+          <b>{t('contact.call')}</b>
+          <span dir="ltr">{clinic.phoneIntl}</span>
+        </a>
+        <a class="card contact-card" href={clinic.whatsappUrl} target="_blank" rel="noopener">
+          <span class="icon-circle"><Icon name="whatsapp" size={22} /></span>
+          <b>{t('contact.whatsapp')}</b>
+          <span>WhatsApp</span>
+        </a>
+        <a class="card contact-card" href={clinic.instagramUrl} target="_blank" rel="noopener">
+          <span class="icon-circle"><Icon name="instagram" size={22} /></span>
+          <b>{t('contact.instagram')}</b>
+          <span dir="ltr">{clinic.instagram}</span>
+        </a>
+        <a class="card contact-card" href={clinic.mapsUrl} target="_blank" rel="noopener">
+          <span class="icon-circle"><Icon name="pin" size={22} /></span>
+          <b>{t('contact.location')}</b>
+          <span>{isAr ? clinic.locationAr : clinic.locationEn}</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

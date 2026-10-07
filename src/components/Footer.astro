@@ -1,0 +1,73 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import type { Locale } from '../i18n/ui';
+import { useTranslations, useTranslatedPath } from '../i18n/utils';
+import { clinic } from '../data/clinic';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+const isAr = lang === 'ar';
+const year = new Date().getFullYear();
+
+const quickLinks = [
+  { href: tp('/'), label: t('nav.home') },
+  { href: tp('/about'), label: t('nav.about') },
+  { href: tp('/services'), label: t('nav.services') },
+  { href: tp('/gallery'), label: t('nav.gallery') },
+  { href: tp('/contact'), label: t('nav.contact') },
+];
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a href={tp('/')} class="brand">
+        <Logo size={42} variant="light" />
+        <span class="brand-text">
+          <span class="brand-name-en">Dr. Sumaia Alhalabi</span>
+          <span class="brand-name-ar">د. سمية الحلبي</span>
+          <span class="brand-sub">{t('brand.sub')}</span>
+        </span>
+      </a>
+      <p class="about-p">{t('footer.about')}</p>
+      <div class="socials">
+        <a href={clinic.instagramUrl} target="_blank" rel="noopener" aria-label="Instagram">
+          <Icon name="instagram" size={20} />
+        </a>
+        <a href={clinic.whatsappUrl} target="_blank" rel="noopener" aria-label="WhatsApp">
+          <Icon name="whatsapp" size={20} />
+        </a>
+        <a href={clinic.phoneHref} aria-label={t('contact.call')}>
+          <Icon name="phone" size={20} />
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h4>{t('footer.links')}</h4>
+      <ul>
+        {quickLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </div>
+
+    <div>
+      <h4>{t('footer.contact')}</h4>
+      <ul class="footer-contact">
+        <li><Icon name="phone" size={18} /><a href={clinic.phoneHref} dir="ltr">{clinic.phoneIntl}</a></li>
+        <li><Icon name="pin" size={18} /><span>{isAr ? clinic.locationAr : clinic.locationEn}</span></li>
+        <li><Icon name="clock" size={18} /><span>{isAr ? clinic.hoursAr.join(' · ') : clinic.hoursEn.join(' · ')}</span></li>
+        <li><Icon name="instagram" size={18} /><a href={clinic.instagramUrl} target="_blank" rel="noopener" dir="ltr">{clinic.instagram}</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      © {year} {isAr ? clinic.nameAr : clinic.nameEn} · {t('footer.rights')} · {t('footer.credit')}
+    </div>
+  </div>
+</footer>

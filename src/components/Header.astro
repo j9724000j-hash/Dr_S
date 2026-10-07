@@ -1,0 +1,65 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import type { Locale } from '../i18n/ui';
+import { useTranslations, useTranslatedPath, stripLocalePrefix } from '../i18n/utils';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+const stripped = stripLocalePrefix(Astro.url.pathname);
+
+const navItems = [
+  { href: tp('/'), label: t('nav.home') },
+  { href: tp('/about'), label: t('nav.about') },
+  { href: tp('/services'), label: t('nav.services') },
+  { href: tp('/gallery'), label: t('nav.gallery') },
+  { href: tp('/contact'), label: t('nav.contact') },
+];
+
+const otherLang: Locale = lang === 'ar' ? 'en' : 'ar';
+const otherUrl = otherLang === 'ar' ? stripped : stripped === '/' ? '/en' : `/en${stripped}`;
+const isActive = (href: string) =>
+  stripped === href || (href !== '/' && stripped.startsWith(href));
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={tp('/')} class="brand" aria-label={t('nav.home')}>
+      <Logo size={46} />
+      <span class="brand-text">
+        <span class="brand-name-en">Dr. Sumaia Alhalabi</span>
+        <span class="brand-name-ar">د. سمية الحلبي</span>
+        <span class="brand-sub">{t('brand.sub')}</span>
+      </span>
+    </a>
+
+    <nav class="main-nav" aria-label={t('nav.home')}>
+      {navItems.map((item) => (
+        <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="header-actions">
+      <a class="lang-switch" href={otherUrl} hreflang={otherLang} lang={otherLang}>
+        {otherLang === 'ar' ? 'عربي' : 'EN'}
+      </a>
+      <a class="btn btn-primary btn-sm" href={tp('/contact')}>{t('nav.book')}</a>
+      <details class="mobile-nav">
+        <summary aria-label={t('nav.home')}><Icon name="menu" size={22} /></summary>
+        <nav>
+          {navItems.map((item) => (
+            <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          ))}
+          <a href={tp('/contact')}><b>{t('nav.book')}</b></a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>

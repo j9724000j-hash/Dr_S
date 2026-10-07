@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n/ui';
+import { useTranslations, useTranslatedPath } from '../../i18n/utils';
+import { services } from '../../data/content';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+---
+
+<BaseLayout lang={lang} title={t('meta.services.title')} description={t('meta.services.desc')}>
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow={t('services.eyebrow')} title={t('services.title')} sub={t('services.sub')} />
+      <div class="cards-grid">
+        {services[lang].map((s) => (
+          <article class="card service-card">
+            <div class="service-img">
+              <img src={s.image} alt={s.name} loading="lazy" />
+            </div>
+            <span class="icon-circle"><Icon name={s.icon} size={26} /></span>
+            <h3>{s.name}</h3>
+            <p>{s.desc}</p>
+            <a class="service-link" href={tp('/contact')}>
+              {t('services.book')} <Icon name="arrow" size={16} />
+            </a>
+          </article>
+        ))}
+      </div>
+      <div class="center-cta">
+        <a class="btn btn-primary" href={tp('/contact')}>
+          <Icon name="calendar" size={18} /> {t('services.cta')}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
