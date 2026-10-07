@@ -1,40 +1,56 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
 import SectionHeading from '../SectionHeading.astro';
 import Icon from '../Icon.astro';
 import type { Locale } from '../../i18n/ui';
 import { useTranslations, useTranslatedPath } from '../../i18n/utils';
-import { services } from '../../data/content';
+import { getMeta } from '../../data/meta';
+import { clinic } from '../../data/clinic';
+import { services } from '../../data/services';
+import { imgSize } from '../../data/images';
 
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
-
 const t = useTranslations(lang);
 const tp = useTranslatedPath(lang);
+const meta = getMeta('/services', lang);
+
+/* ItemList — قائمة الخدمات المؤكدة */
+const jsonLd = [{
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: services.map((s, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: s.content[lang].name,
+    url: `${Astro.site?.toString().replace(/\/$/, '') ?? ''}${tp(`/services/${s.slug}`)}`,
+  })),
+}];
 ---
 
-<BaseLayout lang={lang} title={t('meta.services.title')} description={t('meta.services.desc')}>
+<BaseLayout lang={lang} title={meta.title} description={meta.description} jsonLd={jsonLd}>
+  <Breadcrumbs lang={lang} items={[{ label: t('nav.services') }]} />
+
   <section class="section">
     <div class="container">
-      <SectionHeading eyebrow={t('services.eyebrow')} title={t('services.title')} sub={t('services.sub')} />
+      <SectionHeading h1 eyebrow={t('services.eyebrow')} title={t('services.title')} sub={t('services.sub')} />
       <div class="cards-grid">
-        {services[lang].map((s) => (
-          <article class="card service-card">
+        {services.map((s) => (
+          <a class="card service-card" href={tp(`/services/${s.slug}`)}>
             <div class="service-img">
-              <img src={s.image} alt={s.name} loading="lazy" />
+              <img src={s.image} alt={s.imageAlt[lang]} width={imgSize[s.image][0]} height={imgSize[s.image][1]} loading="lazy" />
             </div>
-            <span class="icon-circle"><Icon name={s.icon} size={26} /></span>
-            <h3>{s.name}</h3>
-            <p>{s.desc}</p>
-            <a class="service-link" href={tp('/contact')}>
-              {t('services.book')} <Icon name="arrow" size={16} />
-            </a>
-          </article>
+            <h3>{s.content[lang].name}</h3>
+            <p>{s.content[lang].shortDesc}</p>
+            <span class="service-link">{t('cta.more')} <Icon name="arrow" size={16} /></span>
+          </a>
         ))}
       </div>
+      <p class="services-note">{t('services.note')}</p>
       <div class="center-cta">
-        <a class="btn btn-primary" href={tp('/contact')}>
-          <Icon name="calendar" size={18} /> {t('services.cta')}
+        <a class="btn btn-primary" href={clinic.phoneHref}>
+          <Icon name="phone" size={17} /> {t('cta.call')}
         </a>
       </div>
     </div>

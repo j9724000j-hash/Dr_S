@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import SectionHeading from '../SectionHeading.astro';
+import FaqList from '../FaqList.astro';
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n/ui';
+import { useTranslations, useTranslatedPath } from '../../i18n/utils';
+import { getMeta } from '../../data/meta';
+import { clinic } from '../../data/clinic';
+import { faqs } from '../../data/faq';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+const meta = getMeta('/faq', lang);
+---
+
+<BaseLayout lang={lang} title={meta.title} description={meta.description}>
+  <Breadcrumbs lang={lang} items={[{ label: t('nav.faq') }]} />
+
+  <section class="section">
+    <div class="container narrow">
+      <SectionHeading h1 eyebrow={t('faq.eyebrow')} title={t('faq.title')} sub={t('faq.sub')} />
+      <FaqList lang={lang} items={faqs[lang]} withSchema />
+
+      <div class="faq-more">
+        <div>
+          <h2>{t('faq.more.title')}</h2>
+          <p>{t('faq.more.text')}</p>
+        </div>
+        <a class="btn btn-primary" href={clinic.phoneHref}>
+          <Icon name="phone" size={17} /> {t('cta.call')}
+        </a>
+      </div>
+
+      <div class="center-cta">
+        <a class="btn btn-ghost" href={tp('/services')}>{t('cta.allServices')}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

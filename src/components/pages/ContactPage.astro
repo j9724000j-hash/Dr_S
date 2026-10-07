@@ -1,113 +1,85 @@
 ---
+/**
+ * صفحة التواصل — الهاتف أولاً (spec §12/§14):
+ * بدون نماذج اتصال أو حجز. الهاتف + واتساب كقناة ثانوية مؤكدة +
+ * العنوان المؤكد + فيسبوك. أوقات العمل غير مؤكدة → لا تُعرض كحقائق.
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
 import SectionHeading from '../SectionHeading.astro';
 import Icon from '../Icon.astro';
 import type { Locale } from '../../i18n/ui';
 import { useTranslations, useTranslatedPath } from '../../i18n/utils';
-import { services } from '../../data/content';
+import { getMeta } from '../../data/meta';
 import { clinic } from '../../data/clinic';
 
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
-
 const t = useTranslations(lang);
 const tp = useTranslatedPath(lang);
 const isAr = lang === 'ar';
+const meta = getMeta('/contact', lang);
 
-const waTemplate = isAr
-  ? 'مرحباً، أنا {name} ({phone}) — الخدمة: {service} — الرسالة: {message}'
-  : 'Hello, I am {name} ({phone}) — Service: {service} — Message: {message}';
+const jsonLd = [{
+  '@context': 'https://schema.org',
+  '@type': 'Dentist',
+  name: isAr ? clinic.nameAr : clinic.nameEn,
+  telephone: clinic.phone,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: isAr ? 'أوتوستراد المزة' : 'Mezzeh Autostrad',
+    addressLocality: isAr ? 'دمشق' : 'Damascus',
+    addressCountry: 'SY',
+  },
+  sameAs: [clinic.facebookUrl],
+}];
 ---
 
-<BaseLayout lang={lang} title={t('meta.contact.title')} description={t('meta.contact.desc')}>
+<BaseLayout lang={lang} title={meta.title} description={meta.description} jsonLd={jsonLd}>
+  <Breadcrumbs lang={lang} items={[{ label: t('nav.contact') }]} />
+
   <section class="section">
     <div class="container">
-      <SectionHeading eyebrow={t('contact.eyebrow')} title={t('contact.title')} sub={t('contact.sub')} />
+      <SectionHeading h1 eyebrow={t('contact.eyebrow')} title={t('contact.title')} sub={t('contact.sub')} />
 
-      <div class="contact-page-grid">
-        <!-- Info -->
+      <!-- بطاقة الاتصال الرئيسية — التحويل الأساسي في الموقع (spec §0.7) -->
+      <div class="call-hero">
+        <span class="call-hero-icon"><Icon name="phone" size={30} /></span>
+        <div>
+          <h2>{t('contact.call.title')}</h2>
+          <p>{t('contact.call.desc')}</p>
+        </div>
+        <a class="btn btn-primary btn-lg" href={clinic.phoneHref} dir="ltr">{clinic.phone}</a>
+        <span class="call-hero-intl" dir="ltr">{clinic.phoneIntl}</span>
+      </div>
+
+      <div class="contact-page-grid contact-no-form">
         <div class="info-list">
-          <a class="info-item" href={clinic.phoneHref}>
-            <span class="icon-circle"><Icon name="phone" size={20} /></span>
-            <span><b>{t('contact.call')}</b><span dir="ltr">{clinic.phoneIntl}</span></span>
-          </a>
           <a class="info-item" href={clinic.whatsappUrl} target="_blank" rel="noopener">
             <span class="icon-circle"><Icon name="whatsapp" size={20} /></span>
-            <span><b>{t('contact.whatsapp')}</b><span>WhatsApp</span></span>
-          </a>
-          <a class="info-item" href={clinic.instagramUrl} target="_blank" rel="noopener">
-            <span class="icon-circle"><Icon name="instagram" size={20} /></span>
-            <span><b>{t('contact.instagram')}</b><span dir="ltr">{clinic.instagram}</span></span>
+            <span><b>{t('contact.whatsapp')}</b><span>{t('contact.whatsapp.desc')}</span></span>
           </a>
           <a class="info-item" href={clinic.mapsUrl} target="_blank" rel="noopener">
             <span class="icon-circle"><Icon name="pin" size={20} /></span>
             <span><b>{t('contact.location')}</b><span>{isAr ? clinic.locationAr : clinic.locationEn}</span></span>
           </a>
+          <a class="info-item" href={clinic.facebookUrl} target="_blank" rel="noopener">
+            <span class="icon-circle"><Icon name="facebook" size={20} /></span>
+            <span><b>{t('contact.facebook')}</b><span dir="ltr">{clinic.facebook}</span></span>
+          </a>
           <div class="info-item">
             <span class="icon-circle"><Icon name="clock" size={20} /></span>
-            <span><b>{t('contact.hours')}</b><span>{isAr ? clinic.hoursAr.join(' · ') : clinic.hoursEn.join(' · ')}</span></span>
+            <span><b>{isAr ? 'أوقات العمل' : 'Working Hours'}</b><span>{t('contact.hours.pending')}</span></span>
           </div>
         </div>
 
-        <!-- Form -->
-        <div class="card form-card">
-          <h3>{t('form.title')}</h3>
-          <form
-            id="contact-form"
-            class="contact-form"
-            data-wa={clinic.whatsapp}
-            data-template={waTemplate}
-          >
-            <div class="form-row">
-              <div class="field">
-                <label for="cf-name">{t('form.name')}</label>
-                <input id="cf-name" name="name" type="text" required autocomplete="name" />
-              </div>
-              <div class="field">
-                <label for="cf-phone">{t('form.phone')}</label>
-                <input id="cf-phone" name="phone" type="tel" required autocomplete="tel" dir="ltr" />
-              </div>
-            </div>
-            <div class="field">
-              <label for="cf-service">{t('form.service')}</label>
-              <select id="cf-service" name="service" required>
-                <option value="" disabled selected>{t('form.select')}</option>
-                {services[lang].map((s) => <option value={s.name}>{s.name}</option>)}
-              </select>
-            </div>
-            <div class="field">
-              <label for="cf-message">{t('form.message')}</label>
-              <textarea id="cf-message" name="message" required></textarea>
-            </div>
-            <button class="btn btn-primary" type="submit">
-              <Icon name="whatsapp" size={18} /> {t('form.send')}
-            </button>
-            <p class="form-note">{t('form.note')}</p>
-          </form>
-        </div>
+        <!-- خريطة: رابط مباشر (بانتظار تفعيل التضمين مع تأكيد الموقع الدقيق) -->
+        <a class="map-card" href={clinic.mapsUrl} target="_blank" rel="noopener">
+          <span class="map-pin"><Icon name="pin" size={26} /></span>
+          <b>{isAr ? clinic.locationAr : clinic.locationEn}</b>
+          <span class="map-link">{t('contact.maps')} <Icon name="arrow" size={15} /></span>
+        </a>
       </div>
-
-      <iframe
-        class="map-frame"
-        src={clinic.mapsEmbed}
-        loading="lazy"
-        title={t('contact.location')}
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe>
     </div>
   </section>
 </BaseLayout>
-
-<script>
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    let message = form.dataset.template ?? '';
-    for (const key of ['name', 'phone', 'service', 'message']) {
-      message = message.replaceAll(`{${key}}`, String(data.get(key) ?? ''));
-    }
-    const wa = form.dataset.wa ?? '';
-    window.open(`https://wa.me/${wa}?text=${encodeURIComponent(message)}`, '_blank');
-  });
-</script>

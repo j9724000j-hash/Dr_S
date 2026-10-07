@@ -1,0 +1,10 @@
+---
+import ArticlePage from '../../../components/pages/ArticlePage.astro';
+import { articles } from '../../../data/journal';
+
+export function getStaticPaths() {
+  return articles.map((a) => ({ params: { slug: a.slug } }));
+}
+const { slug } = Astro.params;
+---
+<ArticlePage lang="en" slug={slug} />

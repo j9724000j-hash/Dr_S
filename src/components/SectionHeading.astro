@@ -3,13 +3,15 @@ interface Props {
   eyebrow: string;
   title: string;
   sub?: string;
+  /** اجعل العنوان h1 للصفحات التي تحتاج عنواناً رئيسياً واحداً (spec §17) */
+  h1?: boolean;
 }
 
-const { eyebrow, title, sub } = Astro.props;
+const { eyebrow, title, sub, h1 = false } = Astro.props;
 ---
 
 <div class="section-heading">
   <span class="eyebrow">{eyebrow}</span>
-  <h2>{title}</h2>
+  {h1 ? <h1>{title}</h1> : <h2>{title}</h2>}
   {sub && <p>{sub}</p>}
 </div>

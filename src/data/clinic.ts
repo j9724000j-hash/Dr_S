@@ -1,22 +1,39 @@
-/** بيانات العيادة الثابتة — source of truth للتواصل */
+/**
+ * بيانات العيادة — source of truth للتواصل (spec §54: Content Variables)
+ *
+ * ⚠️ قواعد سلامة المعلومات (spec §0.8/§5):
+ * تُستخدم المعلومات المُتحقَّق منها فقط. أي معلومة غير مؤكدة تبقى معلّقة
+ * كـ TODO ولا تظهر في الموقع.
+ *
+ * مؤكد حالياً: الاسم، التخصص، الهاتف، واتساب، فيسبوك (الاسم)، العنوان.
+ * غير مؤكد بعد: الدومين، أوقات العمل، الإيميل، رابط فيسبوك الدقيق.
+ */
 export const clinic = {
   nameAr: 'د. سمية الحلبي',
-  nameEn: 'Dr. Sumaia Alhalabi',
+  nameEn: 'Dr. Sumaya Alhalabi',
   specialtyAr: 'طب وجراحة الفم والأسنان',
-  specialtyEn: 'General & Cosmetic Dentistry',
-  phone: '0948567237',
-  phoneIntl: '+971 94 856 7237',
-  phoneHref: 'tel:+971948567237',
-  whatsapp: '971948567237',
-  whatsappUrl: 'https://wa.me/971948567237',
-  instagram: '@Dr.SumaiaAlhalabi',
-  instagramUrl: 'https://www.instagram.com/Dr.SumaiaAlhalabi',
-  // TODO: تأكيد الاسم العربي الدقيق للمنطقة (Al Muwaileh)
-  locationAr: 'الشارقة، الإمارات العربية المتحدة',
-  locationEn: 'Al Muwaileh, Sharjah, UAE',
-  mapsUrl: 'https://www.google.com/maps?q=Al+Muwaileh,+Sharjah,+UAE',
-  mapsEmbed: 'https://www.google.com/maps?q=Al+Muwaileh,+Sharjah,+UAE&output=embed',
-  hoursAr: ['السبت – الخميس', '9:00 ص – 9:00 م'],
-  hoursEn: ['Saturday – Thursday', '9:00 AM – 9:00 PM'],
-  email: 'info@drsumaiaalhalabi.com', // TODO: تأكيد الإيميل الحقيقي
+  specialtyEn: 'Dentistry — Oral & Dental Surgery',
+
+  /** الهاتف المُتحقَّق منه (spec §0.7) — يدعم الاتصال المحلي والدولي */
+  phone: '0948567231',
+  phoneHref: 'tel:0948567231',
+  phoneIntl: '+963 948 567 231',
+
+  whatsapp: '963948567231',
+  whatsappUrl: 'https://wa.me/963948567231',
+
+  facebook: 'Sumaia Alhalabi',
+  // TODO: تأكيد رابط صفحة فيسبوك الدقيق (حالياً رابط بحث بالاسم)
+  facebookUrl: 'https://www.facebook.com/search/top?q=Sumaia%20Alhalabi',
+
+  locationAr: 'دمشق - أوتوستراد المزة',
+  locationEn: 'Mezzeh Autostrad, Damascus, Syria',
+  mapsUrl: 'https://www.google.com/maps?q=Mezzeh+Autostrad,+Damascus,+Syria',
+
+  // TODO: تأكيد أوقات العمل قبل عرضها (غير مؤكدة بعد — لا تُعرض حالياً)
+  // hoursAr: ['السبت – الخميس', '9:00 ص – 9:00 م'],
+  // hoursEn: ['Saturday – Thursday', '9:00 AM – 9:00 PM'],
+
+  // TODO: تأكيد الإيميل الرسمي قبل عرضه (غير مؤكد بعد — لا يُعرض حالياً)
+  // email: '',
 } as const;

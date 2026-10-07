@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import SectionHeading from '../SectionHeading.astro';
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n/ui';
+import { useTranslations, useTranslatedPath } from '../../i18n/utils';
+import { getMeta } from '../../data/meta';
+import { articles } from '../../data/journal';
+import { imgSize } from '../../data/images';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+const meta = getMeta('/journal', lang);
+---
+
+<BaseLayout lang={lang} title={meta.title} description={meta.description}>
+  <Breadcrumbs lang={lang} items={[{ label: t('nav.journal') }]} />
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading h1 eyebrow={t('journal.eyebrow')} title={t('journal.title')} sub={t('journal.sub')} />
+      <div class="cards-grid">
+        {articles.map((a) => (
+          <a class="card journal-card" href={tp(`/journal/${a.slug}`)}>
+            <div class="journal-thumb">
+              <img src={a.image} alt={a.imageAlt[lang]} width={imgSize[a.image][0]} height={imgSize[a.image][1]} loading="lazy" />
+            </div>
+            <span class="journal-meta">
+              <time datetime={a.date}>{a.date}</time> · {a.readMinutes} {t('journal.readMin')}
+            </span>
+            <h3>{a.content[lang].title}</h3>
+            <p>{a.content[lang].description}</p>
+            <span class="service-link">{t('cta.read')} <Icon name="arrow" size={16} /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n/ui';
+import { useTranslations, useTranslatedPath } from '../../i18n/utils';
+import { getMeta } from '../../data/meta';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+const meta = getMeta('/404', lang);
+---
+
+<BaseLayout lang={lang} title={meta.title} description={meta.description}>
+  <section class="section notfound">
+    <div class="container center-all">
+      <span class="notfound-code">404</span>
+      <h1>{t('notfound.title')}</h1>
+      <p>{t('notfound.text')}</p>
+      <a class="btn btn-primary" href={tp('/')}>
+        <Icon name="arrow" size={16} /> {t('cta.backHome')}
+      </a>
+    </div>
+  </section>
+</BaseLayout>
