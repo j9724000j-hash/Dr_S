@@ -2,7 +2,7 @@
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
 import type { Locale } from '../i18n/ui';
-import { useTranslations, useTranslatedPath, stripLocalePrefix } from '../i18n/utils';
+import { useTranslations, useTranslatedPath, stripLocalePrefix, localizePath } from '../i18n/utils';
 import { clinic } from '../data/clinic';
 
 interface Props { lang: Locale; }
@@ -22,9 +22,19 @@ const navItems = [
 ];
 
 const otherLang: Locale = lang === 'ar' ? 'en' : 'ar';
-const otherUrl = otherLang === 'ar' ? stripped : stripped === '/' ? '/en' : `/en${stripped}`;
-const isActive = (href: string) =>
-  stripped === href || (href !== '/' && stripped.startsWith(href));
+// مبدّل اللغة: نفس المسار الحالي باللغة الأخرى مع بادئة النشر (base).
+// صفحة 404 العربية تُبنى كملف dist/404.html (بلا مسار مجلد) → نعود للرئيسية.
+const isNotFound = /\/404\/?$/.test(Astro.url.pathname);
+const otherUrl = localizePath(otherLang, isNotFound ? '/' : stripped);
+// تمييز الرابط النشط: مقارنة المسار الحالي (مع base وبادئة اللغة) بروابط التنقل
+const norm = (p: string) => (p.length > 1 ? p.replace(/\/+$/, '') : p);
+const homeHref = norm(tp('/'));
+const isActive = (href: string) => {
+  const h = norm(href);
+  const current = norm(Astro.url.pathname);
+  if (h === homeHref) return current === h;
+  return current === h || current.startsWith(`${h}/`);
+};
 ---
 
 <header class="site-header">
@@ -69,7 +79,7 @@ const isActive = (href: string) =>
               {item.label}
             </a>
           ))}
-          <a href={tp('/contact')} aria-current={stripped === '/contact' ? 'page' : undefined}>
+          <a href={tp('/contact')} aria-current={stripped === '/contact' || stripped === '/contact/' ? 'page' : undefined}>
             {t('nav.contact')}
           </a>
           <a href={clinic.phoneHref} class="mobile-call">

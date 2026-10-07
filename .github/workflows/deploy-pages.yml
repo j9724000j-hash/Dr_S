@@ -1,0 +1,68 @@
+# نشر معاينة الموقع (Astro ثابت) على GitHub Pages
+#
+# - المصدر الوحيد للنشر: GitHub Actions (وليس بناء Jekyll التلقائي).
+# - المسار النهائي: https://j9724000j-hash.github.io/Dr_S/
+#   (astro.config.mjs → site + base، ولا حاجة لأي متغيّرات إضافية هنا)
+# - عند النشر مستقبلاً على الدومين الحقيقي، يكفي تمرير SITE_URL و SITE_BASE
+#   في خطوة البناء (نفس هذا الملف) أو البناء محلياً ورفع dist/ إلى Hostinger.
+name: Deploy Astro site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - arena/4c6dc206-dr-s
+      - main
+  workflow_dispatch:
+
+# صلاحيات النشر القياسية لـGitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# نشر واحد في كل مرة (لا نُلغِ عملية نشر جارية)
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build (npm ci + astro build)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # المشروع يشترط node >= 22.12.0 (package.json → engines)
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies (npm ci)
+        run: npm ci
+
+      - name: Build static site (npm run build)
+        run: npm run build
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload dist as Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

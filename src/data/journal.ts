@@ -1,4 +1,5 @@
 import type { Locale } from '../i18n/ui';
+import { img } from './images';
 
 /**
  * المجلة — محتوى تثقيفي مسؤول (spec §16: Journal / Dental Education)
@@ -29,7 +30,7 @@ export const articles: Article[] = [
     slug: 'daily-oral-care',
     date: '2026-10-07',
     readMinutes: 4,
-    image: '/images/12_Natural_Smile_Beauty_Campaign.webp',
+    image: img.smileCampaign,
     imageAlt: {
       ar: 'ابتسامة طبيعية هادئة — مفهوم بصري بهوية العيادة',
       en: 'Calm natural smile — conceptual brand visual',
@@ -116,7 +117,7 @@ export const articles: Article[] = [
     slug: 'what-to-expect-cleaning',
     date: '2026-10-07',
     readMinutes: 3,
-    image: '/images/11_Comfort_Patient_Experience.webp',
+    image: img.comfort,
     imageAlt: {
       ar: 'أجواء راحة وهدوء — مفهوم بصري بهوية العيادة',
       en: 'A calm, comfortable atmosphere — conceptual brand visual',
@@ -199,7 +200,7 @@ export const articles: Article[] = [
     slug: 'cosmetic-fillings-guide',
     date: '2026-10-07',
     readMinutes: 4,
-    image: '/images/09_Cosmetic_Filling_Precision_Detail.webp',
+    image: img.filling,
     imageAlt: {
       ar: 'تفاصيل حشوة تجميلية — مفهوم بصري بهوية العيادة',
       en: 'Cosmetic filling detail — conceptual brand visual',
@@ -282,7 +283,7 @@ export const articles: Article[] = [
     slug: 'denture-care',
     date: '2026-10-07',
     readMinutes: 3,
-    image: '/images/15_Lavender_Botanical_Branch.webp',
+    image: img.lavender,
     imageAlt: {
       ar: 'غصن لافندر — عنصر زخرفي بهوية العيادة',
       en: 'Lavender branch — decorative brand element',

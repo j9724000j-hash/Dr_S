@@ -3,7 +3,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import CallBar from '../components/CallBar.astro';
 import type { Locale } from '../i18n/ui';
-import { stripLocalePrefix } from '../i18n/utils';
+import { stripLocalePrefix, withBase } from '../i18n/utils';
 import { clinic } from '../data/clinic';
 
 import '@fontsource/montserrat/400.css';
@@ -36,15 +36,17 @@ const {
 } = Astro.props;
 
 const dir = lang === 'ar' ? 'rtl' : 'ltr';
-// عنوان الموقع مركزي في astro.config.mjs → site (بانتظار تأكيد الدومين الحقيقي)
-const base = Astro.site?.toString().replace(/\/$/, '') ?? '';
-const canonical = `${base}${Astro.url.pathname}`;
+// أصل الموقع + مسار النشر مركزيان في astro.config.mjs (site + base):
+//   https://j9724000j-hash.github.io  +  /Dr_S/
+// canonical/hreflang/og:image تُبنى من الأصل + withBase(المسار) دائماً.
+const siteOrigin = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const canonical = `${siteOrigin}${Astro.url.pathname}`;
 const arPath = stripLocalePrefix(Astro.url.pathname);
-const enPath = arPath === '/' ? '/en' : `/en${arPath}`;
-const arUrl = `${base}${arPath}`;
-const enUrl = `${base}${enPath}`;
+const enPath = arPath === '/' ? '/en/' : `/en${arPath}`;
+const arUrl = `${siteOrigin}${withBase(arPath)}`;
+const enUrl = `${siteOrigin}${withBase(enPath)}`;
 const siteName = `${clinic.nameEn} | ${clinic.specialtyEn}`;
-const ogImage = `${base}/images/01_Hero_Clinic_Signature_Homepage.png`;
+const ogImage = `${siteOrigin}${withBase('/images/01_Hero_Clinic_Signature_Homepage.png')}`;
 const isRootAr = lang === 'ar' && arPath === '/';
 ---
 
@@ -60,7 +62,7 @@ const isRootAr = lang === 'ar' && arPath === '/';
     <link rel="alternate" hreflang="en" href={enUrl} />
     <link rel="alternate" hreflang="x-default" href={arUrl} />
     <meta name="theme-color" content="#5B3B82" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={title} />
@@ -81,7 +83,7 @@ const isRootAr = lang === 'ar' && arPath === '/';
          قسرية لأي مسار محلي)، ويحترم التفضيل المحفوظ ثم لغة المتصفح،
          والافتراضي العربية. المحتوى نفسه موجود بالكامل بدون جافاسكربت. */
       isRootAr && (
-        <script is:inline>
+        <script is:inline data-en-url={withBase('/en')}>
           (function () {
             try {
               var pref = localStorage.getItem('lang-pref');
@@ -93,7 +95,9 @@ const isRootAr = lang === 'ar' && arPath === '/';
               var wantsEn = langs.some(function (l) {
                 return (l || '').toLowerCase().indexOf('en') === 0;
               });
-              if (!wantsAr && wantsEn) location.replace('/en');
+              /* الرابط الهدف يمرّ عبر withBase() وقت البناء (base مستودع الصفحات) */
+              var target = document.currentScript && document.currentScript.getAttribute('data-en-url');
+              if (!wantsAr && wantsEn) location.replace(target || '/en');
             } catch (e) {
               /* تجاهل: الجذر يبقى عربياً */
             }
