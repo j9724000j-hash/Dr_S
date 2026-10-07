@@ -12,7 +12,7 @@ export const defaultLocale: Locale = 'ar';
  */
 export const ui = {
   ar: {
-    'brand.sub': 'طب وجراحة الفم والأسنان',
+    'brand.sub': 'طب الأسنان العلاجيوالتجميلي',
 
     'nav.label': 'التنقل الرئيسي',
     'nav.home': 'الرئيسية',
@@ -22,10 +22,10 @@ export const ui = {
     'nav.journal': 'المجلة',
     'nav.contact': 'التواصل',
 
-    'cta.call': 'اتصلي الآن',
+    'cta.call': 'اتصل الآن',
     'cta.call.aria': 'الاتصال بالعيادة',
     'cta.whatsapp': 'مراسلة عبر واتساب',
-    'cta.services': 'استكشفي الخدمات',
+    'cta.services': 'عرض الخدمات',
     'cta.more': 'التفاصيل',
     'cta.allServices': 'جميع الخدمات',
     'cta.faq': 'الأسئلة الشائعة',
@@ -37,33 +37,33 @@ export const ui = {
     'hero.title1': 'ابتسامة صحية',
     'hero.title2': 'تبدأ بعناية دقيقة',
     'hero.sub':
-      'طب وجراحة الفم والأسنان بعناية شخصية وأسلوب هادئ — من الفحص الدوري والوقاية إلى الترميم والحشوات التجميلية.',
-    'hero.note': 'د. سمية الحلبي — دمشق، أوتوستراد المزة',
+      'طب الأسنان العلاجيوالتجميلي بعناية شخصية وأسلوب هادئ — من الفحص الدوري والوقاية إلى الترميم والحشوات التجميلية.',
+    'hero.note': 'د. سميّا الحلبي — دمشق، أوتوستراد المزة',
 
     'home.intro.eyebrow': 'مرحباً بك',
     'home.intro.title': 'عناية أسنان بأسلوب مختلف',
     'home.intro.p1':
-      'في عيادة د. سمية الحلبي نؤمن أن العناية بالأسنان يجب أن تكون تجربة هادئة ومريحة، تبدأ بالاستماع إليك وتنتهي بابتسامة صحية.',
+      'في عيادة د. سميّا الحلبي نؤمن أن العناية بالأسنان يجب أن تكون تجربة هادئة ومريحة، تبدأ بالاستماع إليك وتنتهي بابتسامة صحية.',
     'home.intro.p2':
       'نقدم خدمات طب الأسنان العام والترميم والحشوات التجميلية والتنظيف والوقاية — بأسلوب يراعي التفاصيل ويحترم وقتك وراحتك.',
 
     'home.services.eyebrow': 'خدماتنا',
-    'home.services.title': 'خدمات مؤكدة بعناية مسؤولة',
+    'home.services.title': 'خدماتنا تقدّم بعناية فائقة',
     'home.services.sub': 'ست خدمات أساسية نقدّمها بدقة واهتمام بالتفاصيل.',
 
     'home.values.eyebrow': 'نهجنا',
-    'home.values.title': 'لماذا تختارين عيادتنا؟',
+    'home.values.title': 'لماذا تختار عيادتنا؟',
     'home.values.sub': 'مبادئ بسيطة نلتزم بها في كل موعد.',
 
     'home.experience.eyebrow': 'تجربة المريضة',
     'home.experience.title': 'راحة تسبق العلاج',
     'home.experience.sub': 'تجربة مصممة حول هدوئك وثقتك، خطوة بخطوة.',
 
-    'home.doctor.title': 'د. سمية الحلبي',
-    'home.doctor.role': 'طب وجراحة الفم والأسنان',
+    'home.doctor.title': 'د. سميّا الحلبي',
+    'home.doctor.role': 'طب الأسنان العلاجيوالتجميلي',
     'home.doctor.philosophy':
       '«أؤمن أن الابتسامة الجميلة تبدأ بعناية دقيقة، وبأن كل مريضة تستحق وقتاً كافياً للاستماع إليها وشرح خياراتها بوضوح.»',
-    'home.doctor.cta': 'تعرّفي على الدكتورة',
+    'home.doctor.cta': 'تعرّف على الدكتورة',
 
     'home.tour.eyebrow': 'أجواء العيادة',
     'home.tour.title': 'مساحات صُممت لراحتك',
@@ -71,7 +71,7 @@ export const ui = {
 
     'home.faq.eyebrow': 'الأسئلة الشائعة',
     'home.faq.title': 'إجابات تهمك',
-    'home.faq.sub': 'أكثر ما تسأل عنه مريضاتنا — بإجابات واضحة ومسؤولة.',
+    'home.faq.sub': 'أكثر ما يسأل عنه مرضانا.',
 
     'home.journal.eyebrow': 'المجلة',
     'home.journal.title': 'تثقيف بأسلوب بسيط',
@@ -99,10 +99,10 @@ export const ui = {
     'experience.step4.desc': 'إرشادات واضحة بعد الجلسة وباب مفتوح لأسئلتك.',
 
     'about.eyebrow': 'عن الدكتورة',
-    'about.title': 'د. سمية الحلبي',
-    'about.role': 'طب وجراحة الفم والأسنان',
+    'about.title': 'د. سميّا الحلبي',
+    'about.role': 'طب الأسنان العلاجيوالتجميلي',
     'about.p1':
-      'د. سمية الحلبي طبيبة أسنان متخصصة في طب وجراحة الفم والأسنان، تستقبل مريضاتها في عيادتها بدمشق — أوتوستراد المزة.',
+      'د. سميّا الحلبي طبيبة أسنان متخصصة في طب الأسنان العلاجيوالتجميلي، تستقبل مريضاتها في عيادتها بدمشق — أوتوستراد المزة.',
     'about.p2':
       'تؤمن بأن العلاقة بين الطبيبة ومريضتها تقوم على الثقة والوضوح: وقت كافٍ للاستماع، شرح مبسط للخيارات، وعناية دقيقة في التنفيذ.',
     'about.philosophyTitle': 'فلسفة العناية',
@@ -112,7 +112,7 @@ export const ui = {
     'about.approach3': 'عناية دقيقة بالتفاصيل أثناء العلاج.',
     'about.approach4': 'إرشادات متابعة واضحة بعد كل زيارة.',
     'about.portraitNote': 'ستُعرض الصورة الشخصية للدكتورة هنا فور توفرها.',
-    'about.cta': 'اتصلي للحجز أو الاستفسار',
+    'about.cta': 'اتصل للحجز أو الاستفسار',
 
     'services.eyebrow': 'الخدمات',
     'services.title': 'خدماتنا في طب الأسنان',
@@ -155,7 +155,7 @@ export const ui = {
     'contact.title': 'يسعدنا تواصلك',
     'contact.sub':
       'أسهل طريقة لحجز موعد أو الاستفسار هي الاتصال المباشر. كما يمكن التواصل عبر واتساب.',
-    'contact.call.title': 'اتصلي الآن',
+    'contact.call.title': 'اتصل الآن',
     'contact.call.desc': 'الطريقة الأسرع للحجز والاستفسار.',
     'contact.whatsapp': 'واتساب',
     'contact.whatsapp.desc': 'راسلينا وسنرد عليك.',
@@ -167,7 +167,7 @@ export const ui = {
     'contact.hours.pending': 'أوقات العمل: سيتم الإعلان عنها قريباً.',
 
     'footer.about':
-      'عيادة د. سمية الحلبي لطب وجراحة الفم والأسنان في دمشق — عناية دقيقة وأسلوب هادئ واهتمام شخصي.',
+      'عيادة د. سميّا الحلبي لطب الأسنان العلاجيوالتجميلي في دمشق — عناية دقيقة وأسلوب هادئ واهتمام شخصي.',
     'footer.links': 'روابط سريعة',
     'footer.contact': 'التواصل',
     'footer.follow': 'تابعينا',
@@ -181,11 +181,11 @@ export const ui = {
     'lang.aria': 'تغيير اللغة',
     'lang.current': 'اللغة الحالية: العربية',
 
-    'callbar.label': 'اتصلي الآن',
+    'callbar.label': 'اتصل الآن',
   },
 
   en: {
-    'brand.sub': 'Dentistry — Oral & Dental Surgery',
+    'brand.sub': 'Therapeutic & Cosmetic Dentistry',
 
     'nav.label': 'Main navigation',
     'nav.home': 'Home',
@@ -198,7 +198,7 @@ export const ui = {
     'cta.call': 'Call Now',
     'cta.call.aria': 'Call the clinic',
     'cta.whatsapp': 'Message on WhatsApp',
-    'cta.services': 'Explore Services',
+    'cta.services': 'View Services',
     'cta.more': 'Details',
     'cta.allServices': 'All Services',
     'cta.faq': 'FAQ',
@@ -221,7 +221,7 @@ export const ui = {
       'We offer general dentistry, restorations, cosmetic fillings, cleaning and prevention — with attention to detail and respect for your time and comfort.',
 
     'home.services.eyebrow': 'Our Services',
-    'home.services.title': 'Confirmed services, responsible care',
+    'home.services.title': 'Our services, delivered with exceptional care',
     'home.services.sub': 'Six core services delivered with precision and attention to detail.',
 
     'home.values.eyebrow': 'Our Approach',
@@ -233,7 +233,7 @@ export const ui = {
     'home.experience.sub': 'An experience designed around your calm and trust, step by step.',
 
     'home.doctor.title': 'Dr. Sumaya Alhalabi',
-    'home.doctor.role': 'Dentistry — Oral & Dental Surgery',
+    'home.doctor.role': 'Therapeutic & Cosmetic Dentistry',
     'home.doctor.philosophy':
       '“I believe a beautiful smile begins with precise care, and that every patient deserves enough time to be heard and to understand her options clearly.”',
     'home.doctor.cta': 'Meet the Doctor',
@@ -244,7 +244,7 @@ export const ui = {
 
     'home.faq.eyebrow': 'FAQ',
     'home.faq.title': 'Answers that matter to you',
-    'home.faq.sub': 'What our patients ask most — answered clearly and responsibly.',
+    'home.faq.sub': 'What our patients ask about most.',
 
     'home.journal.eyebrow': 'Journal',
     'home.journal.title': 'Education, made simple',
@@ -273,9 +273,9 @@ export const ui = {
 
     'about.eyebrow': 'About the Doctor',
     'about.title': 'Dr. Sumaya Alhalabi',
-    'about.role': 'Dentistry — Oral & Dental Surgery',
+    'about.role': 'Therapeutic & Cosmetic Dentistry',
     'about.p1':
-      'Dr. Sumaya Alhalabi is a dentist specialising in dentistry and oral & dental surgery, welcoming her patients at her clinic in Damascus — Mezzeh Autostrad.',
+      'Dr. Sumaya Alhalabi is a dentist specialising in therapeutic & cosmetic dentistry, welcoming her patients at her clinic in Damascus — Mezzeh Autostrad.',
     'about.p2':
       'She believes the relationship between doctor and patient rests on trust and clarity: enough time to listen, a plain explanation of options, and precise care in delivery.',
     'about.philosophyTitle': 'Philosophy of care',
@@ -340,7 +340,7 @@ export const ui = {
     'contact.hours.pending': 'Opening hours: to be announced soon.',
 
     'footer.about':
-      'Dr. Sumaya Alhalabi’s clinic for dentistry and oral & dental surgery in Damascus — precise care, a calm approach and personal attention.',
+      'Dr. Sumaya Alhalabi’s clinic for therapeutic & cosmetic dentistry in Damascus — precise care, a calm approach and personal attention.',
     'footer.links': 'Quick Links',
     'footer.contact': 'Contact',
     'footer.follow': 'Follow Us',

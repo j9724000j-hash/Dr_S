@@ -283,10 +283,10 @@ export const articles: Article[] = [
     slug: 'denture-care',
     date: '2026-10-07',
     readMinutes: 3,
-    image: img.lavender,
+    image: img.instruments,
     imageAlt: {
-      ar: 'غصن لافندر — عنصر زخرفي بهوية العيادة',
-      en: 'Lavender branch — decorative brand element',
+      ar: 'أدوات طب أسنان بعناية — مفهوم بصري بهوية العيادة',
+      en: 'Carefully arranged dental instruments — conceptual brand visual',
     },
     serviceSlug: 'removable-dentures',
     content: {

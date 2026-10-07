@@ -23,7 +23,7 @@
 | 12 | `12_Natural_Smile_Beauty_Campaign.png` | المجلة — دليل العناية اليومية |
 | 13 | `13_Floral_Dental_Still_Life.png` | الخدمات — تنظيف الأسنان |
 | 14 | `14_Abstract_Tooth_Digital_Artwork.png` | الخدمات — الأطقم الجزئية + خلفية لافتة CTA |
-| 15 | `15_Lavender_Botanical_Branch.png` | عنصر زخرفي (الهيرو/عن الدكتورة/المجلة) |
+| 15 | `15_Lavender_Botanical_Branch.png` | (احتياطي — غير مستخدم حاليًا)|
 | 16 | `16_Minimal_Tooth_Outline.png` | الخدمات — القلع + إطار صورة الدكتورة |
 | 17 | `17_Soft_Lavender_Gradient.png` | خلفيات (احتياطي) |
 | 18 | `18_Carrara_Marble_Texture.png` | خلفيات (احتياطي) |

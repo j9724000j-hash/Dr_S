@@ -30,7 +30,7 @@ const quickLinks = [
         <Logo size={42} variant="light" />
         <span class="brand-text">
           <span class="brand-name-en">Dr. Sumaya Alhalabi</span>
-          <span class="brand-name-ar">د. سمية الحلبي</span>
+          {isAr && <span class="brand-name-ar">د. سميّا الحلبي</span>}
           <span class="brand-sub">{t('brand.sub')}</span>
         </span>
       </a>

@@ -186,13 +186,6 @@ html[lang='ar'] .brand-sub { letter-spacing: 0; text-transform: none; }
   background: linear-gradient(135deg, var(--accent), var(--secondary));
   opacity: .5; filter: blur(6px);
 }
-.hero-lavender {
-  position: absolute; z-index: 2; width: 110px;
-  bottom: -16px; inset-inline-start: -24px;
-  transform: rotate(-12deg);
-  filter: drop-shadow(0 8px 16px rgba(91,59,130,.25));
-  opacity: .95;
-}
 
 /* ---------- Section heading ---------- */
 .section-heading { max-width: 42rem; margin: 0 auto clamp(36px, 5vw, 56px); text-align: center; }
@@ -301,10 +294,6 @@ html[lang='ar'] .service-link svg { transform: scaleX(-1); }
   position: relative; font-family: var(--font-script);
   font-size: clamp(6rem, 14vw, 9rem); color: var(--primary);
   text-shadow: 0 10px 30px rgba(91, 59, 130, .18);
-}
-.doctor-lavender {
-  position: absolute; top: -18px; inset-inline-end: 4%; width: 88px;
-  transform: rotate(14deg); opacity: .9;
 }
 .doctor-role { color: var(--champagne); font-weight: 700; margin-bottom: 18px; }
 .doctor-quote {
@@ -477,7 +466,6 @@ html[lang='ar'] .service-link svg { transform: scaleX(-1); }
   font-size: clamp(5.5rem, 12vw, 8rem); color: var(--primary);
 }
 .portrait-name { position: relative; font-weight: 700; color: var(--primary-dark); margin-top: -6px; }
-.about-lavender { position: absolute; top: -20px; inset-inline-end: 0; width: 90px; transform: rotate(14deg); opacity: .9; }
 .about-copy .role { color: var(--champagne); font-weight: 700; margin-top: 2px; }
 .about-copy > p { color: var(--muted); margin-top: 14px; }
 .approach-title { font-size: 1.25rem; margin-top: 30px; color: var(--primary-dark); }
