@@ -1,55 +1,116 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SectionHeading from '../SectionHeading.astro';
+import FaqList from '../FaqList.astro';
 import Icon from '../Icon.astro';
 import type { Locale } from '../../i18n/ui';
 import { useTranslations, useTranslatedPath } from '../../i18n/utils';
-import { services, values, stats, gallery, tourStripKeys } from '../../data/content';
+import { getMeta } from '../../data/meta';
 import { clinic } from '../../data/clinic';
-import { img } from '../../data/images';
+import { services } from '../../data/services';
+import { faqs } from '../../data/faq';
+import { articles } from '../../data/journal';
+import { img, imgSize } from '../../data/images';
 
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
-
 const t = useTranslations(lang);
 const tp = useTranslatedPath(lang);
 const isAr = lang === 'ar';
+const meta = getMeta('/', lang);
 
-const tourItems = gallery[lang].filter((g) => (tourStripKeys as readonly string[]).includes(g.key));
+const values = [
+  { icon: 'sparkle', title: t('value.precision'), desc: t('value.precision.desc') },
+  { icon: 'heart', title: t('value.calm'), desc: t('value.calm.desc') },
+  { icon: 'tooth', title: t('value.listening'), desc: t('value.listening.desc') },
+  { icon: 'shield', title: t('value.prevention'), desc: t('value.prevention.desc') },
+] as const;
+
+const steps = [
+  { icon: 'heart', title: t('experience.step1'), desc: t('experience.step1.desc') },
+  { icon: 'tooth', title: t('experience.step2'), desc: t('experience.step2.desc') },
+  { icon: 'sparkle', title: t('experience.step3'), desc: t('experience.step3.desc') },
+  { icon: 'check', title: t('experience.step4'), desc: t('experience.step4.desc') },
+] as const;
+
+const tour = [
+  { src: img.roomPrecision, title: isAr ? 'غرفة العلاج' : 'Treatment Room', desc: isAr ? 'تجهيزات بعناية دقيقة' : 'Equipment with precise care', alt: isAr ? 'غرفة علاج بأسلوب هادئ — مفهوم بصري بهوية العيادة' : 'Calm treatment room — conceptual brand visual' },
+  { src: img.reception, title: isAr ? 'الاستقبال' : 'Reception', desc: isAr ? 'ترحيب دافئ وخصوصية' : 'A warm, private welcome', alt: isAr ? 'استقبال أنيق — مفهوم بصري بهوية العيادة' : 'Elegant reception — conceptual brand visual' },
+  { src: img.roomPatient, title: isAr ? 'منظور المريضة' : 'Patient View', desc: isAr ? 'أجواء مريحة وهادئة' : 'A calm, comfortable setting', alt: isAr ? 'زاوية العلاج من منظور المريضة — مفهوم بصري' : 'Treatment area from the patient’s view — conceptual visual' },
+];
+
+const [w1, h1] = imgSize[img.heroClinic];
+
+/* البيانات المنظمة — معلومات مؤكدة فقط (spec §18) */
+const jsonLd = [{
+  '@context': 'https://schema.org',
+  '@type': 'Dentist',
+  name: isAr ? clinic.nameAr : clinic.nameEn,
+  telephone: clinic.phone,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: isAr ? 'أوتوستراد المزة' : 'Mezzeh Autostrad',
+    addressLocality: isAr ? 'دمشق' : 'Damascus',
+    addressCountry: 'SY',
+  },
+  url: Astro.site?.toString() ?? '',
+}];
 ---
 
-<BaseLayout lang={lang} title={t('meta.home.title')} description={t('meta.home.desc')}>
-  <!-- ===== Hero ===== -->
+<BaseLayout lang={lang} title={meta.title} description={meta.description} jsonLd={jsonLd}>
+  <!-- ===== Hero (spec §39) ===== -->
   <section class="hero">
     <div class="container hero-grid">
-      <div class="hero-copy">
-        <span class="badge"><Icon name="sparkle" size={16} /> {t('hero.badge')}</span>
-        <p class="hero-greeting">{t('hero.greeting')}</p>
+      <div>
+        <span class="badge"><Icon name="sparkle" size={15} /> {t('hero.badge')}</span>
+        <p class="hero-greeting">{isAr ? clinic.nameAr : clinic.nameEn} · {isAr ? clinic.specialtyAr : clinic.specialtyEn}</p>
         <h1 class="hero-title">
-          {t('hero.title1')} <span class="title-accent">{t('hero.title2')}</span>
+          {t('hero.title1')}<br /><span class="title-accent">{t('hero.title2')}</span>
         </h1>
         <p class="hero-sub">{t('hero.sub')}</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href={tp('/contact')}>
-            <Icon name="calendar" size={18} /> {t('hero.cta1')}
+          <a class="btn btn-primary" href={clinic.phoneHref}>
+            <Icon name="phone" size={18} /> {t('cta.call')}
           </a>
-          <a class="btn btn-ghost" href={tp('/services')}>{t('hero.cta2')}</a>
+          <a class="btn btn-ghost" href={tp('/services')}>{t('cta.services')}</a>
         </div>
-        <ul class="stats">
-          {stats[lang].map((s) => (
-            <li><b>{s.value}</b><span>{s.label}</span></li>
-          ))}
-        </ul>
+        <p class="hero-note"><Icon name="pin" size={15} /> {t('hero.note')}</p>
       </div>
-
       <div class="hero-visual">
         <div class="hero-blob" aria-hidden="true"></div>
         <div class="hero-frame">
-          <img src={img.heroClinic} alt={isAr ? clinic.nameAr : clinic.nameEn} loading="eager" />
+          <img
+            src={img.heroClinic}
+            alt={isAr ? 'أجواء عيادة أسنان راقية بألوان هادئة — مفهوم بصري بهوية العيادة' : 'An elegant dental clinic atmosphere in calm tones — conceptual brand visual'}
+            width={w1}
+            height={h1}
+            fetchpriority="high"
+          />
         </div>
-        <img src={img.lavender} alt="" class="hero-lavender" aria-hidden="true" loading="lazy" />
-        <div class="float-card float-card-1"><Icon name="smile" size={20} /><span>{t('hero.float1')}</span></div>
-        <div class="float-card float-card-2"><Icon name="star" size={20} /><span>{t('hero.float2')}</span></div>
+        <img class="hero-lavender" src={img.lavender} alt="" width={1264} height={843} loading="lazy" aria-hidden="true" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Intro ===== -->
+  <section class="section">
+    <div class="container intro-grid">
+      <div class="intro-visual">
+        <img
+          src={img.heroSmile}
+          alt={isAr ? 'ابتسامة طبيعية هادئة — مفهوم بصري بهوية العيادة' : 'A calm, natural smile — conceptual brand visual'}
+          width={imgSize[img.heroSmile][0]}
+          height={imgSize[img.heroSmile][1]}
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <SectionHeading eyebrow={t('home.intro.eyebrow')} title={t('home.intro.title')} />
+        <div class="intro-copy">
+          <p>{t('home.intro.p1')}</p>
+          <p>{t('home.intro.p2')}</p>
+          <a class="btn btn-ghost" href={tp('/about')}>{t('home.doctor.cta')}</a>
+        </div>
       </div>
     </div>
   </section>
@@ -57,34 +118,34 @@ const tourItems = gallery[lang].filter((g) => (tourStripKeys as readonly string[
   <!-- ===== Services ===== -->
   <section class="section alt" id="services">
     <div class="container">
-      <SectionHeading eyebrow={t('services.eyebrow')} title={t('services.title')} sub={t('services.sub')} />
+      <SectionHeading eyebrow={t('home.services.eyebrow')} title={t('home.services.title')} sub={t('home.services.sub')} />
       <div class="cards-grid">
-        {services[lang].map((s) => (
-          <article class="card service-card">
+        {services.map((s) => (
+          <a class="card service-card" href={tp(`/services/${s.slug}`)}>
             <div class="service-img">
-              <img src={s.image} alt={s.name} loading="lazy" />
+              <img src={s.image} alt={s.imageAlt[lang]} width={imgSize[s.image][0]} height={imgSize[s.image][1]} loading="lazy" />
             </div>
-            <span class="icon-circle"><Icon name={s.icon} size={26} /></span>
-            <h3>{s.name}</h3>
-            <p>{s.desc}</p>
-          </article>
+            <h3>{s.content[lang].name}</h3>
+            <p>{s.content[lang].shortDesc}</p>
+            <span class="service-link">{t('cta.more')} <Icon name="arrow" size={16} /></span>
+          </a>
         ))}
       </div>
       <div class="center-cta">
-        <a class="btn btn-primary" href={tp('/services')}>{t('services.cta')}</a>
+        <a class="btn btn-primary" href={tp('/services')}>{t('cta.allServices')}</a>
       </div>
     </div>
   </section>
 
-  <!-- ===== Values ===== -->
+  <!-- ===== Values / Approach ===== -->
   <section class="section">
     <div class="container">
-      <SectionHeading eyebrow={t('values.eyebrow')} title={t('values.title')} sub={t('values.sub')} />
+      <SectionHeading eyebrow={t('home.values.eyebrow')} title={t('home.values.title')} sub={t('home.values.sub')} />
       <div class="values-grid">
-        {values[lang].map((v) => (
+        {values.map((v) => (
           <div class="value-card">
             <span class="icon-circle"><Icon name={v.icon} size={24} /></span>
-            <h3>{v.name}</h3>
+            <h3>{v.title}</h3>
             <p>{v.desc}</p>
           </div>
         ))}
@@ -92,61 +153,112 @@ const tourItems = gallery[lang].filter((g) => (tourStripKeys as readonly string[
     </div>
   </section>
 
-  <!-- ===== Clinic tour ===== -->
+  <!-- ===== Patient experience ===== -->
   <section class="section alt">
     <div class="container">
-      <SectionHeading eyebrow={t('tour.eyebrow')} title={t('tour.title')} sub={t('tour.sub')} />
+      <SectionHeading eyebrow={t('home.experience.eyebrow')} title={t('home.experience.title')} sub={t('home.experience.sub')} />
+      <div class="experience-grid">
+        <div class="experience-visual">
+          <img
+            src={img.consultation}
+            alt={isAr ? 'جلسة استشارة هادئة — مفهوم بصري بهوية العيادة' : 'A calm consultation moment — conceptual brand visual'}
+            width={imgSize[img.consultation][0]}
+            height={imgSize[img.consultation][1]}
+            loading="lazy"
+          />
+        </div>
+        <ol class="steps-list">
+          {steps.map((s, i) => (
+            <li class="step-item">
+              <span class="step-num">{i + 1}</span>
+              <div>
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Doctor (بدون صورة شخصية غير متوفرة — spec §6/§36) ===== -->
+  <section class="section doctor-section">
+    <div class="container doctor-grid">
+      <div class="doctor-visual" aria-hidden="true">
+        <div class="doctor-frame">
+          <img src={img.toothOutline} alt="" width={1264} height={843} loading="lazy" />
+          <span class="doctor-monogram">S</span>
+        </div>
+        <img class="doctor-lavender" src={img.lavender} alt="" width={1264} height={843} loading="lazy" />
+      </div>
+      <div>
+        <SectionHeading eyebrow={t('about.eyebrow')} title={t('home.doctor.title')} />
+        <p class="doctor-role">{t('home.doctor.role')}</p>
+        <blockquote class="doctor-quote">{t('home.doctor.philosophy')}</blockquote>
+        <a class="btn btn-primary" href={tp('/about')}>{t('home.doctor.cta')}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Clinic atmosphere ===== -->
+  <section class="section alt">
+    <div class="container">
+      <SectionHeading eyebrow={t('home.tour.eyebrow')} title={t('home.tour.title')} sub={t('home.tour.sub')} />
       <div class="tour-grid">
-        {tourItems.map((item) => (
-          <a href={tp('/gallery')} class="tour-card">
-            <img src={item.src} alt={item.title} loading="lazy" />
-            <span class="tour-caption"><b>{item.title}</b><i>{item.desc}</i></span>
+        {tour.map((item) => (
+          <figure class="tour-card">
+            <img src={item.src} alt={item.alt} width={imgSize[item.src][0]} height={imgSize[item.src][1]} loading="lazy" />
+            <figcaption class="tour-caption"><b>{item.title}</b><i>{item.desc}</i></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ preview ===== -->
+  <section class="section">
+    <div class="container narrow">
+      <SectionHeading eyebrow={t('home.faq.eyebrow')} title={t('home.faq.title')} sub={t('home.faq.sub')} />
+      <FaqList lang={lang} items={faqs[lang].slice(0, 4)} />
+      <div class="center-cta">
+        <a class="btn btn-ghost" href={tp('/faq')}>{t('cta.faq')}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Journal preview ===== -->
+  <section class="section alt">
+    <div class="container">
+      <SectionHeading eyebrow={t('home.journal.eyebrow')} title={t('home.journal.title')} sub={t('home.journal.sub')} />
+      <div class="cards-grid">
+        {articles.slice(0, 3).map((a) => (
+          <a class="card journal-card" href={tp(`/journal/${a.slug}`)}>
+            <div class="journal-thumb">
+              <img src={a.image} alt={a.imageAlt[lang]} width={imgSize[a.image][0]} height={imgSize[a.image][1]} loading="lazy" />
+            </div>
+            <span class="journal-meta">{a.readMinutes} {t('journal.readMin')}</span>
+            <h3>{a.content[lang].title}</h3>
+            <p>{a.content[lang].description}</p>
+            <span class="service-link">{t('cta.read')} <Icon name="arrow" size={16} /></span>
           </a>
         ))}
       </div>
       <div class="center-cta">
-        <a class="btn btn-ghost" href={tp('/gallery')}>{t('tour.cta')}</a>
+        <a class="btn btn-ghost" href={tp('/journal')}>{t('cta.journal')}</a>
       </div>
     </div>
   </section>
 
-  <!-- ===== CTA banner ===== -->
+  <!-- ===== Contact CTA ===== -->
   <section class="section">
     <div class="container">
       <div class="cta-banner">
-        <span class="cta-script">{t('cta.title1')}</span>
-        <span class="cta-ar">{t('cta.title2')}</span>
-        <a class="btn btn-invert" href={tp('/contact')}>
-          <Icon name="calendar" size={18} /> {t('cta.btn')}
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Contact strip ===== -->
-  <section class="section alt" id="contact">
-    <div class="container">
-      <SectionHeading eyebrow={t('contact.eyebrow')} title={t('contact.title')} sub={t('contact.sub')} />
-      <div class="contact-grid">
-        <a class="card contact-card" href={clinic.phoneHref}>
-          <span class="icon-circle"><Icon name="phone" size={22} /></span>
-          <b>{t('contact.call')}</b>
-          <span dir="ltr">{clinic.phoneIntl}</span>
-        </a>
-        <a class="card contact-card" href={clinic.whatsappUrl} target="_blank" rel="noopener">
-          <span class="icon-circle"><Icon name="whatsapp" size={22} /></span>
-          <b>{t('contact.whatsapp')}</b>
-          <span>WhatsApp</span>
-        </a>
-        <a class="card contact-card" href={clinic.instagramUrl} target="_blank" rel="noopener">
-          <span class="icon-circle"><Icon name="instagram" size={22} /></span>
-          <b>{t('contact.instagram')}</b>
-          <span dir="ltr">{clinic.instagram}</span>
-        </a>
-        <a class="card contact-card" href={clinic.mapsUrl} target="_blank" rel="noopener">
-          <span class="icon-circle"><Icon name="pin" size={22} /></span>
-          <b>{t('contact.location')}</b>
-          <span>{isAr ? clinic.locationAr : clinic.locationEn}</span>
+        <span class="cta-script">Healthy Smiles, Brighter Lives</span>
+        <span class="cta-ar">{t('home.contact.title')}</span>
+        <p class="cta-sub">{t('home.contact.sub')}</p>
+        <a class="btn btn-invert" href={clinic.phoneHref}>
+          <Icon name="phone" size={18} /> {t('cta.call')} · <bdi dir="ltr">{clinic.phone}</bdi>
         </a>
       </div>
     </div>

@@ -1,0 +1,101 @@
+---
+/**
+ * مقال تثقيفي — صفحة مستقلة مع بيانات منظمة Article (معلومات مؤكدة فقط)
+ * وربط داخلي بالخدمة المرتبطة (spec §42).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n/ui';
+import { useTranslations, useTranslatedPath } from '../../i18n/utils';
+import { getMeta } from '../../data/meta';
+import { clinic } from '../../data/clinic';
+import { getArticle } from '../../data/journal';
+import { getService } from '../../data/services';
+import { imgSize } from '../../data/images';
+
+interface Props { lang: Locale; slug: string; }
+const { lang, slug } = Astro.props;
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+const isAr = lang === 'ar';
+
+const article = getArticle(slug);
+if (!article) throw new Error(`Unknown article: ${slug}`);
+const c = article.content[lang];
+const meta = getMeta(`/journal/${slug}`, lang);
+const relatedService = article.serviceSlug ? getService(article.serviceSlug) : undefined;
+const base = Astro.site?.toString().replace(/\/$/, '') ?? '';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: c.title,
+    description: c.description,
+    inLanguage: lang,
+    datePublished: article.date,
+    author: { '@type': 'Person', name: isAr ? clinic.nameAr : clinic.nameEn },
+    publisher: { '@type': 'Organization', name: clinic.nameEn },
+    url: `${base}${tp(`/journal/${slug}`)}`,
+  },
+];
+---
+
+<BaseLayout lang={lang} title={meta.title} description={meta.description} ogType="article" jsonLd={jsonLd}>
+  <Breadcrumbs
+    lang={lang}
+    items={[{ label: t('nav.journal'), href: tp('/journal') }, { label: c.title }]}
+  />
+
+  <article class="section article">
+    <div class="container narrow">
+      <header class="article-header">
+        <span class="badge"><Icon name="sparkle" size={14} /> {t('journal.eyebrow')}</span>
+        <h1>{c.title}</h1>
+        <p class="article-meta">
+          <time datetime={article.date}>{t('journal.published')} {article.date}</time>
+          · {article.readMinutes} {t('journal.readMin')}
+        </p>
+      </header>
+
+      <figure class="article-figure">
+        <img
+          src={article.image}
+          alt={article.imageAlt[lang]}
+          width={imgSize[article.image][0]}
+          height={imgSize[article.image][1]}
+          fetchpriority="high"
+        />
+      </figure>
+
+      <p class="article-intro">{c.intro}</p>
+
+      {c.sections.map((s) => (
+        <section class="article-section">
+          <h2>{s.heading}</h2>
+          {s.body.map((p) => <p>{p}</p>)}
+        </section>
+      ))}
+
+      <p class="article-closing">{c.closing}</p>
+      <p class="content-disclaimer">{t('service.disclaimer')}</p>
+
+      {relatedService && (
+        <div class="article-related">
+          <span>{t('journal.related')}:</span>
+          <a class="btn btn-ghost btn-sm" href={tp(`/services/${relatedService.slug}`)}>
+            {relatedService.content[lang].name} <Icon name="arrow" size={15} />
+          </a>
+        </div>
+      )}
+
+      <div class="article-actions">
+        <a class="btn btn-ghost" href={tp('/journal')}>‹ {t('journal.back')}</a>
+        <a class="btn btn-primary" href={clinic.phoneHref}>
+          <Icon name="phone" size={16} /> {t('cta.call')}
+        </a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

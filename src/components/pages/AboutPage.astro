@@ -1,51 +1,101 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import SectionHeading from '../SectionHeading.astro';
 import Icon from '../Icon.astro';
 import type { Locale } from '../../i18n/ui';
 import { useTranslations, useTranslatedPath } from '../../i18n/utils';
-import { aboutParagraphs, credentials, stats } from '../../data/content';
-import { img } from '../../data/images';
+import { getMeta } from '../../data/meta';
+import { clinic } from '../../data/clinic';
+import { img, imgSize } from '../../data/images';
 
 interface Props { lang: Locale; }
 const { lang } = Astro.props;
-
 const t = useTranslations(lang);
 const tp = useTranslatedPath(lang);
-const years = stats[lang][0];
+const isAr = lang === 'ar';
+const meta = getMeta('/about', lang);
+
+const approach = [
+  t('about.approach1'),
+  t('about.approach2'),
+  t('about.approach3'),
+  t('about.approach4'),
+];
+
+/* Person — معلومات مؤكدة فقط: الاسم والتخصص والعنوان (بدون مؤلفات أو شهادات — spec §5) */
+const jsonLd = [{
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: isAr ? clinic.nameAr : clinic.nameEn,
+  jobTitle: isAr ? clinic.specialtyAr : clinic.specialtyEn,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: isAr ? 'أوتوستراد المزة' : 'Mezzeh Autostrad',
+    addressLocality: isAr ? 'دمشق' : 'Damascus',
+    addressCountry: 'SY',
+  },
+}];
 ---
 
-<BaseLayout lang={lang} title={t('meta.about.title')} description={t('meta.about.desc')}>
+<BaseLayout lang={lang} title={meta.title} description={meta.description} jsonLd={jsonLd}>
+  <Breadcrumbs lang={lang} items={[{ label: t('nav.about') }]} />
+
   <section class="section">
     <div class="container about-grid">
+      <!-- إطار صورة الدكتورة — بديل بصري أنيق حتى تتوفر صورة حقيقية
+           (استبدال الأصل لاحقاً لا يتطلب أي تغيير في التصميم — spec §6/§36) -->
       <div class="about-photo">
-        <div class="photo-frame">
-          <img src={img.consultation} alt={t('about.title')} loading="lazy" />
+        <div class="photo-frame portrait-placeholder">
+          <img src={img.toothOutline} alt="" width={1264} height={843} loading="lazy" aria-hidden="true" />
+          <span class="portrait-monogram" aria-hidden="true">S</span>
+          <span class="portrait-name">{isAr ? clinic.nameAr : clinic.nameEn}</span>
         </div>
-        <img src={img.lavender} alt="" class="about-lavender" aria-hidden="true" loading="lazy" />
-        <div class="exp-badge"><b>{years.value}</b><span>{t('about.years')}</span></div>
+        <img class="about-lavender" src={img.lavender} alt="" width={1264} height={843} loading="lazy" aria-hidden="true" />
       </div>
 
       <div class="about-copy">
-        <span class="eyebrow">{t('about.eyebrow')}</span>
-        <h1>{t('about.title')}</h1>
+        <SectionHeading h1 eyebrow={t('about.eyebrow')} title={t('about.title')} />
         <p class="role">{t('about.role')}</p>
-        {aboutParagraphs[lang].map((p) => <p>{p}</p>)}
+        <p>{t('about.p1')}</p>
+        <p>{t('about.p2')}</p>
 
-        <h2 class="cred-title">{t('about.credentialsTitle')}</h2>
-        <ul class="cred-list">
-          {credentials[lang].map((c) => (
-            <li><Icon name="check" size={18} /> {c}</li>
+        <h2 class="approach-title">{t('about.approachTitle')}</h2>
+        <ul class="approach-list">
+          {approach.map((item) => (
+            <li><Icon name="check" size={15} /> {item}</li>
           ))}
         </ul>
 
-        <div class="signature">
-          <span class="script-sign">Dr. Sumaia</span>
-          <span class="sig-ar">د. سمية الحلبي</span>
+        <div class="about-cta-row">
+          <a class="btn btn-primary" href={clinic.phoneHref}>
+            <Icon name="phone" size={17} /> {t('about.cta')}
+          </a>
+          <a class="btn btn-ghost" href={tp('/services')}>{t('cta.services')}</a>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <a class="btn btn-primary" href={tp('/contact')}>
-          <Icon name="calendar" size={18} /> {t('about.cta')}
-        </a>
+  <!-- فلسفة العناية -->
+  <section class="section alt">
+    <div class="container philosophy-grid">
+      <div class="philosophy-visual">
+        <img
+          src={img.comfort}
+          alt={isAr ? 'أجواء راحة وهدوء — مفهوم بصري بهوية العيادة' : 'A calm, comfortable atmosphere — conceptual brand visual'}
+          width={imgSize[img.comfort][0]}
+          height={imgSize[img.comfort][1]}
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <h2>{t('about.philosophyTitle')}</h2>
+        <blockquote class="doctor-quote">{t('home.doctor.philosophy')}</blockquote>
+        <div class="signature">
+          <span class="script-sign">Sumaya</span>
+          <span class="sig-ar">{isAr ? clinic.nameAr : clinic.nameEn}</span>
+        </div>
       </div>
     </div>
   </section>

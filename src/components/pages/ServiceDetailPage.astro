@@ -1,0 +1,173 @@
+---
+/**
+ * صفحة خدمة مستقلة — صفحة هبوط SEO كاملة (spec §40):
+ * مقدمة، ما العلاج، لمن، ماذا تتوقعين، المسار، نصائح، أسئلة شائعة،
+ * خدمات ذات صلة، مقال مرتبط، ودعوة للاتصال.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../Breadcrumbs.astro';
+import FaqList from '../FaqList.astro';
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n/ui';
+import { useTranslations, useTranslatedPath } from '../../i18n/utils';
+import { getMeta } from '../../data/meta';
+import { clinic } from '../../data/clinic';
+import { getService, services } from '../../data/services';
+import { getArticle } from '../../data/journal';
+import { imgSize } from '../../data/images';
+
+interface Props { lang: Locale; slug: string; }
+const { lang, slug } = Astro.props;
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+const isAr = lang === 'ar';
+
+const service = getService(slug);
+if (!service) throw new Error(`Unknown service: ${slug}`);
+const c = service.content[lang];
+const meta = getMeta(`/services/${slug}`, lang);
+const related = service.related.map(getService).filter(Boolean);
+const article = service.journal ? getArticle(service.journal) : undefined;
+const base = Astro.site?.toString().replace(/\/$/, '') ?? '';
+
+/* MedicalWebPage — معلومات تعليمية مؤكدة فقط، دون ادعاءات (spec §18) */
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalWebPage',
+    name: meta.title,
+    description: meta.description,
+    inLanguage: lang,
+    url: `${base}${tp(`/services/${slug}`)}`,
+  },
+];
+---
+
+<BaseLayout lang={lang} title={meta.title} description={meta.description} jsonLd={jsonLd}>
+  <Breadcrumbs
+    lang={lang}
+    items={[{ label: t('nav.services'), href: tp('/services') }, { label: c.name }]}
+  />
+
+  <!-- Hero الخدمة -->
+  <section class="section service-hero">
+    <div class="container service-hero-grid">
+      <div>
+        <span class="badge"><Icon name={service.icon} size={15} /> {t('services.eyebrow')}</span>
+        <h1>{c.name}</h1>
+        <p class="service-tagline">{c.tagline}</p>
+        <p class="service-short">{c.shortDesc}</p>
+        <a class="btn btn-primary" href={clinic.phoneHref}>
+          <Icon name="phone" size={17} /> {t('cta.call')}
+        </a>
+      </div>
+      <div class="service-hero-visual">
+        <img
+          src={service.image}
+          alt={service.imageAlt[lang]}
+          width={imgSize[service.image][0]}
+          height={imgSize[service.image][1]}
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- المحتوى التعليمي -->
+  <section class="section alt">
+    <div class="container narrow content-flow">
+      <div class="content-block">
+        <h2>{t('service.what')}</h2>
+        {c.what.map((p) => <p>{p}</p>)}
+      </div>
+
+      <div class="content-block">
+        <h2>{t('service.forWhom')}</h2>
+        <ul class="check-list">
+          {c.forWhom.map((li) => <li><Icon name="check" size={15} /> {li}</li>)}
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2>{t('service.expect')}</h2>
+        <ul class="check-list">
+          {c.expect.map((li) => <li><Icon name="check" size={15} /> {li}</li>)}
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h2>{t('service.process')}</h2>
+        <ol class="process-list">
+          {c.process.map((step, i) => (
+            <li>
+              <span class="step-num">{i + 1}</span>
+              <div><h3>{step.title}</h3><p>{step.desc}</p></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div class="content-block">
+        <h2>{t('service.care')}</h2>
+        <ul class="check-list">
+          {c.care.map((li) => <li><Icon name="check" size={15} /> {li}</li>)}
+        </ul>
+      </div>
+
+      <p class="content-disclaimer">{t('service.disclaimer')}</p>
+    </div>
+  </section>
+
+  <!-- أسئلة شائعة خاصة بالخدمة -->
+  <section class="section">
+    <div class="container narrow">
+      <h2 class="section-h2">{t('service.faqs')}</h2>
+      <FaqList lang={lang} items={c.faqs} />
+    </div>
+  </section>
+
+  <!-- ذات صلة + مقال -->
+  <section class="section alt">
+    <div class="container">
+      {related.length > 0 && (
+        <h2 class="section-h2">{t('service.related')}</h2>
+      )}
+      <div class="cards-grid">
+        {related.map((r) => r && (
+          <a class="card service-card" href={tp(`/services/${r.slug}`)}>
+            <div class="service-img">
+              <img src={r.image} alt={r.imageAlt[lang]} width={imgSize[r.image][0]} height={imgSize[r.image][1]} loading="lazy" />
+            </div>
+            <h3>{r.content[lang].name}</h3>
+            <p>{r.content[lang].shortDesc}</p>
+            <span class="service-link">{t('cta.more')} <Icon name="arrow" size={16} /></span>
+          </a>
+        ))}
+        {article && (
+          <a class="card journal-card" href={tp(`/journal/${article.slug}`)}>
+            <div class="journal-thumb">
+              <img src={article.image} alt={article.imageAlt[lang]} width={imgSize[article.image][0]} height={imgSize[article.image][1]} loading="lazy" />
+            </div>
+            <span class="journal-meta">{t('service.journal')}</span>
+            <h3>{article.content[lang].title}</h3>
+            <p>{article.content[lang].description}</p>
+            <span class="service-link">{t('cta.read')} <Icon name="arrow" size={16} /></span>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- دعوة للاتصال -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner">
+        <span class="cta-ar">{t('service.call.title')}</span>
+        <p class="cta-sub">{t('service.call.text')}</p>
+        <a class="btn btn-invert" href={clinic.phoneHref}>
+          <Icon name="phone" size={18} /> {t('cta.call')} · <bdi dir="ltr">{clinic.phone}</bdi>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

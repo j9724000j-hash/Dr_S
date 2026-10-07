@@ -1,0 +1,37 @@
+---
+/**
+ * قائمة أسئلة شائعة — تفاصيل/ملخص بدون أي جافاسكربت (spec §0.10: Zero-JS)
+ * مع بيانات منظمة FAQPage مبنية من نفس المحتوى المعروض (معلومات مؤكدة فقط).
+ */
+import type { Locale } from '../i18n/ui';
+import type { FaqItem } from '../data/faq';
+
+interface Props {
+  lang: Locale;
+  items: FaqItem[];
+  /** إضافة بيانات منظمة FAQPage (تُستخدم في صفحة الأسئلة الشائعة) */
+  withSchema?: boolean;
+}
+
+const { lang, items, withSchema = false } = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<div class="faq-list">
+  {items.map((f) => (
+    <details class="faq-item">
+      <summary>{f.q}<span class="faq-icon" aria-hidden="true"></span></summary>
+      <p>{f.a}</p>
+    </details>
+  ))}
+</div>
+{withSchema && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}

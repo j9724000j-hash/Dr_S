@@ -1,7 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Icon from '../components/Icon.astro';
+import CallBar from '../components/CallBar.astro';
 import type { Locale } from '../i18n/ui';
 import { stripLocalePrefix } from '../i18n/utils';
 import { clinic } from '../data/clinic';
@@ -21,22 +21,31 @@ interface Props {
   title: string;
   description?: string;
   lang: Locale;
+  /** نوع الصفحة لأغراض og:type */
+  ogType?: 'website' | 'article';
+  /** بيانات منظمة JSON-LD إضافية خاصة بالصفحة (معلومات مؤكدة فقط — spec §0.8) */
+  jsonLd?: object[];
 }
 
 const {
   title,
-  description = 'عيادة الدكتورة سمية الحلبي — طب وجراحة الفم والأسنان في الشارقة.',
+  description = 'عيادة الدكتورة سمية الحلبي — طب وجراحة الفم والأسنان في دمشق.',
   lang,
+  ogType = 'website',
+  jsonLd = [],
 } = Astro.props;
 
 const dir = lang === 'ar' ? 'rtl' : 'ltr';
-const base = Astro.site?.toString().replace(/\/$/, '') ?? 'https://drsumaiaalhalabi.com';
+// عنوان الموقع مركزي في astro.config.mjs → site (بانتظار تأكيد الدومين الحقيقي)
+const base = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const canonical = `${base}${Astro.url.pathname}`;
 const arPath = stripLocalePrefix(Astro.url.pathname);
 const enPath = arPath === '/' ? '/en' : `/en${arPath}`;
 const arUrl = `${base}${arPath}`;
 const enUrl = `${base}${enPath}`;
 const siteName = `${clinic.nameEn} | ${clinic.specialtyEn}`;
+const ogImage = `${base}/images/01_Hero_Clinic_Signature_Homepage.png`;
+const isRootAr = lang === 'ar' && arPath === '/';
 ---
 
 <!doctype html>
@@ -52,14 +61,46 @@ const siteName = `${clinic.nameEn} | ${clinic.specialtyEn}`;
     <link rel="alternate" hreflang="x-default" href={arUrl} />
     <meta name="theme-color" content="#5B3B82" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:locale" content={lang === 'ar' ? 'ar_AR' : 'en_US'} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    {jsonLd.map((data) => (
+      <script type="application/ld+json" set:html={JSON.stringify(data)} />
+    ))}
+    {
+      /* اختيار اللغة الأولي (spec §0.16.2/§0.16.3/§0.16.14):
+         يعمل على الجذر "/" فقط، خفيف، لا يمنع الزحف أبداً (لا إعادة توجيه
+         قسرية لأي مسار محلي)، ويحترم التفضيل المحفوظ ثم لغة المتصفح،
+         والافتراضي العربية. المحتوى نفسه موجود بالكامل بدون جافاسكربت. */
+      isRootAr && (
+        <script is:inline>
+          (function () {
+            try {
+              var pref = localStorage.getItem('lang-pref');
+              if (pref === 'ar' || pref === 'en') return; // تفضيل محفوظ → يبقى الزائر حيث هو
+              var langs = navigator.languages || [navigator.language || ''];
+              var wantsAr = langs.some(function (l) {
+                return (l || '').toLowerCase().indexOf('ar') === 0;
+              });
+              var wantsEn = langs.some(function (l) {
+                return (l || '').toLowerCase().indexOf('en') === 0;
+              });
+              if (!wantsAr && wantsEn) location.replace('/en');
+            } catch (e) {
+              /* تجاهل: الجذر يبقى عربياً */
+            }
+          })();
+        </script>
+      )
+    }
   </head>
   <body>
     <Header lang={lang} />
@@ -67,14 +108,6 @@ const siteName = `${clinic.nameEn} | ${clinic.specialtyEn}`;
       <slot />
     </main>
     <Footer lang={lang} />
-    <a
-      class="wa-fab"
-      href={clinic.whatsappUrl}
-      target="_blank"
-      rel="noopener"
-      aria-label="WhatsApp"
-    >
-      <Icon name="whatsapp" size={28} />
-    </a>
+    <CallBar lang={lang} />
   </body>
 </html>
