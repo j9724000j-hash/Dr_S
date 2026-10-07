@@ -49,6 +49,10 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+        with:
+          # يُفعّل Pages تلقائياً على المستودع إن لم يكن مُفعَّلاً
+          # (build_type: workflow — لا بناء Jekyll ديناميكي)
+          enablement: true
 
       - name: Upload dist as Pages artifact
         uses: actions/upload-pages-artifact@v3
