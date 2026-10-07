@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n/ui';
+import { useTranslations, useTranslatedPath } from '../../i18n/utils';
+import { aboutParagraphs, credentials, stats } from '../../data/content';
+import { img } from '../../data/images';
+
+interface Props { lang: Locale; }
+const { lang } = Astro.props;
+
+const t = useTranslations(lang);
+const tp = useTranslatedPath(lang);
+const years = stats[lang][0];
+---
+
+<BaseLayout lang={lang} title={t('meta.about.title')} description={t('meta.about.desc')}>
+  <section class="section">
+    <div class="container about-grid">
+      <div class="about-photo">
+        <div class="photo-frame">
+          <img src={img.consultation} alt={t('about.title')} loading="lazy" />
+        </div>
+        <img src={img.lavender} alt="" class="about-lavender" aria-hidden="true" loading="lazy" />
+        <div class="exp-badge"><b>{years.value}</b><span>{t('about.years')}</span></div>
+      </div>
+
+      <div class="about-copy">
+        <span class="eyebrow">{t('about.eyebrow')}</span>
+        <h1>{t('about.title')}</h1>
+        <p class="role">{t('about.role')}</p>
+        {aboutParagraphs[lang].map((p) => <p>{p}</p>)}
+
+        <h2 class="cred-title">{t('about.credentialsTitle')}</h2>
+        <ul class="cred-list">
+          {credentials[lang].map((c) => (
+            <li><Icon name="check" size={18} /> {c}</li>
+          ))}
+        </ul>
+
+        <div class="signature">
+          <span class="script-sign">Dr. Sumaia</span>
+          <span class="sig-ar">د. سمية الحلبي</span>
+        </div>
+
+        <a class="btn btn-primary" href={tp('/contact')}>
+          <Icon name="calendar" size={18} /> {t('about.cta')}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,80 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import type { Locale } from '../i18n/ui';
+import { stripLocalePrefix } from '../i18n/utils';
+import { clinic } from '../data/clinic';
+
+import '@fontsource/montserrat/400.css';
+import '@fontsource/montserrat/500.css';
+import '@fontsource/montserrat/600.css';
+import '@fontsource/montserrat/700.css';
+import '@fontsource/tajawal/400.css';
+import '@fontsource/tajawal/500.css';
+import '@fontsource/tajawal/700.css';
+import '@fontsource/tajawal/800.css';
+import '@fontsource/great-vibes/400.css';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang: Locale;
+}
+
+const {
+  title,
+  description = 'عيادة الدكتورة سمية الحلبي — طب وجراحة الفم والأسنان في الشارقة.',
+  lang,
+} = Astro.props;
+
+const dir = lang === 'ar' ? 'rtl' : 'ltr';
+const base = Astro.site?.toString().replace(/\/$/, '') ?? 'https://drsumaiaalhalabi.com';
+const canonical = `${base}${Astro.url.pathname}`;
+const arPath = stripLocalePrefix(Astro.url.pathname);
+const enPath = arPath === '/' ? '/en' : `/en${arPath}`;
+const arUrl = `${base}${arPath}`;
+const enUrl = `${base}${enPath}`;
+const siteName = `${clinic.nameEn} | ${clinic.specialtyEn}`;
+---
+
+<!doctype html>
+<html lang={lang} dir={dir}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="ar" href={arUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={arUrl} />
+    <meta name="theme-color" content="#5B3B82" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={lang === 'ar' ? 'ar_AR' : 'en_US'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+  </head>
+  <body>
+    <Header lang={lang} />
+    <main>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <a
+      class="wa-fab"
+      href={clinic.whatsappUrl}
+      target="_blank"
+      rel="noopener"
+      aria-label="WhatsApp"
+    >
+      <Icon name="whatsapp" size={28} />
+    </a>
+  </body>
+</html>
