@@ -85,6 +85,8 @@ npm run build      # إنتاج dist/ جاهز للنشر
 
 - **الرابط:** <https://j9724000j-hash.github.io/Dr_S/> (والنسخة الإنجليزية:
   <https://j9724000j-hash.github.io/Dr_S/en/>)
+- **متطلب لمرة واحدة:** مصدر Pages في إعدادات المستودع = **GitHub Actions**
+  (`Settings → Pages → Build and deployment → Source: GitHub Actions`).
 - **Workflow:** `.github/workflows/deploy-pages.yml` — يعمل عند كل دفع إلى
   `main` أو إلى فرع الجلسة، ويمكن تشغيله يدوياً (`workflow_dispatch`).
   الخطوات: `npm ci` → `npm run build` → رفع `dist/` كـartifact → نشر عبر
