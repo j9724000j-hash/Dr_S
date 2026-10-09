@@ -18,7 +18,7 @@ export const faqs: Record<Locale, FaqItem[]> = {
     },
     {
       q: 'ما الطريقة الصحيحة لتفريش الأسنان؟',
-      a: 'مرتين يومياً لمدة دقيقتين بمعجون يحتوي على الفلورايد، بحركات لطيفة تغطي جميع الأسطح، مع تنظيف ما بين الأسنان بالخيط أو الفرشاة بين السنية يومياً.',
+      a: 'مرتين يومياً لمدة دقيقتين بمعجون يحتوي على الفلورايد، بحركات لطيفة تغطي جميع الأسطح، مع تنظيف ما بين الأسنان بالخيط يومياً.',
     },
     {
       q: 'هل نزف اللثة عند التفريش أمر طبيعي؟',
@@ -56,7 +56,7 @@ export const faqs: Record<Locale, FaqItem[]> = {
     },
     {
       q: 'What is the right way to brush my teeth?',
-      a: 'Twice daily for two minutes with a fluoride toothpaste, using gentle strokes that cover all surfaces, plus daily cleaning between teeth with floss or interdental brushes.',
+      a: 'Twice daily for two minutes with a fluoride toothpaste, using gentle strokes that cover all surfaces, plus daily cleaning between teeth with floss.',
     },
     {
       q: 'Is bleeding when brushing normal?',

@@ -62,7 +62,7 @@ export const ui = {
     'home.doctor.title': 'د. سميّا الحلبي',
     'home.doctor.role': 'طب الأسنان العلاجي و التجميلي',
     'home.doctor.philosophy':
-      '«أؤمن أن الابتسامة الجميلة تبدأ بعناية دقيقة، وبأن كل مريضة تستحق وقتاً كافياً للاستماع إليها وشرح خياراتها بوضوح.»',
+      '«أؤمن أن الابتسامة الجميلة تبدأ بعناية دقيقة، وبأن كل مريض يستحق وقتاً كافياً للاستماع إليه وشرح خياراته بوضوح.»',
     'home.doctor.cta': 'تعرّف على الدكتورة',
 
     'home.tour.eyebrow': 'أجواء العيادة',
@@ -235,7 +235,7 @@ export const ui = {
     'home.doctor.title': 'Dr. Sumaia Alhalabi',
     'home.doctor.role': 'Therapeutic & Cosmetic Dentistry',
     'home.doctor.philosophy':
-      '“I believe a beautiful smile begins with precise care, and that every patient deserves enough time to be heard and to understand her options clearly.”',
+      '“I believe a beautiful smile begins with precise care, and that every patient deserves enough time to be heard and to understand their options clearly.”',
     'home.doctor.cta': 'Meet the Doctor',
 
     'home.tour.eyebrow': 'Clinic Atmosphere',
