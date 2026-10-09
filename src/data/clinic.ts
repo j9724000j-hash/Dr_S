@@ -10,7 +10,7 @@
  */
 export const clinic = {
   nameAr: 'د. سميّا الحلبي',
-  nameEn: 'Dr. Sumaya Alhalabi',
+  nameEn: 'Dr. Sumaia Alhalabi',
   specialtyAr: 'طب الأسنان العلاجي و التجميلي',
   specialtyEn: 'Therapeutic & Cosmetic Dentistry',
 

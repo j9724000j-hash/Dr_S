@@ -211,12 +211,12 @@ export const ui = {
     'hero.title2': 'Begins with Precise Care',
     'hero.sub':
       'Oral and dental care with a personal touch and a calm approach — from routine check-ups and prevention to restorations and cosmetic fillings.',
-    'hero.note': 'Dr. Sumaya Alhalabi — Mezzeh Autostrad, Damascus',
+    'hero.note': 'Dr. Sumaia Alhalabi — Mezzeh Autostrad, Damascus',
 
     'home.intro.eyebrow': 'Welcome',
     'home.intro.title': 'Dental care, done differently',
     'home.intro.p1':
-      'At Dr. Sumaya Alhalabi’s clinic, we believe dental care should be a calm, comfortable experience — one that begins with listening to you and ends with a healthy smile.',
+      'At Dr. Sumaia Alhalabi’s clinic, we believe dental care should be a calm, comfortable experience — one that begins with listening to you and ends with a healthy smile.',
     'home.intro.p2':
       'We offer general dentistry, restorations, cosmetic fillings, cleaning and prevention — with attention to detail and respect for your time and comfort.',
 
@@ -232,7 +232,7 @@ export const ui = {
     'home.experience.title': 'Comfort comes first',
     'home.experience.sub': 'An experience designed around your calm and trust, step by step.',
 
-    'home.doctor.title': 'Dr. Sumaya Alhalabi',
+    'home.doctor.title': 'Dr. Sumaia Alhalabi',
     'home.doctor.role': 'Therapeutic & Cosmetic Dentistry',
     'home.doctor.philosophy':
       '“I believe a beautiful smile begins with precise care, and that every patient deserves enough time to be heard and to understand her options clearly.”',
@@ -272,10 +272,10 @@ export const ui = {
     'experience.step4.desc': 'Clear aftercare guidance and an open door for your questions.',
 
     'about.eyebrow': 'About the Doctor',
-    'about.title': 'Dr. Sumaya Alhalabi',
+    'about.title': 'Dr. Sumaia Alhalabi',
     'about.role': 'Therapeutic & Cosmetic Dentistry',
     'about.p1':
-      'Dr. Sumaya Alhalabi is a dentist specialising in therapeutic & cosmetic dentistry, welcoming her patients at her clinic in Damascus — Mezzeh Autostrad.',
+      'Dr. Sumaia Alhalabi is a dentist specialising in therapeutic & cosmetic dentistry, welcoming her patients at her clinic in Damascus — Mezzeh Autostrad.',
     'about.p2':
       'She believes the relationship between doctor and patient rests on trust and clarity: enough time to listen, a plain explanation of options, and precise care in delivery.',
     'about.philosophyTitle': 'Philosophy of care',
@@ -340,7 +340,7 @@ export const ui = {
     'contact.hours.pending': 'Opening hours: to be announced soon.',
 
     'footer.about':
-      'Dr. Sumaya Alhalabi’s clinic for therapeutic & cosmetic dentistry in Damascus — precise care, a calm approach and personal attention.',
+      'Dr. Sumaia Alhalabi’s clinic for therapeutic & cosmetic dentistry in Damascus — precise care, a calm approach and personal attention.',
     'footer.links': 'Quick Links',
     'footer.contact': 'Contact',
     'footer.follow': 'Follow Us',
