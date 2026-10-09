@@ -54,6 +54,9 @@ jobs:
       - name: Build (npm run build, configuration from environment only)
         run: npm run build
 
+      - name: Verify build output (كل رابط محلي له ملف فعلي)
+        run: npm run verify
+
       - name: Assemble package folder (dist + .htaccess, no source files)
         run: |
           set -euo pipefail

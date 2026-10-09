@@ -1,8 +1,58 @@
+# ============================================================
+# Netlify — د. سميّا الحلبي
+# هذا الملف يكفي وحده: عند ربط المستودع بـ Netlify يُقرأ تلقائياً، فلا حاجة
+# لضبط أي شيء يدوياً في لوحة التحكم (لا Build command ولا Publish directory
+# ولا Environment variables).
+#
+# أهم سطر هنا هو SITE_BASE = "/" — بدونه تُبنى الروابط والأصول تحت /Dr_S/
+# (مسار معاينة GitHub Pages) فلا يجدها الخادم ← صفحة بلا CSS ولا خطوط.
+# ============================================================
+
 [build]
-  command = "npm run build"
+  # Netlify تنفّذ تثبيت الاعتماديات تلقائياً (npm install) قبل هذا الأمر.
+  # الخطوة الأخيرة فحص ذاتي: تتأكد أن كل رابط محلي في dist/ له ملف فعلي،
+  # وتُفشل البناء برسالة واضحة إن ظهر رابط مكسور (بدل نشر موقع معطوب).
+  command = "npm run build && npm run verify"
   publish = "dist"
 
 [build.environment]
+  # الموقع منشور على جذر النطاق في Netlify (وليس تحت مسار فرعي كما في GitHub Pages).
   SITE_BASE = "/"
-  SITE_URL = "https://dr-sumaiaalhalabi.netlify.app"
+  # عنوان الموقع (SITE_URL) لا يُثبَّت هنا عمداً: astro.config.mjs يأخذه من
+  # متغيّر URL الذي توفره Netlify نفسها ← canonical و hreflang و sitemap تبقى
+  # صحيحة تلقائياً عند ربط دومين حقيقي لاحقاً، ومن دون أي تعديل على الكود.
   NODE_VERSION = "22"
+  ASTRO_TELEMETRY_DISABLED = "1"
+  NPM_FLAGS = "--no-audit --no-fund"
+
+# ---------- تخزين مؤقت ----------
+# ملفات _astro تحمل بصمة (hash) في اسمها ← يمكن تخزينها لمدة سنة بأمان تام.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# الصور تُطلب بأسماء ثابتة ← تخزين متوسط مع إعادة تحقق.
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000, must-revalidate"
+
+# ---------- ترويسات أمان أساسية ----------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# ---------- صفحات الخطأ 404 ----------
+# Netlify تخدم /404.html تلقائياً لأي مسار غير موجود (Astro يبنيها في جذر dist)،
+# وهذه هي صفحة 404 العربية. القاعدة أدناه تجعل المسارات الإنجليزية تعرض صفحة
+# 404 الإنجليزية بدلاً منها — ولا تُطبَّق إلا عند عدم وجود ملف مطابق للمسار،
+# أي أن /en/ و /en/about/ وكل الصفحات الحقيقية تعمل كالمعتاد.
+[[redirects]]
+  from = "/en/*"
+  to = "/en/404/"
+  status = 404
