@@ -9,16 +9,15 @@
 #          → تجميع dist + .htaccess بدون ملفات المصدر → ZIP بجذر index.html
 #          → Release بوسم infinityfree-main-<short-sha> مع إرفاق الملف.
 #
-# التشغيل: يدوياً من تبويب Actions، أو: gh workflow run package-infinityfree.yml --ref arena/46117fd1-dr-s
+# التشغيل: بدفع وسم باسم package-infinityfree-<رقم> إلى commit يحتوي هذا الملف.
+#   الوسوم لا تُطلق نشر GitHub Pages (deploy-pages.yml يستمع إلى الفروع فقط).
 name: Package InfinityFree zip
 
 on:
   workflow_dispatch:
   push:
-    branches:
-      - arena/46117fd1-dr-s
-    paths:
-      - '.github/workflows/package-infinityfree.yml'
+    tags:
+      - 'package-infinityfree-*'
 
 permissions:
   contents: write
