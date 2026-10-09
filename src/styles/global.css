@@ -141,9 +141,22 @@ html[lang='ar'] .brand-sub { letter-spacing: 0; text-transform: none; }
 }
 @media (min-width: 961px) { .mobile-nav { display: none !important; } }
 
+/* Header fit on phones (320px and up): logo + brand + language switch + menu
+   must share one row. The brand lines scale with the viewport (header only;
+   the footer keeps full size) and the gaps tighten below 560px. */
+.site-header .brand-name-en { font-size: clamp(.95rem, calc(13.5vw - 28px), 1.55rem); white-space: nowrap; }
+.site-header .brand-name-ar { font-size: clamp(.7rem, calc(9.5vw - 20px), .95rem); white-space: nowrap; }
+@media (max-width: 560px) {
+  .site-header .header-inner { gap: 10px; }
+  .site-header .brand, .site-header .header-actions { gap: 8px; }
+}
+
 /* ---------- Hero ---------- */
 .hero {
   padding-block: clamp(40px, 6vw, 72px) clamp(56px, 8vw, 88px);
+  /* decorative .hero-blob overhangs the section; clip it here so it cannot widen
+     the page (RTL pages were shifted sideways and cut on the right) */
+  overflow-x: clip;
   background:
     radial-gradient(900px 480px at 88% -10%, var(--light) 0%, transparent 60%),
     radial-gradient(700px 420px at -10% 110%, var(--ivory) 0%, transparent 55%);
@@ -160,6 +173,10 @@ html[lang='ar'] .brand-sub { letter-spacing: 0; text-transform: none; }
 .title-accent {
   background: linear-gradient(90deg, var(--secondary), var(--primary));
   -webkit-background-clip: text; background-clip: text; color: transparent;
+  /* background-clip:text paints only inside the inline box (font ascent/descent),
+     which cut off Arabic marks (hamza, dots) rising above it. Vertical padding
+     widens the painted area; on an inline box it does not change line height. */
+  padding-block: .3em;
 }
 .hero-sub { margin-top: 18px; color: var(--muted); max-width: 34rem; font-size: 1.03rem; }
 .hero-ctas { margin-top: 28px; display: flex; gap: 14px; flex-wrap: wrap; }
