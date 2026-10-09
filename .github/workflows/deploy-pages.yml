@@ -1,9 +1,10 @@
 # نشر الموقع الثابت (Astro) على GitHub Pages
 #
-# المصدر الوحيد للنشر: GitHub Actions (وليس بناء Jekyll التلقائي).
+# المصدر الوحيد للنشر هنا: GitHub Actions (وليس بناء Jekyll التلقائي).
 # المسار المنشور: https://j9724000j-hash.github.io/Dr_S/
-#   (astro.config.mjs → site + base؛ وقابلان للتجاوز بـSITE_URL/SITE_BASE
-#    عند النشر مستقبلاً على الدومين الحقيقي بجذر الموقع دون تعديل أي كود)
+#   (SITE_URL + SITE_BASE مضبوطان صراحةً في env أدناه — لأن الافتراضي العام في
+#    astro.config.mjs هو جذر النطاق "/" المناسب لـ Netlify و Hostinger و InfinityFree)
+# النشر على Netlify مُعدّ في netlify.toml ولا علاقة له بهذا الملف.
 #
 # ملاحظة على البيئة (environment):
 #   بيئة `github-pages` في إعدادات المستودع مقصورة حالياً على الفرع الافتراضي
@@ -38,6 +39,12 @@ jobs:
   build:
     name: Build (npm ci + astro build)
     runs-on: ubuntu-latest
+    env:
+      # معاينة GitHub Pages تحت مسار المستودع — مضبوطة هنا صراحةً حتى لا تعتمد
+      # على أي افتراضي في astro.config.mjs (الافتراضي هناك هو جذر النطاق "/").
+      SITE_URL: https://j9724000j-hash.github.io
+      SITE_BASE: /Dr_S
+      ASTRO_TELEMETRY_DISABLED: '1'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -54,6 +61,9 @@ jobs:
 
       - name: Build static site (npm run build)
         run: npm run build
+
+      - name: Verify build output (كل رابط محلي له ملف فعلي)
+        run: npm run verify
 
       - name: Setup Pages
         id: pages

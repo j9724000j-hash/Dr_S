@@ -23,8 +23,12 @@
 
 ```bash
 npm install
-npm run dev        # معاينة محلية على :4321
-npm run build      # إنتاج dist/ جاهز للنشر
+npm run dev              # معاينة محلية على :4321
+npm run build            # إنتاج dist/ جاهز للنشر (الافتراضي: جذر النطاق)
+npm run build:netlify    # نفس build لكن مع ضبط SITE_URL و SITE_BASE لـ Netlify
+npm run build:pages      # نفس build لكن لموقع معاينة GitHub Pages (/Dr_S)
+npm run build:infinityfree # نفس build لحزمة InfinityFree (/)
+npm run verify           # فحص dist/ بعد البناء: كل رابط محلي له ملف فعلي
 ```
 
 > إن أعدت توليد الصور، شغّل: `node scripts/optimize-images.mjs`
@@ -100,6 +104,38 @@ npm run build      # إنتاج dist/ جاهز للنشر
 ```bash
 SITE_URL=https://drsumaiaalhalabi.com SITE_BASE=/ npm run build
 ```
+
+## 🌐 النشر على Netlify
+
+الموقع مُعدّ للنشر على Netlify تلقائياً عبر هذا المستودع. الفيصل الوحيد:
+**`SITE_BASE="/"`** — بدونه تُبنى الأصول (CSS والخطوط والصور) تحت `/Dr_S/`
+(مسار معاينة GitHub Pages) فترجع 404 ← صفحة بلا تنسيق.
+
+### الطريقة 1 — ربط المستودع بالكود (الأفضل)
+
+1. افتح لوحة Netlify → New site from Git → اختر المستودع `Dr_S`.
+2. **لا تغيّر** أي إعداد بناء: `netlify.toml` يضبط كل شيء (الأمر ومجلد النشر
+   و`NODE_VERSION=22` و`SITE_BASE=/`).
+3. بعد أول بناء: افحص سجل البناء (Deploy log) وتأكد أن السطر الأول يقول:
+   ```
+   [astro.config] target=Netlify · site=https://… · base=/
+   ```
+4. كل دفع إلى `main` يعيد البناء والنشر تلقائياً.
+
+### الطريقة 2 — رفع مجلد dist/ يدوياً (سريع / بدون Git)
+
+```bash
+npm ci && npm run build:netlify && npm run verify
+```
+ثم افتح لوحة Netlify → Deploys → **Drag & drop** → اسحب مجلد `dist/` إلى المربع.
+
+### ربط دومين حقيقي
+
+أضف الدومين في لوحة Netlify (Domain management) — لا حاجة لتعديل أي ملف:
+`astro.config.mjs` يأخذ العنوان من متغيّر `URL` الذي توفره Netlify تلقائياً،
+فيبقى canonical/hreflang/sitemap صحيحة فوراً.
+
+---
 
 ## 🌐 النشر على Hostinger
 
