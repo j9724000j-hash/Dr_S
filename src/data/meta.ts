@@ -9,21 +9,21 @@ export interface PageMeta { title: string; description: string; }
 export const pageMeta: Record<string, Record<Locale, PageMeta>> = {
   '/': {
     ar: {
-      title: 'د. سميّا الحلبي | طب الأسنان العلاجيوالتجميلي — دمشق',
+      title: 'د. سميّا الحلبي | طب الأسنان العلاجي و التجميلي — دمشق',
       description:
-        'عيادة د. سميّا الحلبي لطب الأسنان العلاجيوالتجميلي في دمشق — أوتوستراد المزة. ترميم، حشوات تجميلية، تنظيف ووقاية بعناية دقيقة. اتصل الآن: 0948567231',
+        'عيادة د. سميّا الحلبي لطب الأسنان العلاجي و التجميلي في دمشق — أوتوستراد المزة. ترميم، حشوات تجميلية، تنظيف ووقاية بعناية دقيقة. اتصل الآن: +963948567231',
     },
     en: {
       title: 'Dr. Sumaya Alhalabi | Therapeutic & Cosmetic Dentistry — Damascus',
       description:
-        'Dr. Sumaya Alhalabi’s dental clinic in Damascus — Mezzeh Autostrad. Restorations, cosmetic fillings, cleaning and prevention with precise care. Call now: 0948567231',
+        'Dr. Sumaya Alhalabi’s dental clinic in Damascus — Mezzeh Autostrad. Restorations, cosmetic fillings, cleaning and prevention with precise care. Call now: +963948567231',
     },
   },
   '/about': {
     ar: {
-      title: 'عن الدكتورة سميّا الحلبي | طب الأسنان العلاجيوالتجميلي',
+      title: 'عن الدكتورة سميّا الحلبي | طب الأسنان العلاجي و التجميلي',
       description:
-        'تعرّف على د. سميّا الحلبي — طبيبة طب الأسنان العلاجيوالتجميلي في دمشق، وفلسفتها في العناية: استماع حقيقي، شرح واضح، ودقة في التفاصيل.',
+        'تعرّف على د. سميّا الحلبي — طبيبة طب الأسنان العلاجي و التجميلي في دمشق، وفلسفتها في العناية: استماع حقيقي، شرح واضح، ودقة في التفاصيل.',
     },
     en: {
       title: 'About Dr. Sumaya Alhalabi | Therapeutic & Cosmetic Dentistry',
@@ -191,12 +191,12 @@ export const pageMeta: Record<string, Record<Locale, PageMeta>> = {
     ar: {
       title: 'التواصل والحجز | د. سميّا الحلبي — دمشق',
       description:
-        'تواصلي مع عيادة د. سميّا الحلبي في دمشق — أوتوستراد المزة. الاتصال: 0948567231 أو عبر واتساب. يسعدنا الرد على استفساراتك.',
+        'تواصلي مع عيادة د. سميّا الحلبي في دمشق — أوتوستراد المزة. الاتصال: +963948567231 أو عبر واتساب. يسعدنا الرد على استفساراتك.',
     },
     en: {
       title: 'Contact & Appointments | Dr. Sumaya Alhalabi — Damascus',
       description:
-        'Reach Dr. Sumaya Alhalabi’s clinic in Damascus — Mezzeh Autostrad. Call 0948567231 or message on WhatsApp. We would love to hear from you.',
+        'Reach Dr. Sumaya Alhalabi’s clinic in Damascus — Mezzeh Autostrad. Call +963948567231 or message on WhatsApp. We would love to hear from you.',
     },
   },
   '/404': {

@@ -501,7 +501,6 @@ html[lang='ar'] .service-link svg { transform: scaleX(-1); }
 }
 .call-hero h2 { font-size: 1.35rem; }
 .call-hero p { color: var(--muted); font-size: .92rem; }
-.call-hero-intl { grid-column: 1 / -1; color: var(--muted); font-size: .88rem; }
 @media (max-width: 640px) {
   .call-hero { grid-template-columns: 1fr; justify-items: start; }
   .call-hero .btn { width: 100%; justify-content: center; }

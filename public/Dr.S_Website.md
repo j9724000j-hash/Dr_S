@@ -79,7 +79,7 @@ The finished site should look like the work of a top-tier international luxury h
 
 ## 0.7 REQUIRED USER JOURNEY
 
-Design the experience around one primary conversion: **calling the clinic/doctor**. The verified phone number is **0948567231** and the implementation must support `tel:0948567231`.
+Design the experience around one primary conversion: **calling the clinic/doctor**. The verified phone number is **+963948567231** and the implementation must support `tel:+963948567231`.
 
 There must be **no online booking system, calendar, booking form, patient login, availability system, reservation engine, or complex contact form.**
 
@@ -194,7 +194,7 @@ Do not consider the work complete unless all of the following are true:
 - The language switcher is present, accessible, branded, and maps users to equivalent localized pages.
 - Automatic language selection respects explicit locale URLs, saved user choice, browser language, and available coarse location signals without harming crawlability.
 - The visual language clearly follows the attached Dr. Sumaya identity.
-- The phone CTA uses `tel:0948567231`.
+- The phone CTA uses `tel:+963948567231`.
 - No booking or contact form system has been added.
 - No fake credentials, reviews, testimonials, cases, location, hours, or clinical claims have been added.
 - AI images are treated as conceptual brand visuals and remain replaceable.
@@ -791,11 +791,11 @@ The user should be able to easily call the doctor/clinic.
 
 The phone number currently provided is:
 
-**0948567231**
+**+963948567231**
 
 It must be implemented as a clickable:
 
-`tel:0948567231`
+`tel:+963948567231`
 
 on mobile devices.
 
@@ -956,7 +956,7 @@ The primary CTA:
 
 Phone:
 
-**0948567231**
+**+963948567231**
 
 Other information remains placeholder-based until verified.
 

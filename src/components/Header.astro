@@ -44,7 +44,7 @@ const isActive = (href: string) => {
       <Logo size={46} />
       <span class="brand-text">
         <span class="brand-name-en">Dr. Sumaya Alhalabi</span>
-        {isAr && <span class="brand-name-ar">د. سميّا الحلبي</span>}
+        <span class="brand-name-ar">{isAr ? clinic.nameAr : clinic.nameEn}</span>
         <span class="brand-sub">{t('brand.sub')}</span>
       </span>
     </a>
