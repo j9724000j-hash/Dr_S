@@ -1,0 +1,50 @@
+# ============================================================
+# .htaccess — موقع د. سميّا الحلبي على InfinityFree (جذر htdocs)
+# ============================================================
+
+# الملف الافتراضي عند فتح أي مجلد (الصفحة الرئيسية العربية)
+DirectoryIndex index.html
+
+# ترميز UTF-8 للنصوص العربية
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+  AddCharset UTF-8 .html .css .js .json .xml .txt .svg
+  AddType image/webp .webp
+  AddType image/svg+xml .svg
+  AddType image/x-icon .ico
+</IfModule>
+
+# صفحة الخطأ 404 (النسخة العربية؛ النسخة الإنجليزية لها ملف خاص في /en/.htaccess)
+ErrorDocument 404 /404.html
+
+# ضغط النصوص إن كان الخادم يدعمه
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/javascript application/json image/svg+xml
+</IfModule>
+
+# تخزين مؤقت للأصول الثابتة (الصفحات HTML لا تُخزَّن لتظهر التحديثات فوراً)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 month"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# رؤوس أمان خفيفة
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# تحويل HTTP إلى HTTPS — فعّله فقط بعد تفعيل شهادة SSL للدومين من لوحة InfinityFree
+# (وإلا قد يتعطل الوصول إلى الموقع). أزل علامات # من الأسطر أدناه عندها:
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^(.*)$ https://dr-sumaiaalhalabi.gt.tc/$1 [R=301,L]
+# </IfModule>

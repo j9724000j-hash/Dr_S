@@ -108,6 +108,22 @@ SITE_URL=https://drsumaiaalhalabi.com SITE_BASE=/ npm run build
 3. لا يحتاج الموقع Node.js في الإنتاج — ملفات ثابتة فقط.
 4. بعد ربط الدومين الحقيقي: حدّث `site` في `astro.config.mjs` ثم أعد البناء.
 
+## 📦 حزمة InfinityFree (ZIP)
+
+للرفع على استضافة InfinityFree المجانية (مجلد `htdocs`) على النطاق
+`https://dr-sumaiaalhalabi.gt.tc`:
+
+```bash
+npm ci
+SITE_URL=https://dr-sumaiaalhalabi.gt.tc SITE_BASE=/ npm run build
+bash scripts/package-infinityfree.sh     # → release/dr-sumaiaalhalabi-infinityfree.zip
+```
+
+- الأرشيف يحتوي محتويات `dist/` مباشرةً (`index.html` في الجذر).
+- يُضيف السكربت `.htaccess` للجذر (الصفحة الرئيسية، صفحة 404 العربية) و`en/.htaccess` (صفحة 404 الإنجليزية).
+- قوالب `.htaccess` في `scripts/infinityfree/`. مجلد `release/` مستثنى من Git.
+- تحويل HTTP إلى HTTPS معطّل افتراضياً في القالب؛ فعّله بعد تفعيل شهادة SSL للدومين.
+
 ## 🛡️ قواعد سلامة المعلومات الملتزم بها
 
 لا مؤهلات/سنوات خبرة/إحصائيات/تقييمات/آراء مرضى/قبل-بعد مُختلقة —
