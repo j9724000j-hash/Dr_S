@@ -1,0 +1,90 @@
+# نشر الموقع الثابت (Astro) على GitHub Pages
+#
+# المصدر الوحيد للنشر: GitHub Actions (وليس بناء Jekyll التلقائي).
+# المسار المنشور: https://j9724000j-hash.github.io/Dr_S/
+#   (astro.config.mjs → site + base؛ وقابلان للتجاوز بـSITE_URL/SITE_BASE
+#    عند النشر مستقبلاً على الدومين الحقيقي بجذر الموقع دون تعديل أي كود)
+#
+# ملاحظة على البيئة (environment):
+#   بيئة `github-pages` في إعدادات المستودع مقصورة حالياً على الفرع الافتراضي
+#   (Deployment branches and tags → main). لذلك:
+#     • الدفع إلى `main` ينشر عبر مسار البيئة القياسي (job: deploy).
+#     • الدفع إلى أي فرع جلسة (arena/*) ينشر عبر نفس إجراءات GitHub الرسمية
+#       (actions/deploy-pages) من داخل نفس ملف الـWorkflow (job: deploy-preview).
+#   لو أضاف المالك لاحقاً فرع الجلسة (أو اختار All branches) في
+#   Settings → Environments → github-pages، يكفي حذف job الـpreview ودمج
+#   الخطوتين — الوظيفة واحدة والنتيجة واحدة.
+name: Deploy Astro site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - 'arena/*'
+  workflow_dispatch:
+
+# صلاحيات النشر القياسية لـGitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# نشر واحد في كل مرة (لا نُلغِ عملية نشر جارية)
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build (npm ci + astro build)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # المشروع يشترط node >= 22.12.0 (package.json → engines)
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies (npm ci)
+        run: npm ci
+
+      - name: Build static site (npm run build)
+        run: npm run build
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload dist as Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  # المسار القياسي: الدفع إلى الفرع الافتراضي عبر بيئة github-pages
+  deploy:
+    name: Deploy to GitHub Pages (main)
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # مسار فرع الجلسة (بيئة النشر لا تسمح به بعد): نفس إجراء النشر الرسمي
+  deploy-preview:
+    name: Deploy to GitHub Pages (preview branch)
+    if: github.ref != 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

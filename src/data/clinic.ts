@@ -9,15 +9,14 @@
  * غير مؤكد بعد: الدومين، أوقات العمل، الإيميل، رابط فيسبوك الدقيق.
  */
 export const clinic = {
-  nameAr: 'د. سمية الحلبي',
-  nameEn: 'Dr. Sumaya Alhalabi',
-  specialtyAr: 'طب وجراحة الفم والأسنان',
-  specialtyEn: 'Dentistry — Oral & Dental Surgery',
+  nameAr: 'د. سميّا الحلبي',
+  nameEn: 'Dr. Sumaia Alhalabi',
+  specialtyAr: 'طب الأسنان العلاجي و التجميلي',
+  specialtyEn: 'Therapeutic & Cosmetic Dentistry',
 
-  /** الهاتف المُتحقَّق منه (spec §0.7) — يدعم الاتصال المحلي والدولي */
-  phone: '0948567231',
-  phoneHref: 'tel:0948567231',
-  phoneIntl: '+963 948 567 231',
+  /** الهاتف المُتحقَّق منه (spec §0.7) — بالتنسيق الدولي الموحَّد في كل مكان */
+  phone: '+963948567231',
+  phoneHref: 'tel:+963948567231',
 
   whatsapp: '963948567231',
   whatsappUrl: 'https://wa.me/963948567231',

@@ -28,7 +28,7 @@ Act simultaneously as:
 
 Do not merely propose the website. **Build it.** The repository is empty, so initialize the project, implement the complete production-ready Astro website, place all required assets, configure the project, run validation/build checks, fix all errors you encounter, and leave the repository in a state that can be deployed as a static site.
 
-The final deliverable must be a polished, responsive, Arabic-first, fully bilingual (Arabic + English) luxury dental website for **Dr. Sumaya Alhalabi**, with correct RTL/LTR behavior, built with Astro and suitable for static deployment on Hostinger. The final project must be self-contained, maintainable, fast, accessible, SEO-ready, and ready for a production build.
+The final deliverable must be a polished, responsive, Arabic-first, fully bilingual (Arabic + English) luxury dental website for **Dr. Sumaia Alhalabi**, with correct RTL/LTR behavior, built with Astro and suitable for static deployment on Hostinger. The final project must be self-contained, maintainable, fast, accessible, SEO-ready, and ready for a production build.
 
 ## 0.3 EMPTY-REPOSITORY BOOTSTRAP
 
@@ -50,7 +50,7 @@ When there is tension between a generic framework recommendation and the source 
 ## 0.5 ATTACHED ASSETS
 
 The user will provide, alongside this prompt:
-- The Dr. Sumaya Alhalabi visual identity/reference image.
+- The Dr. Sumaia Alhalabi visual identity/reference image.
 - The generated website image library described in the specification, potentially as individual files.
 
 You must inspect and use those assets intelligently. The visual identity image is the primary brand authority. The generated images are visual extensions of that identity.
@@ -62,7 +62,7 @@ For every image asset:
 - Use responsive image sizing.
 - Write meaningful alt text in the website language/context.
 - Do not add text overlays into the actual image files.
-- Do not generate a fake portrait of Dr. Sumaya.
+- Do not generate a fake portrait of Dr. Sumaia.
 - Do not turn conceptual AI clinic imagery into claims that it is the real clinic.
 - Preserve easy future asset replacement.
 
@@ -79,7 +79,7 @@ The finished site should look like the work of a top-tier international luxury h
 
 ## 0.7 REQUIRED USER JOURNEY
 
-Design the experience around one primary conversion: **calling the clinic/doctor**. The verified phone number is **0948567231** and the implementation must support `tel:0948567231`.
+Design the experience around one primary conversion: **calling the clinic/doctor**. The verified phone number is **+963948567231** and the implementation must support `tel:+963948567231`.
 
 There must be **no online booking system, calendar, booking form, patient login, availability system, reservation engine, or complex contact form.**
 
@@ -167,7 +167,7 @@ Use the exact verified professional naming from the project specification in bot
 ## 0.12 FUTURE-PROOFING
 
 The implementation must make the following future replacements/additions straightforward without rebuilding the layout:
-- Real Dr. Sumaya photograph
+- Real Dr. Sumaia photograph
 - Real clinic photography
 - Real team details
 - Verified certificates/credentials
@@ -193,8 +193,8 @@ Do not consider the work complete unless all of the following are true:
 - Both Arabic and English route sets are statically generated, directly accessible, internally linked, and production-ready.
 - The language switcher is present, accessible, branded, and maps users to equivalent localized pages.
 - Automatic language selection respects explicit locale URLs, saved user choice, browser language, and available coarse location signals without harming crawlability.
-- The visual language clearly follows the attached Dr. Sumaya identity.
-- The phone CTA uses `tel:0948567231`.
+- The visual language clearly follows the attached Dr. Sumaia identity.
+- The phone CTA uses `tel:+963948567231`.
 - No booking or contact form system has been added.
 - No fake credentials, reviews, testimonials, cases, location, hours, or clinical claims have been added.
 - AI images are treated as conceptual brand visuals and remain replaceable.
@@ -470,13 +470,13 @@ When asked later to build the website, follow this specification exactly.
 
 The project is a premium, luxury dental website for:
 
-## Dr. Sumaya Alhalabi
+## Dr. Sumaia Alhalabi
 
 Professional field:
 
 **Dentistry / Oral and Dental Surgery**
 
-The website should position Dr. Sumaya Alhalabi as a sophisticated, trustworthy, premium dental professional.
+The website should position Dr. Sumaia Alhalabi as a sophisticated, trustworthy, premium dental professional.
 
 The website must feel:
 
@@ -514,7 +514,7 @@ It must NOT feel:
 
 # 3. PRIMARY VISUAL IDENTITY
 
-The attached Dr. Sumaya Alhalabi visual identity/reference image is the PRIMARY visual authority.
+The attached Dr. Sumaia Alhalabi visual identity/reference image is the PRIMARY visual authority.
 
 The website must derive its visual DNA from that identity.
 
@@ -582,13 +582,13 @@ NOT because of excessive decorative elements.
 
 # 5. IMPORTANT INFORMATION LIMITATIONS
 
-At this stage, very little verified information about Dr. Sumaya Alhalabi is available.
+At this stage, very little verified information about Dr. Sumaia Alhalabi is available.
 
 Only use information that has actually been provided.
 
 Currently known information includes:
 
-- Dr. Sumaya Alhalabi
+- Dr. Sumaia Alhalabi
 - Dentistry / Oral and Dental Surgery
 - Dental services mentioned in the provided material
 
@@ -624,9 +624,9 @@ NEVER fabricate professional credentials.
 
 # 6. DOCTOR PHOTOGRAPHY
 
-There is currently NO verified professional photograph of Dr. Sumaya Alhalabi.
+There is currently NO verified professional photograph of Dr. Sumaia Alhalabi.
 
-Do NOT generate an AI person and present her as Dr. Sumaya Alhalabi.
+Do NOT generate an AI person and present her as Dr. Sumaia Alhalabi.
 
 The website should initially use a sophisticated visual alternative:
 
@@ -695,7 +695,7 @@ The assets include:
 
 These images must share one coherent visual universe.
 
-The AI image prompts should always use the attached Dr. Sumaya Alhalabi visual identity as the PRIMARY reference.
+The AI image prompts should always use the attached Dr. Sumaia Alhalabi visual identity as the PRIMARY reference.
 
 ---
 
@@ -791,11 +791,11 @@ The user should be able to easily call the doctor/clinic.
 
 The phone number currently provided is:
 
-**0948567231**
+**+963948567231**
 
 It must be implemented as a clickable:
 
-`tel:0948567231`
+`tel:+963948567231`
 
 on mobile devices.
 
@@ -887,7 +887,7 @@ Sections may include:
 
 ---
 
-## About Dr. Sumaya
+## About Dr. Sumaia
 
 Possible content:
 
@@ -956,7 +956,7 @@ The primary CTA:
 
 Phone:
 
-**0948567231**
+**+963948567231**
 
 Other information remains placeholder-based until verified.
 
@@ -1218,7 +1218,7 @@ It should define:
 - Hover states
 - Focus states
 
-The design system must be based on the Dr. Sumaya Alhalabi visual identity.
+The design system must be based on the Dr. Sumaia Alhalabi visual identity.
 
 ---
 
@@ -1391,7 +1391,7 @@ Approved real smile photography
 
 Generic doctor visual
 →
-Real Dr. Sumaya photograph
+Real Dr. Sumaia photograph
 
 AI atmosphere
 →
@@ -1414,7 +1414,7 @@ Use:
 - Premium abstract imagery
 - Verified information only
 
-Do not create a fake AI portrait of Dr. Sumaya.
+Do not create a fake AI portrait of Dr. Sumaia.
 
 The future real portrait should be a simple asset replacement.
 
@@ -1613,7 +1613,7 @@ Avoid excessive buttons.
 The footer should contain:
 
 - Brand identity
-- Dr. Sumaya Alhalabi
+- Dr. Sumaia Alhalabi
 - Dentistry / Oral and Dental Surgery
 - Navigation
 - Phone
@@ -1928,7 +1928,7 @@ Wait for my next instruction.
 
 The website should ultimately become:
 
-A luxury, editorial, medically responsible, SEO-friendly, extremely fast, Arabic-first digital identity for Dr. Sumaya Alhalabi.
+A luxury, editorial, medically responsible, SEO-friendly, extremely fast, Arabic-first digital identity for Dr. Sumaia Alhalabi.
 
 It should combine:
 

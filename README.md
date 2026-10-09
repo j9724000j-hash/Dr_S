@@ -1,4 +1,4 @@
-# 🌸 موقع د. سمية الحلبي — Dr. Sumaya Alhalabi
+# 🌸 موقع د. سمية الحلبي — Dr. Sumaia Alhalabi
 
 موقع فاخر ثنائي اللغة (عربي أولاً / RTL + إنجليزي / LTR) لعيادة طب وجراحة
 الفم والأسنان في دمشق — أوتوستراد المزة. مبني بـ **Astro** بإخراج ثابت
@@ -43,7 +43,7 @@ npm run build      # إنتاج dist/ جاهز للنشر
 | `/contact` و `/en/contact/` | التواصل (الهاتف أولاً — بلا نماذج) |
 | `/404` و `/en/404/` | صفحة الخطأ |
 
-**التحويل الأساسي في الموقع: الاتصال الهاتفي** — `tel:0948567231`
+**التحويل الأساسي في الموقع: الاتصال الهاتفي** — `tel:+963948567231`
 (spec §0.7: لا نظام حجز، لا نماذج اتصال).
 
 ## 🗂️ أين يقع كل شيء؟
@@ -64,7 +64,8 @@ npm run build      # إنتاج dist/ جاهز للنشر
 
 ## ⚠️ Placeholders بانتظار التأكيد
 
-- **الدومين**: `astro.config.mjs → site` (حالياً `drsumaiaalhalabi.com` مؤقتاً)
+- **الدومين**: `astro.config.mjs → site + base` — حالياً مضبوطان على معاينة
+  GitHub Pages الفعلية `https://j9724000j-hash.github.io/Dr_S/`
 - **أوقات العمل**: غير مؤكدة → غير معروضة (معلّقة في `src/data/clinic.ts`)
 - **الإيميل**: غير مؤكد → غير معروض
 - **رابط فيسبوك الدقيق**: حالياً رابط بحث بالاسم
@@ -79,6 +80,26 @@ npm run build      # إنتاج dist/ جاهز للنشر
 1. استبدل ملف الـPNG المطابق في `public/images/` (نفس الاسم).
 2. شغّل `node scripts/optimize-images.mjs`.
 3. انتهينا — لا تخطيط ولا كود يتغيّر (`src/data/images.ts` يجمع المسارات في مكان واحد).
+
+## 🐙 معاينة GitHub Pages (منشورة تلقائياً)
+
+- **الرابط:** <https://j9724000j-hash.github.io/Dr_S/> (والنسخة الإنجليزية:
+  <https://j9724000j-hash.github.io/Dr_S/en/>)
+- **متطلب لمرة واحدة:** مصدر Pages في إعدادات المستودع = **GitHub Actions**
+  (`Settings → Pages → Build and deployment → Source: GitHub Actions`).
+- **Workflow:** `.github/workflows/deploy-pages.yml` — يعمل عند كل دفع إلى
+  `main` أو إلى فرع الجلسة، ويمكن تشغيله يدوياً (`workflow_dispatch`).
+  الخطوات: `npm ci` → `npm run build` → رفع `dist/` كـartifact → نشر عبر
+  GitHub Pages (`build_type: workflow`، بلا أي بناء Jekyll تلقائي).
+- المسار والـcanonical والـhreflang والصور والـsitemap كلها تُبنى من
+  `site + base` في `astro.config.mjs` عبر `withBase()`/`localizePath()`،
+  لذا لا روابط مكسورة تحت مسار المستودع.
+
+للبناء من أجل الدومين الحقيقي (جذر الموقع) دون تعديل أي كود:
+
+```bash
+SITE_URL=https://drsumaiaalhalabi.com SITE_BASE=/ npm run build
+```
 
 ## 🌐 النشر على Hostinger
 

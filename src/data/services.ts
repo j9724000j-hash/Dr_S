@@ -1,4 +1,5 @@
 import type { Locale } from '../i18n/ui';
+import { img } from './images';
 import type { IconName } from './icons';
 
 /**
@@ -35,7 +36,7 @@ export const services: Service[] = [
   {
     slug: 'restorations',
     icon: 'tooth',
-    image: '/images/08_Tooth_Restoration_3D_Visualization.webp',
+    image: img.tooth3d,
     imageAlt: {
       ar: 'تصوير توضيحي ثلاثي الأبعاد لترميم سن — مفهوم بصري بهوية العيادة',
       en: 'Conceptual 3D visualization of a tooth restoration — brand visual',
@@ -142,7 +143,7 @@ export const services: Service[] = [
   {
     slug: 'cosmetic-fillings',
     icon: 'sparkle',
-    image: '/images/09_Cosmetic_Filling_Precision_Detail.webp',
+    image: img.filling,
     imageAlt: {
       ar: 'لقطة مقربة توضيحية لحشوة تجميلية — مفهوم بصري بهوية العيادة',
       en: 'Conceptual close-up of a cosmetic filling — brand visual',
@@ -247,7 +248,7 @@ export const services: Service[] = [
   {
     slug: 'teeth-cleaning',
     icon: 'smile',
-    image: '/images/13_Floral_Dental_Still_Life.webp',
+    image: img.floral,
     imageAlt: {
       ar: 'تنسيق زهور وأدوات — مفهوم بصري للعناية والنظافة بهوية العيادة',
       en: 'Floral still life — conceptual visual of care and cleanliness',
@@ -354,7 +355,7 @@ export const services: Service[] = [
   {
     slug: 'tooth-extraction',
     icon: 'extract',
-    image: '/images/16_Minimal_Tooth_Outline.webp',
+    image: img.toothOutline,
     imageAlt: {
       ar: 'رسم توضيحي بسيط لسن — مفهوم بصري هادئ بهوية العيادة',
       en: 'Minimal tooth outline — calm conceptual brand visual',
@@ -458,7 +459,7 @@ export const services: Service[] = [
   {
     slug: 'partial-dentures',
     icon: 'denture',
-    image: '/images/14_Abstract_Tooth_Digital_Artwork.webp',
+    image: img.abstractTooth,
     imageAlt: {
       ar: 'عمل فني رقمي تجريدي لسن — مفهوم بصري بهوية العيادة',
       en: 'Abstract digital tooth artwork — conceptual brand visual',
@@ -563,7 +564,7 @@ export const services: Service[] = [
   {
     slug: 'removable-dentures',
     icon: 'plate',
-    image: '/images/07_Dental_Instruments_Still_Life.webp',
+    image: img.instruments,
     imageAlt: {
       ar: 'أدوات طب أسنان بعناية — مفهوم بصري للدقة بهوية العيادة',
       en: 'Carefully arranged dental instruments — conceptual visual of precision',

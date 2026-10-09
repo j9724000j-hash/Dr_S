@@ -1,5 +1,5 @@
 /* ============================================================
-   🌸 Dr. Sumaya Alhalabi — Global Styles
+   🌸 Dr. Sumaia Alhalabi — Global Styles
    نظام تصميم فاخر: لافندر · ليلك · برقم هادئ · عاجي · أبيض لؤلؤي
    لمسات شامبين ذهبية مقيدة — (spec §27)
    Primary #5B3B82 · Secondary #A98FCB · Accent #C9BBE8
@@ -141,9 +141,22 @@ html[lang='ar'] .brand-sub { letter-spacing: 0; text-transform: none; }
 }
 @media (min-width: 961px) { .mobile-nav { display: none !important; } }
 
+/* Header fit on phones (320px and up): logo + brand + language switch + menu
+   must share one row. The brand lines scale with the viewport (header only;
+   the footer keeps full size) and the gaps tighten below 560px. */
+.site-header .brand-name-en { font-size: clamp(.95rem, calc(13.5vw - 28px), 1.55rem); white-space: nowrap; }
+.site-header .brand-name-ar { font-size: clamp(.7rem, calc(9.5vw - 20px), .95rem); white-space: nowrap; }
+@media (max-width: 560px) {
+  .site-header .header-inner { gap: 10px; }
+  .site-header .brand, .site-header .header-actions { gap: 8px; }
+}
+
 /* ---------- Hero ---------- */
 .hero {
   padding-block: clamp(40px, 6vw, 72px) clamp(56px, 8vw, 88px);
+  /* decorative .hero-blob overhangs the section; clip it here so it cannot widen
+     the page (RTL pages were shifted sideways and cut on the right) */
+  overflow-x: clip;
   background:
     radial-gradient(900px 480px at 88% -10%, var(--light) 0%, transparent 60%),
     radial-gradient(700px 420px at -10% 110%, var(--ivory) 0%, transparent 55%);
@@ -160,6 +173,10 @@ html[lang='ar'] .brand-sub { letter-spacing: 0; text-transform: none; }
 .title-accent {
   background: linear-gradient(90deg, var(--secondary), var(--primary));
   -webkit-background-clip: text; background-clip: text; color: transparent;
+  /* background-clip:text paints only inside the inline box (font ascent/descent),
+     which cut off Arabic marks (hamza, dots) rising above it. Vertical padding
+     widens the painted area; on an inline box it does not change line height. */
+  padding-block: .3em;
 }
 .hero-sub { margin-top: 18px; color: var(--muted); max-width: 34rem; font-size: 1.03rem; }
 .hero-ctas { margin-top: 28px; display: flex; gap: 14px; flex-wrap: wrap; }
@@ -185,13 +202,6 @@ html[lang='ar'] .brand-sub { letter-spacing: 0; text-transform: none; }
   border-radius: 46% 54% 52% 48% / 48% 44% 56% 52%;
   background: linear-gradient(135deg, var(--accent), var(--secondary));
   opacity: .5; filter: blur(6px);
-}
-.hero-lavender {
-  position: absolute; z-index: 2; width: 110px;
-  bottom: -16px; inset-inline-start: -24px;
-  transform: rotate(-12deg);
-  filter: drop-shadow(0 8px 16px rgba(91,59,130,.25));
-  opacity: .95;
 }
 
 /* ---------- Section heading ---------- */
@@ -301,10 +311,6 @@ html[lang='ar'] .service-link svg { transform: scaleX(-1); }
   position: relative; font-family: var(--font-script);
   font-size: clamp(6rem, 14vw, 9rem); color: var(--primary);
   text-shadow: 0 10px 30px rgba(91, 59, 130, .18);
-}
-.doctor-lavender {
-  position: absolute; top: -18px; inset-inline-end: 4%; width: 88px;
-  transform: rotate(14deg); opacity: .9;
 }
 .doctor-role { color: var(--champagne); font-weight: 700; margin-bottom: 18px; }
 .doctor-quote {
@@ -477,7 +483,6 @@ html[lang='ar'] .service-link svg { transform: scaleX(-1); }
   font-size: clamp(5.5rem, 12vw, 8rem); color: var(--primary);
 }
 .portrait-name { position: relative; font-weight: 700; color: var(--primary-dark); margin-top: -6px; }
-.about-lavender { position: absolute; top: -20px; inset-inline-end: 0; width: 90px; transform: rotate(14deg); opacity: .9; }
 .about-copy .role { color: var(--champagne); font-weight: 700; margin-top: 2px; }
 .about-copy > p { color: var(--muted); margin-top: 14px; }
 .approach-title { font-size: 1.25rem; margin-top: 30px; color: var(--primary-dark); }
@@ -513,7 +518,6 @@ html[lang='ar'] .service-link svg { transform: scaleX(-1); }
 }
 .call-hero h2 { font-size: 1.35rem; }
 .call-hero p { color: var(--muted); font-size: .92rem; }
-.call-hero-intl { grid-column: 1 / -1; color: var(--muted); font-size: .88rem; }
 @media (max-width: 640px) {
   .call-hero { grid-template-columns: 1fr; justify-items: start; }
   .call-hero .btn { width: 100%; justify-content: center; }

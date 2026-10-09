@@ -9,151 +9,151 @@ export interface PageMeta { title: string; description: string; }
 export const pageMeta: Record<string, Record<Locale, PageMeta>> = {
   '/': {
     ar: {
-      title: 'د. سمية الحلبي | طب وجراحة الفم والأسنان — دمشق',
+      title: 'د. سميّا الحلبي | طب الأسنان العلاجي و التجميلي — دمشق',
       description:
-        'عيادة د. سمية الحلبي لطب وجراحة الفم والأسنان في دمشق — أوتوستراد المزة. ترميم، حشوات تجميلية، تنظيف ووقاية بعناية دقيقة. اتصلي الآن: 0948567231',
+        'عيادة د. سميّا الحلبي لطب الأسنان العلاجي و التجميلي في دمشق — أوتوستراد المزة. ترميم، حشوات تجميلية، تنظيف ووقاية بعناية دقيقة. اتصل الآن: +963948567231',
     },
     en: {
-      title: 'Dr. Sumaya Alhalabi | Dentistry & Oral Surgery — Damascus',
+      title: 'Dr. Sumaia Alhalabi | Therapeutic & Cosmetic Dentistry — Damascus',
       description:
-        'Dr. Sumaya Alhalabi’s dental clinic in Damascus — Mezzeh Autostrad. Restorations, cosmetic fillings, cleaning and prevention with precise care. Call now: 0948567231',
+        'Dr. Sumaia Alhalabi’s dental clinic in Damascus — Mezzeh Autostrad. Restorations, cosmetic fillings, cleaning and prevention with precise care. Call now: +963948567231',
     },
   },
   '/about': {
     ar: {
-      title: 'عن الدكتورة سمية الحلبي | طب وجراحة الفم والأسنان',
+      title: 'عن الدكتورة سميّا الحلبي | طب الأسنان العلاجي و التجميلي',
       description:
-        'تعرّفي على د. سمية الحلبي — طبيبة طب وجراحة الفم والأسنان في دمشق، وفلسفتها في العناية: استماع حقيقي، شرح واضح، ودقة في التفاصيل.',
+        'تعرّف على د. سميّا الحلبي — طبيبة طب الأسنان العلاجي و التجميلي في دمشق، وفلسفتها في العناية: استماع حقيقي، شرح واضح، ودقة في التفاصيل.',
     },
     en: {
-      title: 'About Dr. Sumaya Alhalabi | Dentistry & Oral Surgery',
+      title: 'About Dr. Sumaia Alhalabi | Therapeutic & Cosmetic Dentistry',
       description:
-        'Meet Dr. Sumaya Alhalabi — dentist in oral & dental surgery in Damascus, and her philosophy of care: true listening, clear explanations and precise detail.',
+        'Meet Dr. Sumaia Alhalabi — dentist in therapeutic & cosmetic dentistry in Damascus, and her philosophy of care: true listening, clear explanations and precise detail.',
     },
   },
   '/services': {
     ar: {
-      title: 'خدمات طب الأسنان | د. سمية الحلبي — دمشق',
+      title: 'خدمات طب الأسنان | د. سميّا الحلبي — دمشق',
       description:
         'خدماتنا المؤكدة: ترميم الأسنان، الحشوات التجميلية، تنظيف وتلميع الأسنان، قلع الأسنان، الأطقم الجزئية والمتحركة — بعناية دقيقة في دمشق.',
     },
     en: {
-      title: 'Dental Services | Dr. Sumaya Alhalabi — Damascus',
+      title: 'Dental Services | Dr. Sumaia Alhalabi — Damascus',
       description:
         'Our confirmed services: restorations, cosmetic fillings, cleaning & polishing, extractions, partial and removable dentures — with precise care in Damascus.',
     },
   },
   '/services/restorations': {
     ar: {
-      title: 'ترميم الأسنان وعلاج النخور | د. سمية الحلبي',
+      title: 'ترميم الأسنان وعلاج النخور | د. سميّا الحلبي',
       description:
         'علاج النخر وترميم الأسنان المتضررة للحفاظ على السن الطبيعي ووظيفته — شرح كامل للخطوات والنصائح في صفحة خدمة ترميم الأسنان.',
     },
     en: {
-      title: 'Restorative Dentistry & Cavities | Dr. Sumaya Alhalabi',
+      title: 'Restorative Dentistry & Cavities | Dr. Sumaia Alhalabi',
       description:
         'Treating cavities and restoring damaged teeth to preserve the natural tooth and its function — full explanation of steps and tips on our restorations page.',
     },
   },
   '/services/cosmetic-fillings': {
     ar: {
-      title: 'الحشوات التجميلية | د. سمية الحلبي — دمشق',
+      title: 'الحشوات التجميلية | د. سميّا الحلبي — دمشق',
       description:
-        'حشوات بلون السن الطبيعي تعالج النخر وتعيد المظهر الطبيعي بتناسق مع أسنانك — تعرّفي على التفاصيل والخطوات في صفحة الحشوات التجميلية.',
+        'حشوات بلون السن الطبيعي تعالج النخر وتعيد المظهر الطبيعي بتناسق مع أسنانك — تعرّف على التفاصيل والخطوات في صفحة الحشوات التجميلية.',
     },
     en: {
-      title: 'Cosmetic Fillings | Dr. Sumaya Alhalabi — Damascus',
+      title: 'Cosmetic Fillings | Dr. Sumaia Alhalabi — Damascus',
       description:
         'Tooth-coloured fillings that treat decay and restore a natural appearance in harmony with your teeth — details and steps on our cosmetic fillings page.',
     },
   },
   '/services/teeth-cleaning': {
     ar: {
-      title: 'تنظيف وتلميع الأسنان | د. سمية الحلبي — دمشق',
+      title: 'تنظيف وتلميع الأسنان | د. سميّا الحلبي — دمشق',
       description:
-        'إزالة الجير والتصبغات وتلميع الأسنان — خطوة وقائية أساسية لصحة اللثة والفم. تعرّفي على خطوات الجلسة ونصائح العناية.',
+        'إزالة الجير والتصبغات وتلميع الأسنان — خطوة وقائية أساسية لصحة اللثة والفم. تعرّف على خطوات الجلسة ونصائح العناية.',
     },
     en: {
-      title: 'Teeth Cleaning & Polishing | Dr. Sumaya Alhalabi — Damascus',
+      title: 'Teeth Cleaning & Polishing | Dr. Sumaia Alhalabi — Damascus',
       description:
         'Removal of tartar and stains with polishing — a fundamental preventive step for gum and oral health. Learn the session steps and care tips.',
     },
   },
   '/services/tooth-extraction': {
     ar: {
-      title: 'قلع الأسنان بعناية | د. سمية الحلبي — دمشق',
+      title: 'قلع الأسنان بعناية | د. سميّا الحلبي — دمشق',
       description:
         'قلع السن عندما يكون الخيار الأنسب — بخطوات دقيقة وتعليمات واضحة للتعافي وخيارات التعويض. تفاصيل كاملة في صفحة الخدمة.',
     },
     en: {
-      title: 'Careful Tooth Extraction | Dr. Sumaya Alhalabi — Damascus',
+      title: 'Careful Tooth Extraction | Dr. Sumaia Alhalabi — Damascus',
       description:
         'Extracting a tooth when it is the right option — with careful technique, clear recovery guidance and replacement options. Full details on the service page.',
     },
   },
   '/services/partial-dentures': {
     ar: {
-      title: 'أطقم الأسنان الجزئية | د. سمية الحلبي — دمشق',
+      title: 'أطقم الأسنان الجزئية | د. سميّا الحلبي — دمشق',
       description:
-        'أطقم جزئية تعوّض فقدان بعض الأسنان وتحافظ على المظهر ووظيفة المضغ — تعرّفي على خطوات التصميم والعناية اليومية.',
+        'أطقم جزئية تعوّض فقدان بعض الأسنان وتحافظ على المظهر ووظيفة المضغ — تعرّف على خطوات التصميم والعناية اليومية.',
     },
     en: {
-      title: 'Partial Dentures | Dr. Sumaya Alhalabi — Damascus',
+      title: 'Partial Dentures | Dr. Sumaia Alhalabi — Damascus',
       description:
         'Partial dentures replacing some missing teeth while preserving appearance and chewing function — design steps and daily care explained.',
     },
   },
   '/services/removable-dentures': {
     ar: {
-      title: 'أطقم الأسنان المتحركة الكاملة | د. سمية الحلبي — دمشق',
+      title: 'أطقم الأسنان المتحركة الكاملة | د. سميّا الحلبي — دمشق',
       description:
         'أطقم كاملة متحركة تُصمم بعناية لتعويض فقدان الأسنان واستعادة الابتسامة والمضغ — خطوات التصميم ونصائح العناية.',
     },
     en: {
-      title: 'Removable Complete Dentures | Dr. Sumaya Alhalabi — Damascus',
+      title: 'Removable Complete Dentures | Dr. Sumaia Alhalabi — Damascus',
       description:
         'Complete removable dentures carefully designed to replace missing teeth and restore smile and chewing — design steps and care tips.',
     },
   },
   '/faq': {
     ar: {
-      title: 'الأسئلة الشائعة | د. سمية الحلبي',
+      title: 'الأسئلة الشائعة | د. سميّا الحلبي',
       description:
         'إجابات واضحة ومسؤولة عن أكثر أسئلة الأسنان شيوعاً: الفحص الدوري، التفريش، نزف اللثة، الطوارئ والمزيد.',
     },
     en: {
-      title: 'FAQ | Dr. Sumaya Alhalabi',
+      title: 'FAQ | Dr. Sumaia Alhalabi',
       description:
         'Clear, responsible answers to the most common dental questions: regular check-ups, brushing, bleeding gums, emergencies and more.',
     },
   },
   '/journal': {
     ar: {
-      title: 'المجلة التثقيفية | د. سمية الحلبي',
+      title: 'المجلة التثقيفية | د. سميّا الحلبي',
       description:
         'مقالات قصيرة وموثوقة عن صحة الفم والأسنان: العناية اليومية، تنظيف الأسنان، الحشوات التجميلية والعناية بالأطقم.',
     },
     en: {
-      title: 'Educational Journal | Dr. Sumaya Alhalabi',
+      title: 'Educational Journal | Dr. Sumaia Alhalabi',
       description:
         'Short, trustworthy articles on oral and dental health: daily care, professional cleaning, cosmetic fillings and denture care.',
     },
   },
   '/journal/daily-oral-care': {
     ar: {
-      title: 'العناية اليومية بالأسنان: دليل بسيط | مجلة د. سمية الحلبي',
+      title: 'العناية اليومية بالأسنان: دليل بسيط | مجلة د. سميّا الحلبي',
       description:
         'خطوات عملية للعناية اليومية بالفم: التفريش الصحيح، الخيط، وعادات صغيرة تحمي ابتسامتك — دليل بسيط من مجلة العيادة.',
     },
     en: {
-      title: 'Daily Oral Care: A Simple Guide | Dr. Sumaya Alhalabi Journal',
+      title: 'Daily Oral Care: A Simple Guide | Dr. Sumaia Alhalabi Journal',
       description:
         'Practical steps for daily oral care: proper brushing, flossing, and small habits that protect your smile — a simple guide from the clinic journal.',
     },
   },
   '/journal/what-to-expect-cleaning': {
     ar: {
-      title: 'ماذا تتوقعين عند تنظيف الأسنان في العيادة؟ | مجلة د. سمية الحلبي',
+      title: 'ماذا تتوقعين عند تنظيف الأسنان في العيادة؟ | مجلة د. سميّا الحلبي',
       description:
         'جولة على جلسة التنظيف الاحترافي خطوة بخطوة: الفحص، إزالة الجير، التلميع، وما بعد الجلسة — مقال قصير من مجلة العيادة.',
     },
@@ -165,7 +165,7 @@ export const pageMeta: Record<string, Record<Locale, PageMeta>> = {
   },
   '/journal/cosmetic-fillings-guide': {
     ar: {
-      title: 'الحشوات التجميلية: ما الذي يجب معرفته؟ | مجلة د. سمية الحلبي',
+      title: 'الحشوات التجميلية: ما الذي يجب معرفته؟ | مجلة د. سميّا الحلبي',
       description:
         'كل ما تحتاجين معرفته عن الحشوات التجميلية: متى تُستخدم، كيف تتم مطابقة اللون، وكيف تحافظين عليها — مقال من مجلة العيادة.',
     },
@@ -177,35 +177,35 @@ export const pageMeta: Record<string, Record<Locale, PageMeta>> = {
   },
   '/journal/denture-care': {
     ar: {
-      title: 'العناية بأطقم الأسنان المتحركة | مجلة د. سمية الحلبي',
+      title: 'العناية بأطقم الأسنان المتحركة | مجلة د. سميّا الحلبي',
       description:
         'دليل عملي للعناية اليومية بأطقم الأسنان المتحركة: التنظيف، التخزين، ومتى تزورين الطبيبة — مقال قصير من مجلة العيادة.',
     },
     en: {
-      title: 'Caring for Removable Dentures | Dr. Sumaya Alhalabi Journal',
+      title: 'Caring for Removable Dentures | Dr. Sumaia Alhalabi Journal',
       description:
         'A practical guide to daily denture care: cleaning, storage, and when to see the doctor — a short article from the clinic journal.',
     },
   },
   '/contact': {
     ar: {
-      title: 'التواصل والحجز | د. سمية الحلبي — دمشق',
+      title: 'التواصل والحجز | د. سميّا الحلبي — دمشق',
       description:
-        'تواصلي مع عيادة د. سمية الحلبي في دمشق — أوتوستراد المزة. الاتصال: 0948567231 أو عبر واتساب. يسعدنا الرد على استفساراتك.',
+        'تواصلي مع عيادة د. سميّا الحلبي في دمشق — أوتوستراد المزة. الاتصال: +963948567231 أو عبر واتساب. يسعدنا الرد على استفساراتك.',
     },
     en: {
-      title: 'Contact & Appointments | Dr. Sumaya Alhalabi — Damascus',
+      title: 'Contact & Appointments | Dr. Sumaia Alhalabi — Damascus',
       description:
-        'Reach Dr. Sumaya Alhalabi’s clinic in Damascus — Mezzeh Autostrad. Call 0948567231 or message on WhatsApp. We would love to hear from you.',
+        'Reach Dr. Sumaia Alhalabi’s clinic in Damascus — Mezzeh Autostrad. Call +963948567231 or message on WhatsApp. We would love to hear from you.',
     },
   },
   '/404': {
     ar: {
-      title: 'الصفحة غير موجودة | د. سمية الحلبي',
+      title: 'الصفحة غير موجودة | د. سميّا الحلبي',
       description: 'الصفحة المطلوبة غير موجودة — عودي إلى الصفحة الرئيسية.',
     },
     en: {
-      title: 'Page Not Found | Dr. Sumaya Alhalabi',
+      title: 'Page Not Found | Dr. Sumaia Alhalabi',
       description: 'The requested page does not exist — return to the homepage.',
     },
   },
@@ -213,6 +213,6 @@ export const pageMeta: Record<string, Record<Locale, PageMeta>> = {
 
 export const getMeta = (path: string, lang: Locale): PageMeta =>
   pageMeta[path]?.[lang] ?? {
-    title: lang === 'ar' ? 'د. سمية الحلبي' : 'Dr. Sumaya Alhalabi',
+    title: lang === 'ar' ? 'د. سميّا الحلبي' : 'Dr. Sumaia Alhalabi',
     description: '',
   };

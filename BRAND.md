@@ -27,7 +27,7 @@
 > تم تحميل الخطوط عبر `@fontsource/*` — تعمل offline بدون Google Fonts.
 
 ## 📇 بيانات التواصل / Contact Info
-- **الهاتف / Phone:** `0948567231` (دولي: `+963 948 567 231`)
+- **الهاتف / Phone:** `+963948567231` (tel: `tel:+963948567231`)
 - **واتساب / WhatsApp:** `https://wa.me/963948567231`
 - **فيسبوك / Facebook:** Sumaia Alhalabi (بانتظار تأكيد رابط الصفحة الدقيق)
 - **العنوان / Address:** دمشق - أوتوستراد المزة — Mezzeh Autostrad, Damascus, Syria

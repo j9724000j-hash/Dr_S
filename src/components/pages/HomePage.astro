@@ -4,7 +4,7 @@ import SectionHeading from '../SectionHeading.astro';
 import FaqList from '../FaqList.astro';
 import Icon from '../Icon.astro';
 import type { Locale } from '../../i18n/ui';
-import { useTranslations, useTranslatedPath } from '../../i18n/utils';
+import { useTranslations, useTranslatedPath, withBase } from '../../i18n/utils';
 import { getMeta } from '../../data/meta';
 import { clinic } from '../../data/clinic';
 import { services } from '../../data/services';
@@ -53,7 +53,8 @@ const jsonLd = [{
     addressLocality: isAr ? 'دمشق' : 'Damascus',
     addressCountry: 'SY',
   },
-  url: Astro.site?.toString() ?? '',
+  // أصل الموقع + مسار النشر (base) — وليس الجذر المجرّد
+  url: `${Astro.site?.toString().replace(/\/$/, '') ?? ''}${withBase('/')}`,
 }];
 ---
 
@@ -87,7 +88,6 @@ const jsonLd = [{
             fetchpriority="high"
           />
         </div>
-        <img class="hero-lavender" src={img.lavender} alt="" width={1264} height={843} loading="lazy" aria-hidden="true" />
       </div>
     </div>
   </section>
@@ -190,7 +190,6 @@ const jsonLd = [{
           <img src={img.toothOutline} alt="" width={1264} height={843} loading="lazy" />
           <span class="doctor-monogram">S</span>
         </div>
-        <img class="doctor-lavender" src={img.lavender} alt="" width={1264} height={843} loading="lazy" />
       </div>
       <div>
         <SectionHeading eyebrow={t('about.eyebrow')} title={t('home.doctor.title')} />
