@@ -90,7 +90,7 @@ export const ui = {
     'value.prevention.desc': 'نؤمن بأن العناية المبكرة خير من العلاج المتأخر.',
 
     'experience.step1': 'استقبال دافئ',
-    'experience.step1.desc': 'تستقبلين بابتسامة وخصوصية تامة منذ اللحظة الأولى.',
+    'experience.step1.desc': 'استقبال بابتسامة و خصوصية تامة منذ اللحظة الأولى.',
     'experience.step2': 'فحص متأنٍّ',
     'experience.step2.desc': 'فحص شامل مع شرح واضح لما نراه وخياراتك المتاحة.',
     'experience.step3': 'علاج بعناية',
@@ -263,7 +263,7 @@ export const ui = {
     'value.prevention.desc': 'We believe early care is better than late treatment.',
 
     'experience.step1': 'A warm welcome',
-    'experience.step1.desc': 'You are greeted with a smile and full privacy from the first moment.',
+    'experience.step1.desc': 'A welcome with a smile and complete privacy from the very first moment.',
     'experience.step2': 'A careful examination',
     'experience.step2.desc': 'A comprehensive exam with a clear explanation of findings and options.',
     'experience.step3': 'Careful treatment',
