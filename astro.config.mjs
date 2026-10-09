@@ -28,7 +28,12 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // صفحات الخطأ 404 ليست جزءاً من خريطة الموقع (noindex)
+      filter: (page) => !/\/404\/?$/.test(page),
+    }),
+  ],
   server: {
     // allow any host for the sandbox preview (4321-*.e2b.app)
     allowedHosts: true,

@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# حزم الإصدار (ZIP) لرفعها على الاستضافة — تُرفع كمرفقات GitHub Release لا إلى Git
+release/

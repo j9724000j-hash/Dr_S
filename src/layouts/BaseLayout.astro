@@ -48,6 +48,8 @@ const enUrl = `${siteOrigin}${withBase(enPath)}`;
 const siteName = `${clinic.nameEn} | ${clinic.specialtyEn}`;
 const ogImage = `${siteOrigin}${withBase('/images/01_Hero_Clinic_Signature_Homepage.png')}`;
 const isRootAr = lang === 'ar' && arPath === '/';
+// صفحة 404 ليست عنواناً قابلاً للفهرسة: لا canonical/hreflang لها + noindex
+const isErrorPage = /\/404\/?$/.test(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -57,10 +59,18 @@ const isRootAr = lang === 'ar' && arPath === '/';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="ar" href={arUrl} />
-    <link rel="alternate" hreflang="en" href={enUrl} />
-    <link rel="alternate" hreflang="x-default" href={arUrl} />
+    {
+      isErrorPage ? (
+        <meta name="robots" content="noindex, follow" />
+      ) : (
+        <>
+          <link rel="canonical" href={canonical} />
+          <link rel="alternate" hreflang="ar" href={arUrl} />
+          <link rel="alternate" hreflang="en" href={enUrl} />
+          <link rel="alternate" hreflang="x-default" href={arUrl} />
+        </>
+      )
+    }
     <meta name="theme-color" content="#5B3B82" />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <meta property="og:type" content={ogType} />
