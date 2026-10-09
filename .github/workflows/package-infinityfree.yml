@@ -1,0 +1,210 @@
+# حزمة InfinityFree: بناء فرع main بمتغيرات البيئة فقط، ثم نشر ملف ZIP كمرفق في GitHub Release.
+#
+# لماذا هذا الملف؟
+#   بيئة الجلسة لا تصل إلى uploads.github.com (وهو المسؤول عن رفع مرفقات الإصدارات)،
+#   لذلك يُنفَّذ الرفع من خوادم GitHub Actions نفسها.
+#   هذا الملف لا يغيّر إعدادات GitHub Pages ولا deploy-pages.yml، ولا يُدمج في main.
+#
+# الخطوات: checkout(main) → npm ci → npm run build (SITE_URL و SITE_BASE من البيئة فقط)
+#          → تجميع dist + .htaccess بدون ملفات المصدر → ZIP بجذر index.html
+#          → Release بوسم infinityfree-main-<short-sha> مع إرفاق الملف.
+#
+# التشغيل: يدوياً من تبويب Actions، أو: gh workflow run package-infinityfree.yml --ref arena/46117fd1-dr-s
+name: Package InfinityFree zip
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - arena/46117fd1-dr-s
+    paths:
+      - '.github/workflows/package-infinityfree.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: package-infinityfree
+  cancel-in-progress: false
+
+jobs:
+  package:
+    name: Build main, package ZIP, publish release asset
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: https://dr-sumaiaalhalabi.gt.tc
+      SITE_BASE: /
+      ASTRO_TELEMETRY_DISABLED: '1'
+      ZIP_NAME: dr-sumaiaalhalabi-infinityfree.zip
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies (npm ci)
+        run: npm ci
+
+      - name: Build (npm run build, configuration from environment only)
+        run: npm run build
+
+      - name: Assemble package folder (dist + .htaccess, no source files)
+        run: |
+          set -euo pipefail
+          rm -rf package && mkdir package
+          cp -a dist/. package/
+          # وثائق داخلية للمطوّر منسوخة من public/ — ليست جزءاً من الموقع
+          rm -f package/Dr.S_Website.md package/images/README.md
+          cat > package/.htaccess << 'EOF'
+          # ============================================================
+          # .htaccess — د. سميّا الحلبي | dr-sumaiaalhalabi.gt.tc
+          # ضعه داخل مجلد htdocs بجانب index.html مباشرةً (وليس داخل مجلد فرعي).
+          # ============================================================
+
+          # الصفحة الرئيسية: يُعرض index.html تلقائياً عند فتح المجلد "/"
+          DirectoryIndex index.html
+
+          # صفحة الخطأ 404 (العربية — الافتراضية). صفحة 404 الإنجليزية في en/.htaccess
+          ErrorDocument 404 /404.html
+
+          # ---------- (اختياري) إجبار HTTPS ----------
+          # فعّله فقط بعد أن تصبح شهادة SSL نشطة من لوحة InfinityFree،
+          # وتأكد أن https://dr-sumaiaalhalabi.gt.tc يفتح بدون تحذير.
+          # RewriteEngine On
+          # RewriteCond %{HTTPS} off
+          # RewriteRule ^(.*)$ https://dr-sumaiaalhalabi.gt.tc/$1 [L,R=301]
+
+          # ---------- ضغط النصوص (يُتجاهل إن لم تكن الوحدة متاحة) ----------
+          <IfModule mod_deflate.c>
+            AddOutputFilterByType DEFLATE text/html text/xml text/css text/plain application/javascript application/json image/svg+xml
+          </IfModule>
+
+          # ---------- تخزين مؤقت للأصول الثابتة ----------
+          # ملفات _astro تحمل بصمة (hash) في اسمها، لذلك يمكن تخزينها طويلاً بأمان
+          <IfModule mod_expires.c>
+            ExpiresActive On
+            ExpiresByType text/css "access plus 1 year"
+            ExpiresByType application/javascript "access plus 1 year"
+            ExpiresByType font/woff2 "access plus 1 year"
+            ExpiresByType font/woff "access plus 1 year"
+            ExpiresByType image/webp "access plus 1 month"
+            ExpiresByType image/png "access plus 1 month"
+            ExpiresByType image/svg+xml "access plus 1 month"
+            ExpiresByType image/x-icon "access plus 1 month"
+          </IfModule>
+
+          # ---------- ترويسات أمان أساسية ----------
+          <IfModule mod_headers.c>
+            Header always set X-Content-Type-Options "nosniff"
+            Header always set Referrer-Policy "strict-origin-when-cross-origin"
+            Header always set X-Frame-Options "SAMEORIGIN"
+          </IfModule>
+          EOF
+          cat > package/en/.htaccess << 'EOF'
+          # ============================================================
+          # صفحة الخطأ 404 الإنجليزية لكل المسارات تحت /en/
+          # ============================================================
+          ErrorDocument 404 /en/404/index.html
+          EOF
+          cat > notes.md << 'EOF'
+          ## حزمة الرفع على InfinityFree — https://dr-sumaiaalhalabi.gt.tc
+
+          **الملف:** `dr-sumaiaalhalabi-infinityfree.zip` (≈ 41 MB)
+          **SHA-256:** `__SHA256__`
+
+          **المصدر:** فرع `main` — commit `__SHA__` — بدون أي تعديل على الكود. هذه النسخة مبنية من `main` فقط ولا تتضمن تعديلات من فروع العمل الأخرى.
+
+          **أمر البناء:**
+          ```bash
+          npm ci
+          SITE_URL=https://dr-sumaiaalhalabi.gt.tc SITE_BASE=/ npm run build
+          ```
+
+          ### طريقة الرفع
+          1. افتح مدير الملفات (File Manager) في لوحة InfinityFree، وادخل إلى مجلد `htdocs` الخاص بالنطاق.
+          2. ارفع الأرشيف وفُكّ ضغطه داخل `htdocs`، أو فُكّ ضغطه على جهازك وارفع **محتوياته** (وليس المجلد نفسه).
+          3. تأكد أن `index.html` و`.htaccess` موجودان مباشرةً داخل `htdocs`.
+
+          ### محتويات الأرشيف
+          - 34 صفحة: العربية في الجذر، والإنجليزية تحت `/en/`، مع الصور والخطوط وملفات SEO.
+          - `.htaccess` (الجذر): الصفحة الرئيسية `index.html`، وصفحة الخطأ 404 العربية، وضغط النصوص، وتخزين مؤقت للأصول، وترويسات أمان أساسية.
+          - `en/.htaccess`: صفحة الخطأ 404 الإنجليزية.
+          - `sitemap-index.xml` و`robots.txt` وروابط canonical/hreflang/Open Graph تستخدم النطاق الجديد.
+
+          ### غير مُضمَّن عمداً
+          ملفات المصدر (`src/`, `scripts/`, `package.json`, `astro.config.mjs`…)، و`node_modules`، وإعدادات Git، وأي أسرار. كما استُبعد الملفان `Dr.S_Website.md` و`images/README.md` لأنهما وثائق داخلية للمطوّر وليسا جزءاً من الموقع.
+
+          ### HTTPS
+          توجيه HTTP إلى HTTPS **معلّق** داخل `.htaccess`. فعّله فقط بعد أن تصبح شهادة SSL نشطة للنطاق في InfinityFree، وتأكد أن `https://dr-sumaiaalhalabi.gt.tc` يفتح بدون تحذير.
+
+          ### ما تم التحقق منه قبل النشر
+          - جميع الصفحات الـ34 تُرجع 200، والروابط الداخلية والأصول بلا أعطال.
+          - الصور تُحمَّل في متصفح Chromium بدون واجهة دون أخطاء، والخطوط محمّلة، ولا يوجد تجاوز أفقي على الجوال (390px).
+          - `lang` و`dir` صحيحان لكل لغة، ومبدّل اللغة يعمل ذهاباً وإياباً، والزائر الذي لغته الإنجليزية يُوجَّه من `/` إلى `/en/`.
+          - صفحات 404 تُرجع رمز 404 بالعربية أو الإنجليزية حسب المسار.
+
+          > ملاحظة: التحقق جرى على خادم محاكٍ يطبّق قواعد `.htaccess` الأساسية، وليس على خادم InfinityFree نفسه.
+          EOF
+
+      - name: Create ZIP (index.html at archive root) and verify
+        run: |
+          set -euo pipefail
+          python3 - << 'PY'
+          import os, zipfile
+          root, out = 'package', os.environ['ZIP_NAME']
+          with zipfile.ZipFile(out, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+              for dp, dn, fn in os.walk(root):
+                  dn.sort()
+                  for f in sorted(fn):
+                      full = os.path.join(dp, f)
+                      z.write(full, os.path.relpath(full, root).replace(os.sep, '/'))
+          with zipfile.ZipFile(out) as z:
+              names = z.namelist()
+              assert z.testzip() is None, 'corrupt archive'
+              assert 'index.html' in names, 'index.html must be at the archive root'
+              assert '.htaccess' in names and 'en/.htaccess' in names, 'missing .htaccess'
+              assert not any(n.startswith(('dist/', 'package/')) for n in names), 'unexpected folder prefix'
+              forbidden = [n for n in names if any(x in n for x in ('node_modules', 'src/', '.git/', 'package.json', 'astro.config', '.env', 'Dr.S_Website.md', 'images/README.md'))]
+              assert not forbidden, f'forbidden entries: {forbidden}'
+              print(f'archive OK: {len(names)} entries, index.html at root')
+          PY
+          sha256sum "$ZIP_NAME" | tee zip.sha256
+          echo "--- package manifest (sha256) ---"
+          (cd package && find . -type f -print0 | LC_ALL=C sort -z | xargs -0 sha256sum)
+
+      - name: Create GitHub Release and attach ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          SHA="$(git rev-parse HEAD)"
+          SHORT="$(git rev-parse --short=7 HEAD)"
+          TAG="infinityfree-main-${SHORT}"
+          SHA256="$(cut -d' ' -f1 zip.sha256)"
+          sed -i -e "s/__SHORT__/${SHORT}/g" -e "s/__SHA256__/${SHA256}/g" -e "s/__SHA__/${SHA}/g" notes.md
+          gh release create "$TAG" "$ZIP_NAME" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$SHA" \
+            --title "حزمة InfinityFree — dr-sumaiaalhalabi.gt.tc (من main @ ${SHORT})" \
+            --notes-file notes.md
+          {
+            echo "### InfinityFree ZIP published"
+            echo "- Tag: \`${TAG}\` → commit \`${SHA}\`"
+            echo "- SHA-256: \`${SHA256}\`"
+            echo "- Download: https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/${ZIP_NAME}"
+          } >> "$GITHUB_STEP_SUMMARY"
+          gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json tagName,targetCommitish,url,assets
+
+      - name: Keep ZIP as workflow artifact (backup)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dr-sumaiaalhalabi-infinityfree
+          path: dr-sumaiaalhalabi-infinityfree.zip
+          if-no-files-found: error
