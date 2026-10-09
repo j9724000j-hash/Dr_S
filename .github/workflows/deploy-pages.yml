@@ -9,7 +9,7 @@
 #   بيئة `github-pages` في إعدادات المستودع مقصورة حالياً على الفرع الافتراضي
 #   (Deployment branches and tags → main). لذلك:
 #     • الدفع إلى `main` ينشر عبر مسار البيئة القياسي (job: deploy).
-#     • الدفع إلى فرع الجلسة ينشر عبر نفس إجراءات GitHub الرسمية
+#     • الدفع إلى أي فرع جلسة (arena/*) ينشر عبر نفس إجراءات GitHub الرسمية
 #       (actions/deploy-pages) من داخل نفس ملف الـWorkflow (job: deploy-preview).
 #   لو أضاف المالك لاحقاً فرع الجلسة (أو اختار All branches) في
 #   Settings → Environments → github-pages، يكفي حذف job الـpreview ودمج
@@ -20,7 +20,7 @@ on:
   push:
     branches:
       - main
-      - arena/4c6dc206-dr-s
+      - 'arena/*'
   workflow_dispatch:
 
 # صلاحيات النشر القياسية لـGitHub Pages
