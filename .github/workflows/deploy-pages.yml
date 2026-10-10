@@ -3,7 +3,7 @@
 # المصدر الوحيد للنشر هنا: GitHub Actions (وليس بناء Jekyll التلقائي).
 # المسار المنشور: https://j9724000j-hash.github.io/Dr_S/
 #   (SITE_URL + SITE_BASE مضبوطان صراحةً في env أدناه — لأن الافتراضي العام في
-#    astro.config.mjs هو جذر النطاق "/" المناسب لـ Netlify و Hostinger و InfinityFree)
+#    astro.config.mjs هو جذر النطاق "/" المناسب لـ Netlify و Hostinger)
 # النشر على Netlify مُعدّ في netlify.toml ولا علاقة له بهذا الملف.
 #
 # قاعدة الأمان (SEC-002 في تقرير التدقيق):

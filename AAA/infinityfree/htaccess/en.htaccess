@@ -1,7 +1,7 @@
 # ============================================================
 # .htaccess — النسخة الإنجليزية (/en/) على InfinityFree
-# يُنسخ إلى مجلد en/ داخل الحزمة عبر scripts/package-infinityfree.sh
-# وعبر workflow package-infinityfree.yml
+# يُنسخ إلى مجلد en/ داخل الحزمة عبر AAA/infinityfree/package-infinityfree.sh
+# وعبر AAA/infinityfree/workflow/package-infinityfree.yml
 # ============================================================
 
 # صفحة الخطأ 404 الإنجليزية (تتجاوز الإعداد العام في جذر الموقع)

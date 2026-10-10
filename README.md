@@ -27,7 +27,6 @@ npm run dev              # معاينة محلية على :4321
 npm run build            # إنتاج dist/ جاهز للنشر (الافتراضي: جذر النطاق)
 npm run build:netlify    # نفس build لكن مع ضبط SITE_URL و SITE_BASE لـ Netlify
 npm run build:pages      # نفس build لكن لموقع معاينة GitHub Pages (/Dr_S)
-npm run build:infinityfree # نفس build لحزمة InfinityFree (/)
 npm run verify           # فحص dist/ بعد البناء: كل رابط محلي له ملف فعلي
 ```
 
@@ -143,22 +142,6 @@ npm ci && npm run build:netlify && npm run verify
 2. ارفع **محتوى مجلد `dist/`** إلى `public_html/` عبر مدير الملفات أو FTP.
 3. لا يحتاج الموقع Node.js في الإنتاج — ملفات ثابتة فقط.
 4. بعد ربط الدومين الحقيقي: حدّث `site` في `astro.config.mjs` ثم أعد البناء.
-
-## 📦 حزمة InfinityFree (ZIP)
-
-للرفع على استضافة InfinityFree المجانية (مجلد `htdocs`) على النطاق
-`https://dr-sumaiaalhalabi.gt.tc`:
-
-```bash
-npm ci
-SITE_URL=https://dr-sumaiaalhalabi.gt.tc SITE_BASE=/ npm run build
-bash scripts/package-infinityfree.sh     # → release/dr-sumaiaalhalabi-infinityfree.zip
-```
-
-- الأرشيف يحتوي محتويات `dist/` مباشرةً (`index.html` في الجذر).
-- يُضيف السكربت `.htaccess` للجذر (الصفحة الرئيسية، صفحة 404 العربية) و`en/.htaccess` (صفحة 404 الإنجليزية).
-- قوالب `.htaccess` في `scripts/infinityfree/`. مجلد `release/` مستثنى من Git.
-- تحويل HTTP إلى HTTPS معطّل افتراضياً في القالب؛ فعّله بعد تفعيل شهادة SSL للدومين.
 
 ## 🔐 الأمان والنشر
 

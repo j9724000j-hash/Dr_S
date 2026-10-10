@@ -7,14 +7,14 @@
 #
 # الاستخدام (من جذر المستودع):
 #   SITE_URL=https://dr-sumaiaalhalabi.gt.tc SITE_BASE=/ npm run build
-#   bash scripts/package-infinityfree.sh [dist-dir] [output-zip]
+#   bash AAA/infinityfree/package-infinityfree.sh [dist-dir] [output-zip]
 # ------------------------------------------------------------
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 DIST="$(cd "${1:-$ROOT/dist}" && pwd)"
 OUT_ARG="${2:-$ROOT/release/dr-sumaiaalhalabi-infinityfree.zip}"
-TEMPLATES="$ROOT/scripts/infinityfree"
+TEMPLATES="$(cd "$(dirname "$0")/htaccess" && pwd)"
 
 if [ ! -f "$DIST/index.html" ]; then
   echo "خطأ: لم يُعثر على index.html في $DIST — شغّل npm run build أولاً." >&2

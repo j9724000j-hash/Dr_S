@@ -1,3 +1,5 @@
+# ⚠️ معطّل: هذا الملف موجود في AAA/ وليس في .github/workflows/، لذلك لا يُشغَّل.
+# لإعادة تفعيله: git mv AAA/infinityfree/workflow/package-infinityfree.yml .github/workflows/
 # حزمة InfinityFree: بناء فرع main بمتغيرات البيئة فقط، ثم نشر ملف ZIP كمرفق في GitHub Release.
 #
 # لماذا هذا الملف؟
@@ -65,8 +67,8 @@ jobs:
           cp -a dist/. package/
           # وثائق داخلية للمطوّر منسوخة من public/ — ليست جزءاً من الموقع
           rm -f package/Dr.S_Website.md package/images/README.md
-          cp scripts/infinityfree/root.htaccess package/.htaccess
-          cp scripts/infinityfree/en.htaccess package/en/.htaccess
+          cp AAA/infinityfree/htaccess/root.htaccess package/.htaccess
+          cp AAA/infinityfree/htaccess/en.htaccess package/en/.htaccess
           cat > notes.md << 'EOF'
           ## حزمة الرفع على InfinityFree — https://dr-sumaiaalhalabi.gt.tc
 
