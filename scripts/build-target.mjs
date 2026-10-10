@@ -10,7 +10,6 @@
  * الاستخدام:
  *   node scripts/build-target.mjs netlify        # npm run build:netlify
  *   node scripts/build-target.mjs pages          # npm run build:pages
- *   node scripts/build-target.mjs infinityfree   # npm run build:infinityfree
  *
  * كل الأهداف تبني إلى dist/ — امسح dist/ (أو أعد البناء) قبل رفع حزمة إلى منصة أخرى.
  */
@@ -28,11 +27,6 @@ export const TARGETS = {
     label: 'GitHub Pages (مسار المستودع /Dr_S)',
     SITE_URL: 'https://j9724000j-hash.github.io',
     SITE_BASE: '/Dr_S',
-  },
-  infinityfree: {
-    label: 'InfinityFree (مجلد htdocs — جذر النطاق)',
-    SITE_URL: 'https://dr-sumaiaalhalabi.gt.tc',
-    SITE_BASE: '/',
   },
 };
 

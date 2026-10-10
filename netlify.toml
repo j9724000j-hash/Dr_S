@@ -46,6 +46,14 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "SAMEORIGIN"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    # HSTS: المواقع على HTTPS فقط (Netlify). بدون includeSubDomains/preload لتجنّب
+    # تأثيرات على نطاقات فرعية لم تُراجع بعد.
+    Strict-Transport-Security = "max-age=31536000"
+    # CSP في وضع المراقبة فقط (SEC-003): لا تمنع شيئاً، تُسجّل المخالفات في وحدة التحكم.
+    # السكربتان المضمّنان مسموحان بالـ hash (بلا unsafe-inline). بعد التأكد من عدم وجود
+    # مخالفات على كل الصفحات يُحوَّل اسم الترويسة إلى Content-Security-Policy للفرض.
+    # إن تغيّر أي سكربت مضمّن يجب تحديث الـ hash (انظر README: قسم الأمان).
+    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'sha256-8wg8x0UugFxuaQtHrgPbCUeQrFnpbDZZMCWPEBoCbJk=' 'sha256-peJAYVw8jFT9TNvwxPz9h77GWXETCETk9R3iwuK8n3A='; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
 
 # ---------- صفحات الخطأ 404 ----------
 # Netlify تخدم /404.html تلقائياً لأي مسار غير موجود (Astro يبنيها في جذر dist)،

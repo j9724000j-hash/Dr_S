@@ -19,7 +19,7 @@ import sitemap from '@astrojs/sitemap';
  *
  * ── لماذا لم يعد الافتراضي "/Dr_S"؟ ─────────────────────────────────────────
  *   القيمة "/Dr_S" تخصّ حالة واحدة فقط: معاينة GitHub Pages تحت مسار المستودع.
- *   حين كان هذا هو الافتراضي، أي بناء آخر (Netlify / Hostinger / InfinityFree)
+ *   حين كان هذا هو الافتراضي، أي بناء آخر (Netlify / Hostinger / غيرهما)
  *   ينتج HTML يشير إلى الأصول هكذا:  /Dr_S/_astro/xxx.css
  *   وعلى جذر النطاق لا وجود لذلك المسار ← 404 ← صفحة بلا CSS ولا خطوط
  *   (نصوص وروابط فقط). لذلك صار الافتراضي الآن هو الجذر "/"، ومعاينة GitHub
@@ -40,8 +40,6 @@ const TARGETS = {
   pages: { url: 'https://j9724000j-hash.github.io', base: '/Dr_S' },
   /** Netlify — الجذر */
   netlify: { url: 'https://dr-sumaiaalhalabi.netlify.app', base: '/' },
-  /** InfinityFree — الجذر */
-  infinityfree: { url: 'https://dr-sumaiaalhalabi.gt.tc', base: '/' },
 };
 
 const isNetlify = process.env.NETLIFY === 'true';

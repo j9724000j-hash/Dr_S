@@ -152,6 +152,20 @@ for (const f of cssFiles) await scan(f, CSS_URL_RE);
 for (const required of ['index.html', '404.html', 'robots.txt', 'sitemap-index.xml']) {
   if (!files.has(required)) errors.push(`ملف أساسي مفقود في جذر dist/: ${required}`);
 }
+/* ---------- 3b) لا تُنشر وثائق داخلية ولا أصول المصدر (SEC-001 / PERF-001) ---------- */
+// الوثائق الداخلية موجودة في AAA/ (خارج النشر)، وصور PNG الأصلية في AAA/masters/.
+// أي ملف من هذه الأنواع داخل dist/ يعني أن الإعداد تغيّر دون قصد.
+const forbiddenInDist = [...files].filter(
+  (f) => /\.md$/i.test(f) || /\.png$/i.test(f) || /\.map$/i.test(f),
+);
+if (forbiddenInDist.length) {
+  errors.push(
+    `ملفات يجب ألا تُنشر (وثائق/مصادر/خرائط): ${forbiddenInDist.slice(0, 5).join(', ')}` +
+      (forbiddenInDist.length > 5 ? ` … (+${forbiddenInDist.length - 5})` : '') +
+      ' — انقلها إلى AAA/ أو استبعدها من public/.',
+  );
+}
+
 if (!files.has('en/index.html')) errors.push('ملف أساسي مفقود: en/index.html (النسخة الإنجليزية)');
 if (!dirs.has('en/404') && !files.has('en/404.html')) {
   errors.push('صفحة الخطأ الإنجليزية مفقودة (en/404/)');

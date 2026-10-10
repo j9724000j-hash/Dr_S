@@ -3,25 +3,19 @@
 # المصدر الوحيد للنشر هنا: GitHub Actions (وليس بناء Jekyll التلقائي).
 # المسار المنشور: https://j9724000j-hash.github.io/Dr_S/
 #   (SITE_URL + SITE_BASE مضبوطان صراحةً في env أدناه — لأن الافتراضي العام في
-#    astro.config.mjs هو جذر النطاق "/" المناسب لـ Netlify و Hostinger و InfinityFree)
+#    astro.config.mjs هو جذر النطاق "/" المناسب لـ Netlify و Hostinger)
 # النشر على Netlify مُعدّ في netlify.toml ولا علاقة له بهذا الملف.
 #
-# ملاحظة على البيئة (environment):
-#   بيئة `github-pages` في إعدادات المستودع مقصورة حالياً على الفرع الافتراضي
-#   (Deployment branches and tags → main). لذلك:
-#     • الدفع إلى `main` ينشر عبر مسار البيئة القياسي (job: deploy).
-#     • الدفع إلى أي فرع جلسة (arena/*) ينشر عبر نفس إجراءات GitHub الرسمية
-#       (actions/deploy-pages) من داخل نفس ملف الـWorkflow (job: deploy-preview).
-#   لو أضاف المالك لاحقاً فرع الجلسة (أو اختار All branches) في
-#   Settings → Environments → github-pages، يكفي حذف job الـpreview ودمج
-#   الخطوتين — الوظيفة واحدة والنتيجة واحدة.
+# قاعدة الأمان (SEC-002 في تقرير التدقيق):
+#   النشر الحي يحدث من فرع main فقط. دفع أي فرع جلسة (arena/*) لا يُنشر على الموقع
+#   العام، فلا يستطيع فرع غير مراجَع استبدال المحتوى المنشور.
+#   للتجربة قبل الدمج: شغّل البناء محلياً (npm run build && npm run verify).
 name: Deploy Astro site to GitHub Pages
 
 on:
   push:
     branches:
       - main
-      - 'arena/*'
   workflow_dispatch:
 
 # صلاحيات النشر القياسية لـGitHub Pages
@@ -47,10 +41,12 @@ jobs:
       ASTRO_TELEMETRY_DISABLED: '1'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           # المشروع يشترط node >= 22.12.0 (package.json → engines)
           node-version: '22'
@@ -67,14 +63,13 @@ jobs:
 
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
 
       - name: Upload dist as Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
           path: dist
 
-  # المسار القياسي: الدفع إلى الفرع الافتراضي عبر بيئة github-pages
   deploy:
     name: Deploy to GitHub Pages (main)
     if: github.ref == 'refs/heads/main'
@@ -86,15 +81,4 @@ jobs:
     steps:
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
-
-  # مسار فرع الجلسة (بيئة النشر لا تسمح به بعد): نفس إجراء النشر الرسمي
-  deploy-preview:
-    name: Deploy to GitHub Pages (preview branch)
-    if: github.ref != 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

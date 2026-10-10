@@ -116,6 +116,7 @@ export const ui = {
 
     'services.eyebrow': 'الخدمات',
     'services.title': 'خدماتنا في طب الأسنان',
+    'services.list.title': 'قائمة الخدمات',
     'services.sub':
       'ست خدمات أساسية نقدمها بعناية — كل خدمة لها صفحة كاملة تشرحها بوضوح.',
     'services.note':
@@ -145,6 +146,7 @@ export const ui = {
 
     'journal.eyebrow': 'المجلة',
     'journal.title': 'مجلة العيادة التثقيفية',
+    'journal.list.title': 'مقالات المجلة',
     'journal.sub': 'مقالات قصيرة وموثوقة عن صحة الفم والأسنان، بأسلوب بسيط.',
     'journal.readMin': 'دقائق قراءة',
     'journal.related': 'الخدمة المرتبطة',
@@ -289,6 +291,7 @@ export const ui = {
 
     'services.eyebrow': 'Services',
     'services.title': 'Our dental services',
+    'services.list.title': 'Service list',
     'services.sub':
       'Six core services delivered with care — each with a full page explaining it clearly.',
     'services.note':
@@ -318,6 +321,7 @@ export const ui = {
 
     'journal.eyebrow': 'Journal',
     'journal.title': 'The clinic’s educational journal',
+    'journal.list.title': 'Journal articles',
     'journal.sub': 'Short, trustworthy articles on oral and dental health, in a simple style.',
     'journal.readMin': 'min read',
     'journal.related': 'Related service',

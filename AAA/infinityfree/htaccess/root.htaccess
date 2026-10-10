@@ -1,0 +1,58 @@
+# ============================================================
+# .htaccess — موقع د. سميّا الحلبي على InfinityFree (جذر htdocs)
+# المصدر الوحيد: يُنسخ منه .htaccess للجذر عبر workflow الحزمة وعبر
+# AAA/infinityfree/package-infinityfree.sh (لا تُعدَّل نسخة أخرى منه).
+# ============================================================
+
+# الملف الافتراضي عند فتح أي مجلد (الصفحة الرئيسية العربية)
+DirectoryIndex index.html
+
+# ترميز UTF-8 للنصوص العربية
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+  AddCharset UTF-8 .html .css .js .json .xml .txt .svg
+  AddType image/webp .webp
+  AddType image/svg+xml .svg
+  AddType image/x-icon .ico
+</IfModule>
+
+# صفحة الخطأ 404 (العربية — الافتراضية). صفحة 404 الإنجليزية في en/.htaccess
+ErrorDocument 404 /404.html
+
+# ---------- (اختياري) إجبار HTTPS ----------
+# فعّله فقط بعد أن تصبح شهادة SSL نشطة من لوحة InfinityFree،
+# وتأكد أن https://dr-sumaiaalhalabi.gt.tc يفتح بدون تحذير.
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^(.*)$ https://dr-sumaiaalhalabi.gt.tc/$1 [R=301,L]
+# </IfModule>
+
+# ---------- ضغط النصوص (يُتجاهل إن لم تكن الوحدة متاحة) ----------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/xml text/css text/plain application/javascript application/json image/svg+xml
+</IfModule>
+
+# ---------- تخزين مؤقت ----------
+# الصفحات HTML لا تُخزَّن لتظهر التحديثات فوراً. ملفات _astro تحمل بصمة في اسمها.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 month"
+</IfModule>
+
+# ---------- ترويسات أمان أساسية ----------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>

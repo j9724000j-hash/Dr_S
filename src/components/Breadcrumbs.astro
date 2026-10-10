@@ -1,4 +1,5 @@
 ---
+import { toJsonLd } from '../utils/jsonld';
 /** فتات التنقل + بيانات منظمة BreadcrumbList (spec §18/§24) */
 import type { Locale } from '../i18n/ui';
 import { useTranslations, useTranslatedPath } from '../i18n/utils';
@@ -38,4 +39,4 @@ const jsonLd = {
     ))}
   </ol>
 </nav>
-<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+<script type="application/ld+json" set:html={toJsonLd(jsonLd)} />

@@ -35,6 +35,7 @@ const jsonLd = [{
   <section class="section">
     <div class="container">
       <SectionHeading h1 eyebrow={t('services.eyebrow')} title={t('services.title')} sub={t('services.sub')} />
+      <h2 class="sr-only">{t('services.list.title')}</h2>
       <div class="cards-grid">
         {services.map((s) => (
           <a class="card service-card" href={tp(`/services/${s.slug}`)}>
