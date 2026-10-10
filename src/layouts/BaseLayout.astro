@@ -5,6 +5,7 @@ import CallBar from '../components/CallBar.astro';
 import type { Locale } from '../i18n/ui';
 import { stripLocalePrefix, withBase } from '../i18n/utils';
 import { clinic } from '../data/clinic';
+import { toJsonLd } from '../utils/jsonld';
 
 import '@fontsource/montserrat/400.css';
 import '@fontsource/montserrat/500.css';
@@ -46,7 +47,7 @@ const enPath = arPath === '/' ? '/en/' : `/en${arPath}`;
 const arUrl = `${siteOrigin}${withBase(arPath)}`;
 const enUrl = `${siteOrigin}${withBase(enPath)}`;
 const siteName = `${clinic.nameEn} | ${clinic.specialtyEn}`;
-const ogImage = `${siteOrigin}${withBase('/images/01_Hero_Clinic_Signature_Homepage.png')}`;
+const ogImage = `${siteOrigin}${withBase('/images/og-home.jpg')}`;
 const isRootAr = lang === 'ar' && arPath === '/';
 // صفحة 404 ليست عنواناً قابلاً للفهرسة: لا canonical/hreflang لها + noindex
 const isErrorPage = /\/404\/?$/.test(Astro.url.pathname);
@@ -85,7 +86,7 @@ const isErrorPage = /\/404\/?$/.test(Astro.url.pathname);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     {jsonLd.map((data) => (
-      <script type="application/ld+json" set:html={JSON.stringify(data)} />
+      <script type="application/ld+json" set:html={toJsonLd(data)} />
     ))}
     {
       /* اختيار اللغة الأولي (spec §0.16.2/§0.16.3/§0.16.14):

@@ -4,6 +4,7 @@
  * مع بيانات منظمة FAQPage مبنية من نفس المحتوى المعروض (معلومات مؤكدة فقط).
  */
 import type { Locale } from '../i18n/ui';
+import { toJsonLd } from '../utils/jsonld';
 import type { FaqItem } from '../data/faq';
 
 interface Props {
@@ -34,4 +35,4 @@ const jsonLd = {
     </details>
   ))}
 </div>
-{withSchema && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+{withSchema && <script type="application/ld+json" set:html={toJsonLd(jsonLd)} />}

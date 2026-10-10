@@ -22,6 +22,7 @@ const meta = getMeta('/journal', lang);
   <section class="section">
     <div class="container">
       <SectionHeading h1 eyebrow={t('journal.eyebrow')} title={t('journal.title')} sub={t('journal.sub')} />
+      <h2 class="sr-only">{t('journal.list.title')}</h2>
       <div class="cards-grid">
         {articles.map((a) => (
           <a class="card journal-card" href={tp(`/journal/${a.slug}`)}>

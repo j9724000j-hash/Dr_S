@@ -37,13 +37,14 @@ jobs:
       ZIP_NAME: dr-sumaiaalhalabi-infinityfree.zip
     steps:
       - name: Checkout main
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: main
           fetch-depth: 1
+          persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '22'
           cache: npm
@@ -64,57 +65,8 @@ jobs:
           cp -a dist/. package/
           # وثائق داخلية للمطوّر منسوخة من public/ — ليست جزءاً من الموقع
           rm -f package/Dr.S_Website.md package/images/README.md
-          cat > package/.htaccess << 'EOF'
-          # ============================================================
-          # .htaccess — د. سميّا الحلبي | dr-sumaiaalhalabi.gt.tc
-          # ضعه داخل مجلد htdocs بجانب index.html مباشرةً (وليس داخل مجلد فرعي).
-          # ============================================================
-
-          # الصفحة الرئيسية: يُعرض index.html تلقائياً عند فتح المجلد "/"
-          DirectoryIndex index.html
-
-          # صفحة الخطأ 404 (العربية — الافتراضية). صفحة 404 الإنجليزية في en/.htaccess
-          ErrorDocument 404 /404.html
-
-          # ---------- (اختياري) إجبار HTTPS ----------
-          # فعّله فقط بعد أن تصبح شهادة SSL نشطة من لوحة InfinityFree،
-          # وتأكد أن https://dr-sumaiaalhalabi.gt.tc يفتح بدون تحذير.
-          # RewriteEngine On
-          # RewriteCond %{HTTPS} off
-          # RewriteRule ^(.*)$ https://dr-sumaiaalhalabi.gt.tc/$1 [L,R=301]
-
-          # ---------- ضغط النصوص (يُتجاهل إن لم تكن الوحدة متاحة) ----------
-          <IfModule mod_deflate.c>
-            AddOutputFilterByType DEFLATE text/html text/xml text/css text/plain application/javascript application/json image/svg+xml
-          </IfModule>
-
-          # ---------- تخزين مؤقت للأصول الثابتة ----------
-          # ملفات _astro تحمل بصمة (hash) في اسمها، لذلك يمكن تخزينها طويلاً بأمان
-          <IfModule mod_expires.c>
-            ExpiresActive On
-            ExpiresByType text/css "access plus 1 year"
-            ExpiresByType application/javascript "access plus 1 year"
-            ExpiresByType font/woff2 "access plus 1 year"
-            ExpiresByType font/woff "access plus 1 year"
-            ExpiresByType image/webp "access plus 1 month"
-            ExpiresByType image/png "access plus 1 month"
-            ExpiresByType image/svg+xml "access plus 1 month"
-            ExpiresByType image/x-icon "access plus 1 month"
-          </IfModule>
-
-          # ---------- ترويسات أمان أساسية ----------
-          <IfModule mod_headers.c>
-            Header always set X-Content-Type-Options "nosniff"
-            Header always set Referrer-Policy "strict-origin-when-cross-origin"
-            Header always set X-Frame-Options "SAMEORIGIN"
-          </IfModule>
-          EOF
-          cat > package/en/.htaccess << 'EOF'
-          # ============================================================
-          # صفحة الخطأ 404 الإنجليزية لكل المسارات تحت /en/
-          # ============================================================
-          ErrorDocument 404 /en/404/index.html
-          EOF
+          cp scripts/infinityfree/root.htaccess package/.htaccess
+          cp scripts/infinityfree/en.htaccess package/en/.htaccess
           cat > notes.md << 'EOF'
           ## حزمة الرفع على InfinityFree — https://dr-sumaiaalhalabi.gt.tc
 
@@ -205,7 +157,7 @@ jobs:
           gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json tagName,targetCommitish,url,assets
 
       - name: Keep ZIP as workflow artifact (backup)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: dr-sumaiaalhalabi-infinityfree
           path: dr-sumaiaalhalabi-infinityfree.zip

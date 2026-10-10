@@ -4,7 +4,7 @@
 الفم والأسنان في دمشق — أوتوستراد المزة. مبني بـ **Astro** بإخراج ثابت
 (Static) جاهز للنشر على **Hostinger**.
 
-> **المرجع الأعلى للمواصفات:** [`public/Dr.S_Website.md`](public/Dr.S_Website.md)
+> **المرجع الأعلى للمواصفات:** [`AAA/docs/Dr.S_Website.md`](AAA/docs/Dr.S_Website.md)
 > (Master Prompt) — و[`BRAND.md`](BRAND.md) للهوية البصرية.
 
 ---
@@ -16,7 +16,7 @@
 | الإطار | Astro 7 — إخراج ثابت 100% |
 | الواجهات | HTML دلالي + CSS نقي + قدر ضئيل جداً من Vanilla JS (صفر اعتماديات واجهة) |
 | الخطوط | `@fontsource`: Montserrat (EN) · Tajawal (AR) · Great Vibes (شعار) |
-| الصور | أساتذة PNG في `public/images/` + نسخ WebP محسّنة يخدمها الموقع |
+| الصور | أساتذة PNG في `AAA/masters/` (خارج النشر) + نسخ WebP محسّنة في `public/images/` يخدمها الموقع |
 | SEO | sitemap · robots · canonical · hreflang (ar/en/x-default) · OG/Twitter · JSON-LD |
 
 ## 🚀 التشغيل
@@ -78,10 +78,10 @@ npm run verify           # فحص dist/ بعد البناء: كل رابط مح�
 
 ## 🖼️ استبدال الصور المفاهيمية بصور حقيقية لاحقاً
 
-الصور الحالية (19 ملفاً) **مفاهيم بصرية بهوية العيادة** وليست تصويراً
+الصور الحالية (19 ملف أصلي) **مفاهيم بصرية بهوية العيادة** وليست تصويراً
 واقعياً (مع إخلاء مسؤولية ظاهر في تذييل الموقع). عند توفر الصور الحقيقية:
 
-1. استبدل ملف الـPNG المطابق في `public/images/` (نفس الاسم).
+1. استبدل ملف الـPNG المطابق في `AAA/masters/` (نفس الاسم).
 2. شغّل `node scripts/optimize-images.mjs`.
 3. انتهينا — لا تخطيط ولا كود يتغيّر (`src/data/images.ts` يجمع المسارات في مكان واحد).
 
@@ -92,7 +92,7 @@ npm run verify           # فحص dist/ بعد البناء: كل رابط مح�
 - **متطلب لمرة واحدة:** مصدر Pages في إعدادات المستودع = **GitHub Actions**
   (`Settings → Pages → Build and deployment → Source: GitHub Actions`).
 - **Workflow:** `.github/workflows/deploy-pages.yml` — يعمل عند كل دفع إلى
-  `main` أو إلى فرع الجلسة، ويمكن تشغيله يدوياً (`workflow_dispatch`).
+  `main` فقط (لا تُنشر فروع `arena/*` على الموقع العام)، ويمكن تشغيله يدوياً (`workflow_dispatch`).
   الخطوات: `npm ci` → `npm run build` → رفع `dist/` كـartifact → نشر عبر
   GitHub Pages (`build_type: workflow`، بلا أي بناء Jekyll تلقائي).
 - المسار والـcanonical والـhreflang والصور والـsitemap كلها تُبنى من
@@ -159,6 +159,14 @@ bash scripts/package-infinityfree.sh     # → release/dr-sumaiaalhalabi-infinit
 - يُضيف السكربت `.htaccess` للجذر (الصفحة الرئيسية، صفحة 404 العربية) و`en/.htaccess` (صفحة 404 الإنجليزية).
 - قوالب `.htaccess` في `scripts/infinityfree/`. مجلد `release/` مستثنى من Git.
 - تحويل HTTP إلى HTTPS معطّل افتراضياً في القالب؛ فعّله بعد تفعيل شهادة SSL للدومين.
+
+## 🔐 الأمان والنشر
+
+- **النشر الحي من `main` فقط.** دفع فروع `arena/*` لا ينشر على GitHub Pages (SEC-002).
+- **لا تُنشر وثائق داخلية أو صور PNG أصلية.** كل ما هو خارج الموقع في `AAA/`. الفحص `npm run verify` يفشل إذا ظهر ملف `.md` أو `.png` أو `.map` داخل `dist/` (SEC-001 / PERF-001).
+- **CSP في وضع المراقبة** (`Content-Security-Policy-Report-Only` في `netlify.toml`). السكربتان المضمّنان مسموحان بالـ hash. **إذا غيّرت أي سكربت مضمّن** (في `BaseLayout.astro` أو `Header.astro`) يجب تحديث الـ hash في `netlify.toml`. احسب الـ hash من نص السكربت في `dist/index.html`، بصيغة `sha256-<base64>`. بعد التأكد من عدم ظهور مخالفات في وحدة التحكم على كل الصفحات، يُغيَّر اسم الترويسة إلى `Content-Security-Policy` للفرض.
+- **JSON-LD مُهرَّب** عبر `src/utils/jsonld.ts`. استخدمه دائماً عند إضافة بيانات منظمة جديدة.
+- **تقرير التدقيق الكامل:** `AAA/docs/security-audit-report-ar.md`.
 
 ## 🛡️ قواعد سلامة المعلومات الملتزم بها
 

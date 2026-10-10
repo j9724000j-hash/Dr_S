@@ -49,14 +49,14 @@ const quickLinks = [
     </div>
 
     <div>
-      <h4>{t('footer.links')}</h4>
+      <h2>{t('footer.links')}</h2>
       <ul>
         {quickLinks.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
       </ul>
     </div>
 
     <div>
-      <h4>{t('footer.contact')}</h4>
+      <h2>{t('footer.contact')}</h2>
       <ul class="footer-contact">
         <li><Icon name="phone" size={18} /><a href={clinic.phoneHref} dir="ltr">{clinic.phone}</a></li>
         <li><Icon name="pin" size={18} /><span>{isAr ? clinic.locationAr : clinic.locationEn}</span></li>
